@@ -1,0 +1,121 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f7f7f7; /* light gray background */
+}
+
+.menu{
+    background-color: #3498db;
+    border: none;
+    padding: 0px;
+}
+
+.menu:hover{
+    background-color: rgba(129, 211, 211, 0.542);
+}
+
+.navbar {
+    background-color: #3498db; /* blue background */
+    padding: 1em;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    justify-content: space-between;
+    
+}
+
+.navbar ul{
+    list-style-type: none;
+    display: flex;
+    margin-left: 15vw;
+}
+
+
+.navbar ul li a{
+    text-decoration: none;
+    color: white;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 1.5vw;
+}
+
+.navbar ul li a:hover{
+    background-color: rgba(129, 211, 211, 0.542);
+
+}
+
+.logout-container {
+    margin-right: 1vw;
+}
+
+.logout-container button {
+    background-color: #fff;
+    border: none;
+    padding: 10px 2vw;
+    font-size: 2vw;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #3498db; /* blue text */
+}
+
+.logout-container button:hover {
+    background-color: #ccc;
+}
+
+.container{
+    
+    display: block;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* white background */
+    margin-top: 20px;
+}
+table{
+    border: 2px solid ;
+    display: auto;
+    width: 100%;
+    border-collapse: collapse;
+
+}
+table td img{
+    width: 40px; 
+    padding-bottom: 0px;
+}
+
+table tr th{
+    font-size: 1.7vw;
+}
+
+table tr th, table tr td, table tr td input[type="number"]{
+    padding: 10px;
+    text-align: center;
+}
+
+table input[type="datetime-local"],input[type="number"]{
+    width: 10vw;
+}
+table input[type="number"]{
+    width: 10VW;
+    height: 8px;
+    padding: 0;
+}
+
+table tr {
+    width: 100%;
+    border-bottom: 2px solid #000000;
+}
+
