@@ -80,13 +80,10 @@
             <button class="menu" onclick=hidesidebar()>
                 <img src="menublue.png" alt="menu" height="40px" width="45px">
             </button>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="seeAll_items.php">See All Items</a></li>
             <li><a href="#">Borrowed items</a></li>
             <li><a href="#">Returned items</a></li>
-            <li><a href="add.php">Add Item</a></li>
-            <li><a href="#">Remove Item</a></li>
-            <li><a href="#">Users and Passwords</a></li>
             <li><a href="#">Notifications</a></li>
             
         </ul>
@@ -98,5 +95,12 @@
     function hidesidebar() {
         const sidebar = document.querySelector('.sidebar');
         sidebar.style.display = 'none';
+    }
+</script>
+
+<script>
+    function showsidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.display = 'flex';
     }
 </script>
