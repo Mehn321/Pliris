@@ -15,7 +15,7 @@
         return $result;
     }
 
-    $name=retrieve("*","chemicals");
+    $name=retrieve("*","items");
 
 ?>
 

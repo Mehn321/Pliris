@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="notification.css">
 </head>
 <body>
     <?php
@@ -18,24 +18,17 @@
             <img src="ustplogo.png" alt="">
             <ul>
                 
-                <li>Welcome :) </li>
+                <li> NOTIFICATIONS </li>
             </ul>
-        <div class="logout-container">
-            <button>Log Out</button>
-        </div>
+            <div class="logout-container">
+                <button>Log Out</button>
+            </div>
         </nav>
     </header>
 
-
-    <div class="box">
-        <ul>
-            <a href="seeAll_items.php" class="red"><li><img src="allitems.png" alt="">All Items: 0</li></a>
-            <a href="#" class="blue"><li><img src="borrow.png" alt="">Borrowed items: 0</li></a>
-            <a href="notification.php" class="yellow"><li><img src="notification.png" alt="">Notifications : 0</li></a>
-        </ul>
+    <div class="container">
+        
+        <h3>Reminder! please return the____</h>
     </div>
-
 </body>
 </html>
-
-

@@ -1,16 +1,3 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    
-}
-
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f7f7f7; /* light gray background */
-}
 
 .navbar {
     background-color: #3498db; /* blue background */
@@ -76,8 +63,7 @@ body {
     background-color: #ccc;
 }
 
-
-.box{
+.container{
     display: block;
     flex-direction: column;
     padding: 20px;
@@ -86,39 +72,4 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #fff; /* white background */
     margin-top: 20px;
-}
-
-.box{
-    display: relative;
-    align-items: center;
-}
-.box ul{
-    display: flex;
-    flex-wrap: wrap;
-}
-.box ul a{
-    position: flex;
-    padding: 4vw;
-    border:1px solid #333;
-    width: 40vw;
-    border-radius: 50px;
-    justify-items: center;
-    list-style: none;
-    margin: 20px;
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.box ul a li img{
-    width: 5vw;
-}
-
-.red{
-    background-color: red;
-}
-.blue{
-    background-color: rgb(67, 69, 233);
-}
-.yellow{
-    background-color: rgb(178, 178, 0);
 }

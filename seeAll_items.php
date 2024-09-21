@@ -15,7 +15,29 @@
         return $result;
     }
 
-    $name=retrieve("*","chemicals");
+    $name=retrieve("*","items");
+
+    if(isset($_POST["submit"])){
+        $id = $_POST["id"];
+        $quantity = $_POST["quantity"];
+        $borrow_time=$_POST["borrow_time"];
+        $return_time=$_POST["return_time"];
+        $borrowed=$_POST["borrowed"]+$quantity;
+        $conn=connect();
+        $sql="UPDATE items SET borrowed=$borrowed WHERE id=$id";
+        $conn->query($sql);
+        try{
+            $reserve ="INSERT INTO reserved(id,quantity,borrow_time,return_time) values('$id','$quantity','$borrow_time','$return_time' )";
+            $conn->query($reserve);
+        }
+        catch (mysqli_sql_exception $e) {
+            $reserve="UPDATE reserved SET quantity=$quantity, borrow_time=$borrow_time, return_time=$return_time WHERE id=$id";
+        $conn->query($sql);
+        }        
+        
+
+        mysqli_close($conn);
+        }
 
 ?>
 
@@ -65,7 +87,7 @@
                     $itemname = $row['name'];
                     $quantity = $row['quantity'];
                     $borrowed = $row['borrowed'];
-                    $reserved_date = $row['reserve_date'];
+                    $category_id = $row['category_id'];
                     $remaining = $quantity - $borrowed;
                     $id = $row['id'];
                     if(isset($_POST["$id"])){
@@ -77,19 +99,23 @@
                             <td>
                                 $quantity <br>
                                 <label>quantity:</label>
-                                <input type='number' required>
+                                <input type='number' name='quantity' required>
                             </td>
                             <td>
                                 $borrowed <br>
                                 <label>borrow time:</label>
-                                <input type='datetime-local' required>
+                                <input type='datetime-local' name='borrow_time' required>
                             </td>
                             <td>
                                 $remaining<br>
                                 <label>return time:</label>
-                                <input type='datetime-local' required>
+                                <input type='datetime-local' name='return_time' required>
                             </td>
-                            
+                            </td>
+                                <input type='hidden' name='id' value='$id'>
+                            <td>
+                                <input type='hidden' name='borrowed' value='$borrowed'>
+                            <td>
                             <td>
                                 <input type='submit' name='submit' value='submit' >
                             </td>
@@ -121,3 +147,7 @@
 
 </body>
 </html>
+
+<?php
+
+?>

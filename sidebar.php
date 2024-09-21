@@ -80,11 +80,11 @@
             <button class="menu" onclick=hidesidebar()>
                 <img src="menublue.png" alt="menu" height="40px" width="45px">
             </button>
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="seeAll_items.php">See All Items</a></li>
-            <li><a href="#">Borrowed items</a></li>
-            <li><a href="#">Returned items</a></li>
-            <li><a href="#">Notifications</a></li>
+            <a href="dashboard.php"><li>Dashboard</li></a>
+            <a href="seeAll_items.php"><li>See All Items</li></a>
+            <a href="#"><li>Borrowed items</li></a>
+            <a href="#"><li>Returned items</li></a>
+            <a href="notification.php"><li>Notifications</li></a>
             
         </ul>
     </div>
