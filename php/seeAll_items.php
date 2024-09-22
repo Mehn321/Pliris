@@ -14,7 +14,6 @@
         $result=$conn->query($sql);
         return $result;
     }
-
     $name=retrieve("*","items");
 
     if(isset($_POST["submit"])){
@@ -47,7 +46,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="seeAll_items.css">
+    <link rel="stylesheet" href="../css/seeAll_items.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
@@ -57,7 +56,7 @@
     <header class="header">
         <nav class="navbar">
             <button class="menu" onclick=showsidebar()>
-                <img src="menuwhite.png" alt="menu"height="40px" width="45" >
+                <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
             </button>
             <ul>
                 <li><a href="#">CHEMICAL</a></li>
@@ -94,7 +93,7 @@
                         echo "
                         <tr class='row-border'>
                             <form action='seeAll_items.php' method='post'>
-                            <td><img src='ustplogo.png' alt='item image'></td>
+                            <td><img src='../images/ustplogo.png' alt='item image'></td>
                             <td>$itemname </td>
                             <td>
                                 $quantity <br>
@@ -126,7 +125,7 @@
                     elseif(isset($_POST["$id"])==false){
                     echo "
                     <tr class='row-border'>
-                        <td><img src='ustplogo.png' alt='item image'></td>
+                        <td><img src='../images/ustplogo.png' alt='item image'></td>
                         <td>$itemname </td>
                         <td>$quantity</td>
                         <td>$borrowed</td>

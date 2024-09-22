@@ -65,7 +65,7 @@
                     $remaining = $quantity - $borrowed;
                     echo "
                     <tr class='row-border'>
-                        <td><img src='ustplogo.png' alt='item image'></td>
+                        <td><img src='../images/ustplogo.png' alt='item image'></td>
                         <td>$itemname </td>
                         <td>$quantity</td>
                         <td>$borrowed</td>

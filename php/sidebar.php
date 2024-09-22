@@ -78,7 +78,7 @@
         <ul>
             
             <button class="menu" onclick=hidesidebar()>
-                <img src="menublue.png" alt="menu" height="40px" width="45px">
+                <img src="../images/menublue.png" alt="menu" height="40px" width="45px">
             </button>
             <a href="dashboard.php"><li>Dashboard</li></a>
             <a href="seeAll_items.php"><li>See All Items</li></a>
