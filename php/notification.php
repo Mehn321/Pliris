@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    $id_number=$_SESSION['id_number'];
+    if (!isset($_SESSION['id_number'])) {
+        header("Location: login.php");
+        exit;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

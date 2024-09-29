@@ -1,4 +1,11 @@
-<?php
+<?php   
+    session_start();
+    $id_number=$_SESSION['id_number'];
+    if (!isset($_SESSION['id_number'])) {
+        header("Location: login.php");
+        exit;
+    }
+
     function connect(){
         $server="localhost";
         $username = "root";
@@ -14,8 +21,8 @@
         $result=$conn->query($sql);
         return $result;
     }
-    $name=retrieve("*","items");
-
+    $items=retrieve("*","items");
+    
     if(isset($_POST["submit"])){
         $id = $_POST["id"];
         $quantity = $_POST["quantity"];
@@ -23,17 +30,20 @@
         $return_time=$_POST["return_time"];
         $borrowed=$_POST["borrowed"]+$quantity;
         $conn=connect();
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
         $sql="UPDATE items SET borrowed=$borrowed WHERE id=$id";
         $conn->query($sql);
+
         try{
-            $reserve ="INSERT INTO reserved(id,quantity,borrow_time,return_time) values('$id','$quantity','$borrow_time','$return_time' )";
+            $reserve ="INSERT INTO reserved(`id_number`,`id`,`quantity`,`borrow_time`,`return_time`) values('$id_number','$id','$quantity','$borrow_time','$return_time' )";
             $conn->query($reserve);
         }
         catch (mysqli_sql_exception $e) {
-            $reserve="UPDATE reserved SET quantity=$quantity, borrow_time=$borrow_time, return_time=$return_time WHERE id=$id";
-        $conn->query($sql);
-        }        
-        
+            $reserve="UPDATE reserved SET quantity=$quantity, borrow_time=$borrow_time, return_time=$return_time WHERE id=$id AND id_number='$id_number'";
+            $conn->query($reserve);
+        }
 
         mysqli_close($conn);
         }
@@ -58,12 +68,13 @@
             <button class="menu" onclick=showsidebar()>
                 <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
             </button>
-            <ul>
+            <h2>All Items</h2>
+            <!-- <ul>
                 <li><a href="#">CHEMICAL</a></li>
                 <li><a href="#">LABARATORY APARATUS</a></li>
                 <li><a href="#">DIVING INSTRUMENTS</a></li>
                 <li><a href="#"></a></li>
-            </ul>
+            </ul> -->
 
         <div class="logout-container">
             <button>Log Out</button>
@@ -82,7 +93,7 @@
                 <th>Action</th>
             </tr>
             <?php
-                while($row=$name->fetch_assoc()){
+                while($row=$items->fetch_assoc()){
                     $itemname = $row['name'];
                     $quantity = $row['quantity'];
                     $borrowed = $row['borrowed'];
