@@ -27,16 +27,16 @@
         $reserve_id = $_POST["reserve_id"];
         $conn=connect();
         
-        // Check if the reserve_id exists in the reserved table
-        $check_query = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
-        $result = $conn->query($check_query);
+        $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
+        $result = $conn->query($sql);
         
         if($result->num_rows > 0) {
-            $update_query = "UPDATE reserved SET return_stat='1' WHERE reserve_id='$reserve_id'";
-            $insert_query = "INSERT INTO returned(`reserve_id`,`returned_time`) values('$reserve_id',NOW() )";
+            $update_query = "UPDATE reserved SET return_stat='pending return' WHERE reserve_id='$reserve_id'";
+            $insert_query = "INSERT INTO returned(`reserve_id`) values('$reserve_id')";
             $conn->query($update_query);
             $conn->query($insert_query);
             
+        header("Location:borrowed_items.php");
         mysqli_close($conn);
         }
     }
@@ -95,9 +95,9 @@
                     $id = $row['id'];
                     $items = retrieve("name","items","id=$id");
                     $return_stat=$row['return_stat'];
-                    $row = $items->fetch_assoc();
-                    $itemname = $row['name'];
-                    if($return_stat=='1'){
+                    $item_row = $items->fetch_assoc();
+                    $itemname = $item_row['name'];
+                    if($return_stat=='pending return'){
                         continue;
                         // header("Refresh:0");
                     }
