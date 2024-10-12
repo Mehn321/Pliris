@@ -59,10 +59,9 @@
         $email = $_POST['email'];
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $password=password_hash($password, PASSWORD_DEFAULT);
         $insert="INSERT INTO `users`(`first_name`, `last_name`, `id_number`, `email`, `username`, `password`) VALUES ('$first_name','$last_name','$id_number','$email','$username','$password')";
         if ($conn->query($insert) === TRUE) {
-            header("Location: login.php");
+            header("Location: index.php");
         } else {
             echo "Error: " . $insert . "<br>" . $conn->error;
         }

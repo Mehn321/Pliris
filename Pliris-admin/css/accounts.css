@@ -1,3 +1,26 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f7f7f7; /* light gray background */
+}
+
+.menu{
+    background-color: #3498db;
+    border: none;
+    padding: 0px;
+}
+
+.menu:hover{
+    background-color: rgba(129, 211, 211, 0.542);
+}
+
 .navbar {
     background-color: #3498db; /* blue background */
     padding: 1em;
@@ -16,7 +39,6 @@
     list-style-type: none;
     display: flex;
     margin-left: 15vw;
-
 }
 
 
@@ -34,14 +56,14 @@
 }
 
 .logout-container {
-    margin-right: 20px;
+    margin-right: 1vw;
 }
 
 .logout-container button {
     background-color: #fff;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 10px 2vw;
+    font-size: 2vw;
     cursor: pointer;
     border-radius: 5px;
     color: #3498db; /* blue text */
@@ -61,7 +83,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #fff; /* white background */
     margin-top: 20px;
-    margin-left: 15vw;
 }
 table{
     border: 2px solid ;
@@ -75,7 +96,7 @@ table td img{
     padding-bottom: 0px;
 }
 
-table tr th{
+table tr th, table tr td{
     font-size: 1.7vw;
 }
 
@@ -84,10 +105,20 @@ table tr th, table tr td, table tr td input[type="number"]{
     text-align: center;
 }
 
-table tr td input[type="number"]{
+table input[type="number"]{
+    width: 10VW;
+    height: 8px;
+    padding: 0;
+}
+table input[type="file"]{
     width: 10vw;
+    padding: 0px;
 }
 
+input[type="text"]{
+    width: 10vw;
+
+}
 table tr {
     width: 100%;
     border-bottom: 2px solid #000000;

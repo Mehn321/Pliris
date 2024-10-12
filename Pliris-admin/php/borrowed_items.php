@@ -1,12 +1,12 @@
 <?php   
     session_start();
-    $id_number=$_SESSION['id_number'];
-    if (!isset($_SESSION['id_number'])) {
+    $id_number=$_SESSION['id_admin'];
+    if (!isset($_SESSION['id_admin'])) {
         header("Location: ../index.php");
         exit;
     }
     if(isset($_POST['logout'])) {
-        unset($_SESSION['id_number']);
+        unset($_SESSION['id_admin']);
         header("Location: ../index.php");
         exit;
     }
@@ -26,7 +26,7 @@
         $result=$conn->query($sql);
         return $result;
     }
-    $reserved=retrieve("*","reserved","id_number='$id_number' AND return_stat='borrowing'");
+    $reserved=retrieve("*","reserved"," return_stat='borrowing'");
 
     if(isset($_POST["submit"])){
         $reserve_id = $_POST["reserve_id"];
@@ -37,7 +37,7 @@
         
         if($result->num_rows > 0) {
             $update_query = "UPDATE reserved SET return_stat='pending_return' WHERE reserve_id='$reserve_id'";
-            $insert_query = "INSERT INTO returned(`reserve_id`) values('$reserve_id')";
+            $insert_query = "INSERT INTO returned(`reserve_id`,`returned_time`) values('$reserve_id',NOW() )";
             $conn->query($update_query);
             $conn->query($insert_query);
             
@@ -67,7 +67,7 @@
                 <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
             </button>
 
-            <h2>Borrowed Items</h2>
+            <h2>All Items Borrowed</h2>
 
         <div class="logout-container">
             <form action="" method="post">
@@ -80,7 +80,7 @@
     <div class="container">
     <table>
             <tr class="row-border">
-                <th>Picture</th>
+                <th>Borrower</th>
                 <th>Item Name</th>
                 <th>Quantity</th>
                 <th>Borrowed</th>
@@ -94,18 +94,22 @@
                     $borrow_time = $row['borrow_time'];
                     $return_time = $row['return_time'];
                     $id = $row['id'];
+                    $id_num = $row['id_number'];
                     $items = retrieve("name","items","id=$id");
                     $return_stat=$row['return_stat'];
-                    $item_row = $items->fetch_assoc();
-                    $itemname = $item_row['name'];
-                    if($return_stat=='pending_return'){
+                    $row = $items->fetch_assoc();
+                    $itemname = $row['name'];
+                    $users=retrieve('first_name', 'users',"id_number='$id_num'");
+                    $row_users=$users->fetch_assoc();
+                    $first_name=$row_users['first_name'];
+                    if($return_stat=='approved'){
                         continue;
                         // header("Refresh:0");
                     }
 
                     echo "
                     <tr class='row-border'>
-                        <td><img src='../images/ustplogo.png' alt='item image'></td>
+                        <td>$first_name</td>
                         <td>$itemname </td>
                         <td>$quantity</td>
                         <td>$borrow_time</td>

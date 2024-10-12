@@ -26,11 +26,11 @@
 
         if($result->num_rows > 0){
             $row = $result->fetch_assoc();
-            if(password_verify($password, $row['password'])){
+            if($password==$row['password']){
                 // login successful, start session and redirect to dashboard
                 session_start();
                 $_SESSION['id_number'] = $id_number;
-                header("Location: dashboard.php");
+                header("Location: php/dashboard.php");
                 exit;
             } else {
                 $error = "Invalid password";
@@ -52,7 +52,7 @@
 <body>
     <div class="wrapper">
         <h2>LOG IN</h2>
-        <form action="login.php" method="post">
+        <form action="index.php" method="post">
             <div class="input-box">
                 <input type="text" name="id_number" placeholder="id number" required>
             </div>

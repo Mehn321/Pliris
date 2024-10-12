@@ -55,3 +55,66 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* white background */
+}
+
+label {
+    margin-bottom: 5px; /* reduce margin */
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%; /* reduce width */
+    margin-bottom: 10px; /* reduce margin */
+}
+
+input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px; /* reduce margin */
+}
+
+input[type="submit"] {
+    background-color: #3498db; /* blue background */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #555;
+}
+
+  /* Reduce space between form elements */
+  form > * {
+    margin-bottom: 10px;
+}
+

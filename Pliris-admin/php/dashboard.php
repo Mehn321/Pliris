@@ -1,15 +1,16 @@
 <?php
     session_start();
-    $id_number=$_SESSION['id_number'];
-    if (!isset($_SESSION['id_number'])) {
+    $id_number=$_SESSION['id_admin'];
+    if (!isset($_SESSION['id_admin'])) {
         header("Location: ../index.php");
         exit;
     }
     if(isset($_POST['logout'])) {
-        unset($_SESSION['id_number']);
+        unset($_SESSION['id_admin']);
         header("Location: ../index.php");
         exit;
     }
+
     function connect(){
         $server="localhost";
         $username = "root";
@@ -26,14 +27,24 @@
     }
     $all_items=retrieve('name','items', true);
     $quantity_of_allitems=$all_items->num_rows;
-    $borrowed=retrieve('reserve_id','reserved',"id_number='$id_number'  AND return_stat='borrowing'");
+    $borrowed=retrieve('reserve_id','reserved',"return_stat='borrowing'");
     $borrowed_itemsquantity=$borrowed->num_rows;
     $notifications=retrieve('notif_id','notifications',"id_number='$id_number'");
     $notifications_quantity=$notifications->num_rows;
-    
-    $accounts=retrieve('username','users',"id_number='$id_number'");
-    $row_accounts=$accounts->fetch_assoc();
-    $username=$row_accounts['username'];
+    $returned_items=retrieve('reserve_id','reserved',"return_stat='pending_return'");
+    $returned_items_quantity=$returned_items->num_rows;
+    $accounts=retrieve('id_number','users',true);
+    $accounts_quantity=$accounts->num_rows;
+
+    $result=retrieve("*","items",true);
+    while ($row = mysqli_fetch_assoc($result)){
+        $name=$row['name'];
+        $quantity=$row['quantity'];
+        $notifications_quantity=0;
+        if($quantity<=10){
+            $notifications_quantity++;
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,9 +65,8 @@
             </button>
             <img src="../images/ustplogo.png" alt="">
             <ul>
-                <?php
-                echo"<li>Welcome $username :)</li>";
-                ?>
+                
+                <li>Welcome :) </li>
             </ul>
         <div class="logout-container">
             <form action="" method="post">
@@ -74,6 +84,10 @@
             echo"
             <a href='seeAll_items.php' class='red'><li><img src='../images/allitems.png' alt=''>All Items: $quantity_of_allitems </li></a>
             <a href='borrowed_items.php' class='blue'><li><img src='../images/borrow.png' alt=''>Borrowed items: $borrowed_itemsquantity </li></a>
+            <a href='returned_items.php' class='green'><li><img src='../images/return.png' alt=''>Returned Items:$returned_items_quantity </li></a>
+            <a href='add.php' class='purple'><li><img src='../images/add.png' alt=''>Add Items </li></a>
+            <a href='accounts.php' class='pink'><li><img src='../images/accounts.png' alt=''>Accounts : $accounts_quantity</li></a>
+            <a href='records.php' class='brown'><li><img src='../images/records.png' alt=''>Records</li></a>
             <a href='notification.php' class='yellow'><li><img src='../images/notification.png' alt=''>Notifications : $notifications_quantity</li></a>
             ";
             ?>

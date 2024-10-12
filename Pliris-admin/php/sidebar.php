@@ -31,19 +31,18 @@
             top: 0;
             left: 0;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 2;
-            overflow-y: auto; /* or overflow-y: scroll; */
+            z-index: 999;
+            overflow-y: auto;
             max-height: 100vh;
             scrollbar-width: thin;
             scrollbar-color: #ccc;
+            display: none;
         }
 
-        .sidebar img {
-            padding-left: 0px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-bottom: 20px;
+        .sidebar button {
+            margin-top: 15px;
+            margin-left: 0px ;
+            background-color: #333;
         }
 
         .sidebar ul {
@@ -54,6 +53,7 @@
 
         .sidebar li {
             margin-bottom: 10px;
+            margin-left: 1px;
         }
 
         .sidebar a {
@@ -77,17 +77,33 @@
     <div class="sidebar">
         <ul>
             
-            <img src="ustplogo.png" alt="ustp logo">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="seeAll_items.php">See All Items</a></li>
-            <li><a href="#">Borrowed items</a></li>
-            <li><a href="#">Returned items</a></li>
-            <li><a href="add.php">Add Item</a></li>
-            <li><a href="#">Remove Item</a></li>
-            <li><a href="#">Users and Passwords</a></li>
-            <li><a href="#">Notifications</a></li>
+            <button class="menu" onclick=hidesidebar()>
+                <img src="../images/menublue.png" alt="menu" height="40px" width="45px">
+            </button>
+            <a href="dashboard.php"><li>Dashboard</li></a>
+            <a href="seeAll_items.php"><li>See All Items</li></a>
+            <a href="borrowed_items.php"><li>Borrowed items</li></a>
+            <a href="returned_items.php"><li>Returned items</li></a>
+            <a href="add.php"><li>Add Items</li></a>
+            <a href="accounts.php"><li>Accounts</li></a>
+            <a href="records.php"><li>Records</li></a>
+            <a href="notification.php"><li>Notifications</li></a>
             
         </ul>
     </div>
 </body>
 </html>
+
+<script>
+    function hidesidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.display = 'none';
+    }
+</script>
+
+<script>
+    function showsidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.display = 'flex';
+    }
+</script>

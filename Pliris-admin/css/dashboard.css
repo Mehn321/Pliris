@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f7f7f7; /* light gray background */
+}
+
+.navbar {
+    background-color: #3498db; /* blue background */
+    padding: 1em;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    justify-content: space-between;
+    
+}
+
+.menu{
+    background-color: #3498db;
+    border: none;
+    padding: 0px;
+}
+
+.menu:hover{
+    background-color: rgba(129, 211, 211, 0.542);
+}
+
+.navbar img{
+    display: flex;
+    width: 50px;
+    padding: 0;
+    border-radius: 7px;
+}
+
+.navbar ul{
+    list-style-type: none;
+    display: flex;
+    margin-left: 15vw;
+}
+
+
+.navbar ul li{
+    margin-top: 0px;
+    text-decoration: none;
+    color: white;
+    font-size: 3.5vw;
+}
+
+
+.logout-container {
+    margin-right: 1vw;
+}
+
+.logout-container button {
+    background-color: #fff;
+    border: none;
+    padding: 10px 2vw;
+    font-size: 2vw;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #3498db; /* blue text */
+}
+
+.logout-container button:hover {
+    background-color: #ccc;
+}
+
+
+.box{
+    display: block;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* white background */
+    margin-top: 20px;
+}
+
+.box{
+    display: relative;
+    align-items: center;
+}
+.box ul{
+    display: flex;
+    flex-wrap: wrap;
+}
+.box ul a{
+    position: flex;
+    padding: 4vw;
+    border:1px solid #333;
+    width: 40vw;
+    border-radius: 50px;
+    justify-items: center;
+    list-style: none;
+    margin: 20px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 3vw;
+}
+
+.box ul a li img{
+    width: 5vw;
+}
+
+.red{
+    background-color: red;
+}
+.blue{
+    background-color: rgb(67, 69, 233);
+}
+.yellow{
+    background-color: rgb(178, 178, 0);
+}
+.green{
+    background-color: green;
+}
+.purple{
+    background-color: purple;
+}
+.pink{
+    background-color: pink;
+}
+.brown{
+    background-color: brown;
+}

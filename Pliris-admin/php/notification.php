@@ -1,15 +1,16 @@
 <?php
     session_start();
-    $id_number=$_SESSION['id_number'];
-    if (!isset($_SESSION['id_number'])) {
+    $id_number=$_SESSION['id_admin'];
+    if (!isset($_SESSION['id_admin'])) {
         header("Location: ../index.php");
         exit;
     }
     if(isset($_POST['logout'])) {
-        unset($_SESSION['id_number']);
+        unset($_SESSION['id_admin']);
         header("Location: ../index.php");
         exit;
     }
+
     function connect(){
         $server="localhost";
         $username = "root";
@@ -19,13 +20,14 @@
         return $conn;
     }
 
-    function retrieve($column, $table, $where){
+    function retrieve($column, $table){
         $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $where";
+        $sql="SELECT $column FROM $table";
         $result=$conn->query($sql);
         return $result;
     }
-    $result=retrieve("*","notifications","id_number = '$id_number'");
+    $result=retrieve("*","items");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,11 +59,16 @@
         </nav>
     </header>
 
-    <div class="notifications">
+    <div class="container">
         <ul>
         <?php
             while ($row = mysqli_fetch_assoc($result)) {
-                echo "<li> {$row['message']} </li>";
+                $name=$row['name'];
+                $quantity=$row['quantity'];
+                if($quantity<=10){
+                    echo "<li> $name only has $quantity left. Please add more items. </li>";
+                }
+                
             }
         ?>
         </ul>

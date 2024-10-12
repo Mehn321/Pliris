@@ -1,12 +1,12 @@
 <?php   
     session_start();
-    $id_number=$_SESSION['id_number'];
-    if (!isset($_SESSION['id_number'])) {
+    $id_number=$_SESSION['id_admin'];
+    if (!isset($_SESSION['id_admin'])) {
         header("Location: ../index.php");
         exit;
     }
     if(isset($_POST['logout'])) {
-        unset($_SESSION['id_number']);
+        unset($_SESSION['id_admin']);
         header("Location: ../index.php");
         exit;
     }
@@ -29,61 +29,31 @@
     $items=retrieve("*","items");
     
     if(isset($_POST["submit"])){
-        $id = $_POST["id"];
-        $quantity = $_POST["quantity"];
-        $borrow_time=$_POST["borrow_time"];
-        $return_time=$_POST["return_time"];
-        $borrowed=$_POST["borrowed"]+$quantity;
         $conn=connect();
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
+        $id_number = $_POST['id'];
     
-        // Validate inputs
-        if (!is_numeric($quantity) || $quantity <= 0) {
-            echo "<script>alert('Invalid quantity. Please enter a positive integer.');</script>";
-            exit;
+        if(!empty($_POST["image"])){
+            $image=$_POST['image'];
+            $sql="UPDATE users SET image='$image' WHERE id='$id'";
+            $conn->query($sql);
+        }
+        if(!empty($_POST["itemname"])){
+            $itemname=$_POST['itemname'];
+            $sql="UPDATE users SET name='$itemname' WHERE id='$id'";
+            $conn->query($sql);
+        }
+        if(!empty($_POST["quantity"])){
+            $quantity=$_POST['quantity'];
+            $sql="UPDATE users SET quantity='$quantity' WHERE id='$id'";
+            $conn->query($sql);
         }
     
-        if (!is_numeric($id)) {
-            echo "<script>alert('Invalid item ID. Please enter a valid integer.');</script>";
-            exit;
-        }
-    
-        $sql = "SELECT * FROM reserved WHERE id = $id AND ((borrow_time <= '$borrow_time' AND return_time >= '$borrow_time') OR (borrow_time <= '$return_time' AND return_time >= '$return_time'))";
-        $result = $conn->query($sql);
-    
-        $availableQuantity = 0;
-        while ($row = $result->fetch_assoc()) {
-            $availableQuantity += $row['quantity'];
-        }
-    
-        $itemSql = "SELECT quantity FROM items WHERE id = $id";
-        $itemResult = $conn->query($itemSql);
-        $itemRow = $itemResult->fetch_assoc();
-        $totalQuantity = $itemRow['quantity'];
-        
-        $availableAtTime=$totalQuantity - $availableQuantity;
-        if ($availableAtTime < $quantity) {
-            echo "<script>alert('Not enough items available at the desired time. Only $availableAtTime items are available. Please choose a different time or reduce the quantity.');</script>";
-            exit;
-        }
-        
-
-        // Update item and reserve tables
-        $sql="UPDATE items SET borrowed=$borrowed WHERE id=$id";
-        if (!$conn->query($sql)) {
-            echo "<script>alert('Failed to update items table.');</script>";
-            exit;
-        }
-    
-        $reserve ="INSERT INTO reserved(`id_number`,`id`,`quantity`,`borrow_time`,`return_time`,`return_stat`) values('$id_number','$id','$quantity','$borrow_time','$return_time','borrowing' )";
-        if (!$conn->query($reserve)) {
-            echo "<script>alert('Failed to insert into reserved table.');</script>";
-            exit;
-        }
+        mysqli_close($conn);
         header("Location:seeAll_items.php");
-    }
+        }
 
 ?>
 
@@ -106,7 +76,6 @@
                 <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
             </button>
             <h2>All Items</h2>
-
         <div class="logout-container">
             <form action="" method="post">
             <button name="logout" value="logout">Log Out</button>
@@ -118,6 +87,7 @@
     <div class="container">
     <table>
             <tr class="row-border">
+                <th>Picture</th>
                 <th>Item Name</th>
                 <th>Quantity</th>
                 <th>Borrowed</th>
@@ -134,31 +104,29 @@
                     if(isset($_POST["$id"])){
                         echo "
                         <tr class='row-border'>
-                            <form action='seeAll_items.php' method='post'>
-                            <td>$itemname </td>
+                            
+                            <td>
+                                <img src='../images/ustplogo.png' alt='item image'>
+                                <input type='file' name='image'>
+                            </td>
+                            <td>$itemname
+                            <input type='text' name='itemname'>
+                            </td>
                             <td>
                                 $quantity <br>
-                                <label>quantity:</label>
                                 <input type='number' name='quantity' required>
                             </td>
                             <td>
-                                $borrowed <br>
-                                <label>borrow time:</label>
-                                <input type='datetime-local' name='borrow_time' required>
+                                $borrowed
                             </td>
                             <td>
-                                $remaining<br>
-                                <label>return time:</label>
-                                <input type='datetime-local' name='return_time' required>
+                                $remaining
                             </td>
-                            </td>
-                                <input type='hidden' name='id' value='$id'>
-                            <td>
-                                <input type='hidden' name='borrowed' value='$borrowed'>
-                            <td>
+                            <form action='seeAll_items.php' method='post'>
                             <td>
                                 <input type='submit' name='submit' value='submit' >
                             </td>
+                                <input type='hidden' name='id' value='$id'>
                             </form>
                         </tr>
                         ";
@@ -166,14 +134,14 @@
                     elseif(isset($_POST["$id"])==false){
                     echo "
                     <tr class='row-border'>
+                        <td><img src='../images/ustplogo.png' alt='item image'></td>
                         <td>$itemname </td>
                         <td>$quantity</td>
                         <td>$borrowed</td>
                         <td>$remaining</td>
                         <form action='seeAll_items.php' method='post'>
                         <td>
-                            
-                            <input type='submit' name='$id' value='reserve'>
+                            <input type='submit' name='$id' value='edit'>
                         </td>
                         </form>
                     </tr>
