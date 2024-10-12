@@ -23,13 +23,16 @@
         $result = $conn->query($sql);
         
         if($result->num_rows > 0) {
-            $update_query = "UPDATE reserved SET return_stat='pending_return' WHERE reserve_id='$reserve_id'";
-            $insert_query = "INSERT INTO returned(`reserve_id`) values('$reserve_id')";
-            $conn->query($update_query);
-            $conn->query($insert_query);
+            // $update_query = "UPDATE reserved SET return_stat='pending_return' WHERE reserve_id='$reserve_id'";
+            // $insert_query = "INSERT INTO returned(`reserve_id`) values('$reserve_id')";
+            // $conn->query($update_query);
+            // $conn->query($insert_query);
             
-        header("Location:borrowed_items.php");
-        mysqli_close($conn);
+            update('reserved',"return_stat='pending_return'","reserve_id='$reserve_id'");
+            insert("returned","`reserve_id`","'$reserve_id'");
+            
+            header("Location:borrowed_items.php");
+            
         }
     }
 

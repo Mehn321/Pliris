@@ -207,7 +207,7 @@
         $id = $_POST["id"];
         $borrow_time=$_POST["borrow_time"];
         $return_time=$_POST["return_time"];
-        $quantity = $_POST["quantity"];
+        $quantity_toreserve = $_POST["quantity"];
 
         $conn=connect();
         $sql = "SELECT * FROM reserved WHERE id = $id AND ((borrow_time <= '$borrow_time' AND return_time >= '$borrow_time') OR (borrow_time <= '$return_time' AND return_time >= '$return_time'))";
@@ -221,19 +221,19 @@
         $itemSql = "SELECT quantity, borrowed FROM items WHERE id = $id";
         $itemResult = $conn->query($itemSql);
         $itemRow = $itemResult->fetch_assoc();
-        $itemQuantity = $itemRow['quantity'];
-        $availableAtTime=$itemQuantity - $availableQuantity;
-        if ($availableAtTime < $itemQuantity) {
+
+        $availableAtTime=$availableQuantity-$quantity_toreserve;
+        if ($availableAtTime < $quantity_toreserve) {
             echo "<script>alert('Not enough items available at the desired time. Only $availableAtTime items are available. Please choose a different time or reduce the quantity.');</script>";
         }
         else{
-            $borrowed += $quantity;
+            $borrowed += $quantity_toreserve;
             $sql="UPDATE items SET borrowed=$borrowed WHERE id=$id";
             if (!$conn->query($sql)) {
                 echo "<script>alert('Failed to update items table.');</script>";
             }
 
-            $reserve ="INSERT INTO reserved(`id_number`,`id`,`quantity`,`borrow_time`,`return_time`,`return_stat`) values('$id_number','$id','$quantity','$borrow_time','$return_time','borrowing' )";
+            $reserve ="INSERT INTO reserved(`id_number`,`id`,`quantity`,`borrow_time`,`return_time`,`return_stat`) values('$id_number','$id','$quantity_toreserve','$borrow_time','$return_time','borrowing' )";
             if (!$conn->query($reserve)) {
                 echo "<script>alert('Failed to insert into reserved table.');</script>";
             }

@@ -8,14 +8,13 @@
         return $conn;
     }
 
-    function insert($table, $data) {
+    function insert($table, $columns, $data) {
         $conn = connect();
-        $columns = implode(", ", array_keys($data));
-        $values = "'" . implode("', '", array_values($data)) . "'";
-        $sql = "INSERT INTO $table ($columns) VALUES ($values)";
+        $sql = "INSERT INTO $table ($columns) VALUES ($data)";
         $result = $conn->query($sql);
         $conn->close();
         return $result;
+
     }
 
     function retrieve($column, $table, $where){
@@ -27,13 +26,8 @@
     }
 
     // Update function
-    function update($table, $data, $where) {
+    function update($table, $set, $where) {
         $conn = connect();
-        $set = [];
-        foreach ($data as $key => $value) {
-            $set[] = "$key = '$value'";
-        }
-        $set = implode(", ", $set);
         $sql = "UPDATE $table SET $set WHERE $where";
         $result = $conn->query($sql);
         $conn->close();
