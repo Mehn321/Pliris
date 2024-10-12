@@ -17,6 +17,9 @@
         $password="";
         $db_name="mb_reserve";
         $conn = mysqli_connect($server,$username,$password,$db_name);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);   
+        }
         return $conn;
     }
 
@@ -39,7 +42,7 @@
         $name_borrowed=retrieve("name,borrowed","items",$id);
         $name_borrowedrow=$name_borrowed->fetch_assoc();
         $itemname=$name_borrowedrow["name"];
-        $quantity_returned = retrieve("quantity", "returned", "reserve_id = '$reserve_id'");
+        $quantity_returned = retrieve("quantity", "reserved", "reserve_id = '$reserve_id'");
         $quantity_returned_row = $quantity_returned->fetch_assoc();
         $quantity_returned = $quantity_returned_row['quantity'];
         $quantity_borrowed = $row['quantity'];

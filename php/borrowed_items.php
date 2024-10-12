@@ -11,21 +11,8 @@
         exit;
     }
 
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-    }
+    include("../Pliris-admin/php/database.php");
 
-    function retrieve($column, $table, $where){
-        $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $where";
-        $result=$conn->query($sql);
-        return $result;
-    }
     $reserved=retrieve("*","reserved","id_number='$id_number' AND return_stat='borrowing'");
 
     if(isset($_POST["submit"])){
@@ -80,7 +67,6 @@
     <div class="container">
     <table>
             <tr class="row-border">
-                <th>Picture</th>
                 <th>Item Name</th>
                 <th>Quantity</th>
                 <th>Borrowed</th>
@@ -105,7 +91,6 @@
 
                     echo "
                     <tr class='row-border'>
-                        <td><img src='../images/ustplogo.png' alt='item image'></td>
                         <td>$itemname </td>
                         <td>$quantity</td>
                         <td>$borrow_time</td>

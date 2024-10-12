@@ -10,21 +10,8 @@
         header("Location: ../index.php");
         exit;
     }
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-    }
-
-    function retrieve($column, $table, $where){
-        $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $where";
-        $result=$conn->query($sql);
-        return $result;
-    }
+    include("../Pliris-admin/php/database.php");
+    
     $result=retrieve("*","notifications","id_number = '$id_number'");
 ?>
 <!DOCTYPE html>

@@ -10,20 +10,8 @@
         header("Location: ../index.php");
         exit;
     }
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-    }
-    function retrieve($column, $table, $where){
-        $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $where";
-        $result=$conn->query($sql);
-        return $result;
-    }
+    include("../Pliris-admin/php/database.php");
+    
     $all_items=retrieve('name','items', true);
     $quantity_of_allitems=$all_items->num_rows;
     $borrowed=retrieve('reserve_id','reserved',"id_number='$id_number'  AND return_stat='borrowing'");
