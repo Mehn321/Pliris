@@ -82,7 +82,7 @@
             echo "<script>alert('Failed to insert into reserved table.');</script>";
             exit;
         }
-        header("Location:seeAll_items.php");
+        header("Location:reserve_item.php");
     }
 
 ?>
@@ -93,7 +93,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/seeAll_items.css">
+    <link rel="stylesheet" href="../css/reserve_item.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
@@ -134,7 +134,7 @@
                     if(isset($_POST["$id"])){
                         echo "
                         <tr class='row-border'>
-                            <form action='seeAll_items.php' method='post'>
+                            <form action='reserve_item.php' method='post'>
                             <td>$itemname </td>
                             <td>
                                 $quantity <br>
@@ -170,7 +170,7 @@
                         <td>$quantity</td>
                         <td>$borrowed</td>
                         <td>$remaining</td>
-                        <form action='seeAll_items.php' method='post'>
+                        <form action='reserve_item.php' method='post'>
                         <td>
                             
                             <input type='submit' name='$id' value='reserve'>
@@ -213,16 +213,16 @@
         $sql = "SELECT * FROM reserved WHERE id = $id AND ((borrow_time <= '$borrow_time' AND return_time >= '$borrow_time') OR (borrow_time <= '$return_time' AND return_time >= '$return_time'))";
         $result = $conn->query($sql);
 
-        $availableQuantity = 0;
-        while ($row = $result->fetch_assoc()) {
-            $availableQuantity += $row['quantity'];
-        }
+        // $availableQuantity = 0;
+        // while ($row = $result->fetch_assoc()) {
+        //     $availableQuantity += $row['quantity'];
+        // }
 
-        $itemSql = "SELECT quantity, borrowed FROM items WHERE id = $id";
-        $itemResult = $conn->query($itemSql);
-        $itemRow = $itemResult->fetch_assoc();
+        // $itemSql = "SELECT quantity, borrowed FROM items WHERE id = $id";
+        // $itemResult = $conn->query($itemSql);
+        // $itemRow = $itemResult->fetch_assoc();
 
-        $availableAtTime=$availableQuantity-$quantity_toreserve;
+        $availableAtTime= $_POST['availableAtTime'];
         if ($availableAtTime < $quantity_toreserve) {
             echo "<script>alert('Not enough items available at the desired time. Only $availableAtTime items are available. Please choose a different time or reduce the quantity.');</script>";
         }
@@ -237,7 +237,7 @@
             if (!$conn->query($reserve)) {
                 echo "<script>alert('Failed to insert into reserved table.');</script>";
             }
-            header("Location:seeAll_items.php");
+            header("Location:reserve_item.php");
         }
     }
 ?>
@@ -248,7 +248,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/seeAll_items.css">
+    <link rel="stylesheet" href="../css/reserve_item.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
@@ -270,7 +270,7 @@
 
     </header>
     <div class="container">
-        <form action="seeAll_items.php" method="post">
+        <form action="reserve_item.php" method="post">
             <p>Please submit first the date and time you want to borrow and return the item to show the list of items available at that time</p>
             <label>Borrow Time:</label>
             <input type="datetime-local" name="borrow_time" required>
@@ -318,13 +318,15 @@
                         <td>$borrowedAtTime</td>
                         <td>$availableAtTime</td>
                         <td>
-                            <form action='seeAll_items.php' method='post'>
+                            <form action='reserve_item.php' method='post'>
                                 <input type='hidden' name='id' value='$id'>
                                 <input type='hidden' name='borrow_time' value='$borrow_time'>
                                 <input type='hidden' name='return_time' value='$return_time'>
+                                <input type='hidden' name='availableAtTime' value='$availableAtTime'>
                                 <label>Quantity:</label>
                                 <input type='number' name='quantity' required>
                                 <input type='submit' name='reserve' value='Reserve'>
+                                
                             </form>
                         </td>
                     </tr>

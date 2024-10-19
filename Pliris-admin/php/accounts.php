@@ -11,56 +11,66 @@
         exit;
     }
 
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-    }
+    // function connect(){
+    //     $server="localhost";
+    //     $username = "root";
+    //     $password="";
+    //     $db_name="mb_reserve";
+    //     $conn = mysqli_connect($server,$username,$password,$db_name);
+    //     return $conn;
+    // }
 
-    function retrieve($column, $table){
-        $conn=connect();
-        $sql="SELECT $column FROM $table";
-        $result=$conn->query($sql);
-        return $result;
-    }
-    $accounts=retrieve("*","users");
-    
+    // function retrieve($column, $table){
+    //     $conn=connect();
+    //     $sql="SELECT $column FROM $table";
+    //     $result=$conn->query($sql);
+    //     return $result;
+    // }
+    include("database.php");
+    $accounts=retrieve("*","users",true, "last_name");
 
     if(isset($_POST["submit"])){
-        $conn=connect();
-            if (!$conn) {
-                die("Connection failed: " . mysqli_connect_error());
-            }
-            $id_number = $_POST['id_number'];
-        
-            if(!empty($_POST["first_name"])){
-                $first_name=$_POST['first_name'];
-                $sql="UPDATE users SET first_name='$first_name' WHERE id_number='$id_number'";
-                $conn->query($sql);
-            }
-            if(!empty($_POST["last_name"])){
-                $last_name=$_POST['last_name'];
-                $sql="UPDATE users SET last_name='$last_name' WHERE id_number='$id_number'";
-                $conn->query($sql);
-            }
-            if(!empty($_POST["email"])){
-                $email=$_POST['email'];
-                $sql="UPDATE users SET email='$email' WHERE id_number='$id_number'";
-                $conn->query($sql);
-            }
-            if(!empty($_POST["username"])){
-                $username=$_POST['username'];
-                $sql="UPDATE users SET username='$username' WHERE id_number='$id_number'";
-                $conn->query($sql);
-            }
-            if(!empty($_POST["password"])){
-                $password=$_POST['password'];
-                $sql="UPDATE users SET password='$password' WHERE id_number='$id_number'";
-                $conn->query($sql);
-            }
+        $id_number = $_POST['id_number'];
+    
+        if(!empty($_POST["first_name"])){
+            $first_name=$_POST['first_name'];
+            // $sql="UPDATE users SET first_name='$first_name' WHERE id_number='$id_number'";
+            // $conn->query($sql);
+            update("users","first_name='$first_name'","id_number='$id_number'");
+        }
+        if(!empty($_POST["last_name"])){
+            $last_name=$_POST['last_name'];
+            // $sql="UPDATE users SET last_name='$last_name' WHERE id_number='$id_number'";
+            // $conn->query($sql);
+            update("users","last_name='$last_name'","id_number='$id_number'");
+        }
+        if(!empty($_POST["id_num"])){
+            echo"okay";
+            $id_num=$_POST["id_num"];
+            // $sql="UPDATE users SET last_name='$last_name' WHERE id_number='$id_number'";
+            // $conn->query($sql);
+            update("users","id_number='$id_num'","id_number='$id_number'");
+        }
+        if(!empty($_POST["email"])){
+            $email=$_POST['email'];
+            // $sql="UPDATE users SET email='$email' WHERE id_number='$id_number'";
+            // $conn->query($sql);
+            update("users","email='$email'","id_number='$id_number'");
+        }
+        if(!empty($_POST["username"])){
+            $username=$_POST['username'];
+            // $sql="UPDATE users SET username='$username' WHERE id_number='$id_number'";
+            // $conn->query($sql);
+            update("users","username='$username'","id_number='$id_number'");
+
+        }
+        if(!empty($_POST["password"])){
+            $password=$_POST['password'];
+            // $sql="UPDATE users SET password='$password' WHERE id_number='$id_number'";
+            // $conn->query($sql);
+            update("users","password='$password'","id_number='$id_number'");
+
+        }
         header("Location: accounts.php");
         mysqli_close($conn);
     }
@@ -98,8 +108,8 @@
     <div class="container">
     <table>
             <tr class="row-border">
-                <th>First Name</th>
                 <th>Last Name</th>
+                <th>First Name</th>
                 <th>Id Number</th>
                 <th>email</th>
                 <th>Username</th>
@@ -118,16 +128,16 @@
                         <tr class='row-border'>
                         <form action='accounts.php' method='post'>
                         <td>
-                            $first_name
-                            <input type='text' name='first_name'>
-                        </td>
-                        <td>
                             $last_name
                             <input type='text' name='last_name'>
                         </td>
                         <td>
+                            $first_name
+                            <input type='text' name='first_name'>
+                        </td>
+                        <td>
                             $id_number
-                            <input type='number' name='id_number'>
+                            <input type='number' name='id_num'>
                         </td>
                         <td>
                             $email
@@ -150,8 +160,8 @@
                     else{
                         echo "
                         <tr class='row-border'>
-                        <td>$first_name </td>
                         <td>$last_name</td>
+                        <td>$first_name </td>
                         <td>$id_number</td>
                         <td>$email</td>
                         <td>$username</td>

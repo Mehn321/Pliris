@@ -17,9 +17,12 @@
 
     }
 
-    function retrieve($column, $table, $where){
+    function retrieve($column, $table, $where, $order){
         $conn=connect();
         $sql="SELECT $column FROM $table WHERE $where";
+        if(isset($order)){
+            $sql .=" ORDER BY $order";
+        }
         $result=$conn->query($sql);
         $conn->close();
         return $result;

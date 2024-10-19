@@ -49,7 +49,10 @@
         $quantity_to_deduct = min($quantity_returned, $quantity_borrowed);
         $borrowed=$name_borrowedrow["borrowed"]-$quantity_to_deduct;
         $notification_type = "item_returned_approved";
-        $message = "Your returned item $itemname with the quantity of $quantity has been approved.";
+        $quantity=$_POST['quantity'];
+        date_default_timezone_set('Asia/Manila');
+        $currentTime = date('M-d-Y H:i:s');
+        $message = "Your returned item $itemname with the quantity of $quantity has been approved at $currentTime.";
         
         if($result->num_rows > 0) {
             $update_stat = "UPDATE reserved SET return_stat='approved' WHERE reserve_id='$reserve_id'";
@@ -59,7 +62,6 @@
             $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
             mysqli_query($conn, $query);
             header("Location: returned_items.php");
-            exit;
         }
 
 
@@ -73,7 +75,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/seeAll_items.css">
+    <link rel="stylesheet" href="../css/items.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>

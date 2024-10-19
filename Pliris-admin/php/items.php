@@ -33,26 +33,20 @@
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
-        $id_number = $_POST['id'];
-    
-        if(!empty($_POST["image"])){
-            $image=$_POST['image'];
-            $sql="UPDATE users SET image='$image' WHERE id='$id'";
-            $conn->query($sql);
-        }
+        $id = $_POST['id'];
         if(!empty($_POST["itemname"])){
             $itemname=$_POST['itemname'];
-            $sql="UPDATE users SET name='$itemname' WHERE id='$id'";
+            $sql="UPDATE `items` SET name='$itemname' WHERE id='$id'";    
             $conn->query($sql);
         }
         if(!empty($_POST["quantity"])){
             $quantity=$_POST['quantity'];
-            $sql="UPDATE users SET quantity='$quantity' WHERE id='$id'";
+            $sql="UPDATE `items` SET `quantity`='$quantity' WHERE id='$id'";
             $conn->query($sql);
         }
     
         mysqli_close($conn);
-        header("Location:seeAll_items.php");
+        header("Location:items.php");
         }
 
 ?>
@@ -63,7 +57,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/seeAll_items.css">
+    <link rel="stylesheet" href="../css/items.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
@@ -87,7 +81,6 @@
     <div class="container">
     <table>
             <tr class="row-border">
-                <th>Picture</th>
                 <th>Item Name</th>
                 <th>Quantity</th>
                 <th>Borrowed</th>
@@ -104,17 +97,13 @@
                     if(isset($_POST["$id"])){
                         echo "
                         <tr class='row-border'>
-                            
-                            <td>
-                                <img src='../images/ustplogo.png' alt='item image'>
-                                <input type='file' name='image'>
-                            </td>
+                            <form action='items.php' method='post'>
                             <td>$itemname
                             <input type='text' name='itemname'>
                             </td>
                             <td>
                                 $quantity <br>
-                                <input type='number' name='quantity' required>
+                                <input type='number' name='quantity'>
                             </td>
                             <td>
                                 $borrowed
@@ -122,9 +111,8 @@
                             <td>
                                 $remaining
                             </td>
-                            <form action='seeAll_items.php' method='post'>
                             <td>
-                                <input type='submit' name='submit' value='submit' >
+                                <input type='submit' name='submit'>
                             </td>
                                 <input type='hidden' name='id' value='$id'>
                             </form>
@@ -134,12 +122,11 @@
                     elseif(isset($_POST["$id"])==false){
                     echo "
                     <tr class='row-border'>
-                        <td><img src='../images/ustplogo.png' alt='item image'></td>
                         <td>$itemname </td>
                         <td>$quantity</td>
                         <td>$borrowed</td>
                         <td>$remaining</td>
-                        <form action='seeAll_items.php' method='post'>
+                        <form action='items.php' method='post'>
                         <td>
                             <input type='submit' name='$id' value='edit'>
                         </td>

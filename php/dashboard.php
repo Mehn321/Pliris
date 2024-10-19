@@ -60,7 +60,7 @@
             <?php
 
             echo"
-            <a href='seeAll_items.php' class='red'><li><img src='../images/allitems.png' alt=''>All Items: $quantity_of_allitems </li></a>
+            <a href='reserve_item.php' class='red'><li><img src='../images/allitems.png' alt=''>Reserve item</li></a>
             <a href='borrowed_items.php' class='blue'><li><img src='../images/borrow.png' alt=''>Borrowed items: $borrowed_itemsquantity </li></a>
             <a href='notification.php' class='yellow'><li><img src='../images/notification.png' alt=''>Notifications : $notifications_quantity</li></a>
             ";

@@ -81,7 +81,7 @@
                 <img src="../images/menublue.png" alt="menu" height="40px" width="45px">
             </button>
             <a href="dashboard.php"><li>Dashboard</li></a>
-            <a href="seeAll_items.php"><li>See All Items</li></a>
+            <a href="items.php"><li>Items</li></a>
             <a href="borrowed_items.php"><li>Borrowed items</li></a>
             <a href="returned_items.php"><li>Returned items</li></a>
             <a href="add.php"><li>Add Items</li></a>

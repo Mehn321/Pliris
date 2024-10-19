@@ -10,6 +10,22 @@
             header("Location: ../index.php");
             exit;
         }
+
+        if (isset($_POST["add"])) {
+            $item_name = $_POST['item_name'];
+            $quantity = $_POST['quantity'];
+        
+            $conn = mysqli_connect('localhost', 'root', '', 'mb_reserve');
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+        
+            $sql = "INSERT INTO items (name, quantity) VALUES ('$item_name', '$quantity')";
+            mysqli_query($conn, $sql);
+        
+            mysqli_close($conn);
+            header("Location: add.php");
+        }
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,19 +77,5 @@
 </html>
 
 <?php
-if (isset($_POST["add"])) {
-    $item_name = $_POST['item_name'];
-    $quantity = $_POST['quantity'];
 
-    $conn = mysqli_connect('localhost', 'root', '', 'mb_reserve');
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
-    $sql = "INSERT INTO items (name, quantity) VALUES ('$item_name', '$quantity')";
-    mysqli_query($conn, $sql);
-
-    mysqli_close($conn);
-    header("Location: add.php");
-}
 ?>
