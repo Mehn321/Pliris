@@ -1,22 +1,23 @@
 <?php
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = new mysqli($server,$username,$password,$db_name);
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        return $conn;
-    }
+    // function connect(){
+    //     $server="localhost";
+    //     $username = "root";
+    //     $password="";
+    //     $db_name="pliris";
+    //     $conn = new mysqli($server,$username,$password,$db_name);
+    //     if ($conn->connect_error) {
+    //         die("Connection failed: " . $conn->connect_error);
+    //     }
+    //     return $conn;
+    // }
 
-    function retrieve($column, $table, $condition){
-        $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $condition";
-        $result=$conn->query($sql);
-        return $result;
-    }
+    // function retrieve($column, $table, $condition){
+    //     $conn=connect();
+    //     $sql="SELECT $column FROM $table WHERE $condition";
+    //     $result=$conn->query($sql);
+    //     return $result;
+    // }
+    include("Pliris-admin/php/database.php");
 
     if(isset($_POST['login'])){
         $id_number = $_POST['id_number'];
@@ -78,7 +79,7 @@ body{
 }
 
 
- .input-box {
+.input-box {
   position: relative;
   margin: 20px 0;
 }
@@ -93,7 +94,7 @@ body{
   border-bottom: 1px solid #ddd;
   background: transparent;
   outline: none;
-   }
+  }
   
 .input-box input:focus {
   border-bottom: 1px solid #007bff;

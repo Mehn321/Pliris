@@ -3,7 +3,7 @@
         $server="localhost";
         $username = "root";
         $password="";
-        $db_name="mb_reserve";
+        $db_name="pliris";
         $conn = mysqli_connect($server,$username,$password,$db_name);
         return $conn;
     }

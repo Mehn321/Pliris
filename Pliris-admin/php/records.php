@@ -79,9 +79,9 @@
                     $returned_td = new DateTime($row['returned_time']);
                     $returned_time = $returned_td->format('M-d-Y H:i:s');
                     $month = $returned_td->format('F');
-                    $reserved = retrieve("*", "reserved", "reserve_id = '$reserve_id'");
+                    $reserved = retrieve("*", "reserved", "reserve_id = '$reserve_id' AND !($return_stat=='approved')");
                     $row_reserved = $reserved->fetch_assoc();
-                    $return_stat=$row_reserved['return_stat'];
+                    // $return_stat=$row_reserved['return_stat'];
                     $borrowed_time=$row_reserved['borrow_time'];
                     $id_num=$row_reserved['id_number'];
                     $quantity = $row_reserved['quantity'];
@@ -93,9 +93,9 @@
                     $row_items = $items->fetch_assoc();
                     $itemname = $row_items['name'];
                     
-                    if(!($return_stat=='approved')){
-                        continue;
-                    }
+                    // if(!($return_stat=='approved')){
+                    //     continue;
+                    // }
 
                     if (!isset($months[$month])) {
                         $months[$month] = array();

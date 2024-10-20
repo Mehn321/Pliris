@@ -43,14 +43,7 @@
 </html>
 
 <?php
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-        }
+    include("php/database.php");
     if(isset($_POST['submit'])){
         $conn = connect();
         $first_name = $_POST['first_name'];

@@ -13,7 +13,7 @@
 
     include("../Pliris-admin/php/database.php");
 
-    $reserved=retrieve("*","reserved","id_number='$id_number' AND return_stat='borrowing'");
+    
 
     if(isset($_POST["submit"])){
         $reserve_id = $_POST["reserve_id"];
@@ -28,11 +28,19 @@
             // $insert_query = "INSERT INTO returned(`reserve_id`) values('$reserve_id')";
             // $conn->query($update_query);
             // $conn->query($insert_query);
-            
-            update('reserved',"return_stat='pending_return'","reserve_id='$reserve_id'");
-            insert("returned","`reserve_id`","'$reserve_id'");
-            
-            header("Location:reserved_items.php");
+            $return_stat=$_POST["return_stat"];
+            if($return_stat=="disaproved"){
+                update('reserved',"return_stat='pending_return'","reserve_id='$reserve_id'");
+                // update("reserved","return_stat='pending_return","'$reserve_id'");
+                
+                header("Location:reserved_items.php");
+            }
+            else{
+                update('reserved',"return_stat='pending_return'","reserve_id='$reserve_id'");
+                insert("returned","`reserve_id`","'$reserve_id'");
+                
+                header("Location:reserved_items.php");
+            }
             
         }
     }
@@ -78,6 +86,7 @@
                 <th>Action</th>
             </tr>
             <?php
+                $reserved=retrieve("*","reserved","id_number='$id_number' AND (return_stat='borrowing' OR return_stat='disaproved')");
                 while($row=$reserved->fetch_assoc()){
                     $reserve_id=$row['reserve_id'];
                     $quantity = $row['quantity'];
@@ -102,6 +111,7 @@
                         <form action='reserved_items.php' method='post'>
                         <td>
                             <input type='hidden' name='reserve_id' value=$reserve_id>
+                            <input type='hidden' name='return_stat' value=$return_stat>
                             <input type='submit' name='submit' value='return'>
                         </td>
                         </form>

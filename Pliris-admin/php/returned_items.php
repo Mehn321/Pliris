@@ -13,7 +13,7 @@
 
     include("database.php");
     
-    if(isset($_POST["submit"])){
+    if(isset($_POST["approve"])){
         $reserve_id = $_POST["reserve_id"];
 
         // $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
@@ -52,7 +52,32 @@
             header("Location: returned_items.php");
         }
 
+    }
+    if(isset($_POST["disaprove"])){
+        $reserve_id = $_POST["reserve_id"];
 
+        // $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
+        // $result = $conn->query($sql);
+        $result=retrieve("*","reserved","reserve_id='$reserve_id'");
+        
+        $row=$result->fetch_assoc();
+        $id=$row['id'];
+        $id_number = $row['id_number'];
+        $name_borrowed=retrieve("name,borrowed","items",$id);
+        $name_borrowedrow=$name_borrowed->fetch_assoc();
+        $itemname=$name_borrowedrow["name"];
+        $notification_type = "item_returned_approved";
+        $quantity=$_POST['quantity'];
+        date_default_timezone_set('Asia/Manila');
+        $currentTime = date('M-d-Y H:i:s');
+        $users=retrieve('first_name, last_name', 'users',"username='admin'");
+        $fullname_row=$users->fetch_assoc();
+        $first_name=$fullname_row["first_name"];
+        $last_name=$fullname_row["last_name"];
+        $message = "Your returned item $itemname with the quantity of $quantity is disaproved at $currentTime. Please return the item/items or you can aproach the moderator Mr/Maam: $first_name $last_name.";
+        update("reserved", "return_stat='disaproved'","reserve_id='$reserve_id'");
+        insert("notifications", "id_number, notification_type, message","'$id_number', '$notification_type', '$message'");
+        header("Location: returned_items.php");
     }
 
 ?>
@@ -113,9 +138,11 @@
                     $row_items = $items->fetch_assoc();
                     $itemname = $row_items['name'];
                     
-                    if($return_stat=='approved'){
+                    if($return_stat=='approved'||$return_stat=='disaproved'){
                         continue;
                     }
+                    
+                    
                     
                     echo "
                     <tr class='row-border'>
@@ -128,7 +155,8 @@
                         <td>
                             <input type='hidden' name='quantity' value=$quantity>
                             <input type='hidden' name='reserve_id' value=$reserve_id>
-                            <input type='submit' name='submit' value='approve'>
+                            <input type='submit' name='approve' value='approve'>
+                            <input type='submit' name='disaprove' value='disaprove'>
                         </td>
                         </form>
                     </tr>

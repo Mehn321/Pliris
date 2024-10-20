@@ -16,10 +16,10 @@
             $item_name = $_POST['item_name'];
             $quantity = $_POST['quantity'];
         
-            $conn = mysqli_connect('localhost', 'root', '', 'mb_reserve');
-            if (!$conn) {
-                die("Connection failed: " . mysqli_connect_error());
-            }
+            // $conn = mysqli_connect('localhost', 'root', '', 'pliris');
+            // if (!$conn) {
+            //     die("Connection failed: " . mysqli_connect_error());
+            // }
         
             // $sql = "INSERT INTO items (name, quantity) VALUES ('$item_name', '$quantity')";
             // mysqli_query($conn, $sql);

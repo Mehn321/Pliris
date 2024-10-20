@@ -131,28 +131,32 @@
 </html>
 
 <?php
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-        }
+    // function connect(){
+    //     $server="localhost";
+    //     $username = "root";
+    //     $password="";
+    //     $db_name="pliris";
+    //     $conn = mysqli_connect($server,$username,$password,$db_name);
+    //     return $conn;
+    //     }
+    
     if(isset($_POST['submit'])){
-        $conn = connect();
+        
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
         $id_number = $_POST['id_number'];
         $email = $_POST['email'];
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $insert="INSERT INTO `users`(`first_name`, `last_name`, `id_number`, `email`, `username`, `password`) VALUES ('$first_name','$last_name','$id_number','$email','$username','$password')";
-        if ($conn->query($insert) === TRUE) {
-            header("Location: index.php");
-        } else {
-            echo "Error: " . $insert . "<br>" . $conn->error;
-        }
-        $conn->close();          
+        // $insert="INSERT INTO `users`(`first_name`, `last_name`, `id_number`, `email`, `username`, `password`) VALUES ('$first_name','$last_name','$id_number','$email','$username','$password')";
+        // if ($conn->query($insert) === TRUE) {
+        //     header("Location: index.php");
+        // } else {
+        //     echo "Error: " . $insert . "<br>" . $conn->error;
+        // }
+        // $conn->close(); 
+        include("Pliris-admin/php/database.php");
+        insert("users","first_name, last_name, id_number, email, username, password","'$first_name','$last_name','$id_number','$email','$username','$password'");
+        header("Location: index.php");
     }
 ?>

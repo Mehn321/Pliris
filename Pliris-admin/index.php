@@ -1,27 +1,8 @@
 <?php
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = new mysqli($server,$username,$password,$db_name);
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        return $conn;
-    }
-
-    function retrieve($column, $table, $where){
-        $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $where";
-        $result=$conn->query($sql);
-        return $result;
-    }
-
+    include("php/database.php");
     if(isset($_POST['login'])){
         $id_number = $_POST['id_number'];
         $password = $_POST['password'];
-
         $result = retrieve("*", "users", "id_number='999999999'");
 
         if($result->num_rows > 0){
