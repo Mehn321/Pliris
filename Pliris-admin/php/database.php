@@ -8,16 +8,17 @@
         return $conn;
     }
 
+    $conn=connect();
+    
     function insert($table, $columns, $data) {
         $conn = connect();
         $sql = "INSERT INTO $table ($columns) VALUES ($data)";
         $result = $conn->query($sql);
         $conn->close();
         return $result;
-
     }
 
-    function retrieve($column, $table, $where, $order){
+    function retrieve($column, $table, $where=true, $order=null){
         $conn=connect();
         $sql="SELECT $column FROM $table WHERE $where";
         if(isset($order)){

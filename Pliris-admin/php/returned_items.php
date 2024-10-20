@@ -11,31 +11,15 @@
         exit;
     }
 
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);   
-        }
-        return $conn;
-    }
-
-    function retrieve($column, $table, $where){
-        $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $where";
-        $result=$conn->query($sql);
-        return $result;
-    }
-    $returned=retrieve("*","returned", true);
+    include("database.php");
+    
     if(isset($_POST["submit"])){
         $reserve_id = $_POST["reserve_id"];
-        $conn=connect();
+
+        // $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
+        // $result = $conn->query($sql);
+        $result=retrieve("*","reserved","reserve_id='$reserve_id'");
         
-        $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
-        $result = $conn->query($sql);
         $row=$result->fetch_assoc();
         $id=$row['id'];
         $id_number = $row['id_number'];
@@ -55,12 +39,16 @@
         $message = "Your returned item $itemname with the quantity of $quantity has been approved at $currentTime.";
         
         if($result->num_rows > 0) {
-            $update_stat = "UPDATE reserved SET return_stat='approved' WHERE reserve_id='$reserve_id'";
-            $conn->query($update_stat);
-            $update_borrowed = "UPDATE items SET borrowed='$borrowed' WHERE id='$id'";
-            $conn->query($update_borrowed);
-            $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
-            mysqli_query($conn, $query);
+            // $update_stat = "UPDATE reserved SET return_stat='approved' WHERE reserve_id='$reserve_id'";
+            // $conn->query($update_stat);
+            // $update_borrowed = "UPDATE items SET borrowed='$borrowed' WHERE id='$id'";
+            // $conn->query($update_borrowed);
+            // $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
+            // mysqli_query($conn, $query);
+
+            update("reserved", "return_stat='approved'","reserve_id='$reserve_id'");
+            update("items", "borrowed='$borrowed'","id='$id'");
+            insert("notifications", "id_number, notification_type, message","'$id_number', '$notification_type', '$message'");
             header("Location: returned_items.php");
         }
 
@@ -107,6 +95,7 @@
                 <th>Action</th>
             </tr>
             <?php
+                $returned=retrieve("*","returned", true);
                 while ($row = $returned->fetch_assoc()) {
                     $reserve_id = $row['reserve_id'];
                     $returned_time = new DateTime($row['returned_time']);

@@ -10,6 +10,7 @@
             header("Location: ../index.php");
             exit;
         }
+        include("database.php");
 
         if (isset($_POST["add"])) {
             $item_name = $_POST['item_name'];
@@ -20,10 +21,11 @@
                 die("Connection failed: " . mysqli_connect_error());
             }
         
-            $sql = "INSERT INTO items (name, quantity) VALUES ('$item_name', '$quantity')";
-            mysqli_query($conn, $sql);
-        
-            mysqli_close($conn);
+            // $sql = "INSERT INTO items (name, quantity) VALUES ('$item_name', '$quantity')";
+            // mysqli_query($conn, $sql);
+            // mysqli_close($conn);
+
+            insert("items","name, quantity","'$item_name', '$quantity'");
             header("Location: add.php");
         }
     ?>

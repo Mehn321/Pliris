@@ -11,22 +11,23 @@
         exit;
     }
 
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-    }
+    // function connect(){
+    //     $server="localhost";
+    //     $username = "root";
+    //     $password="";
+    //     $db_name="mb_reserve";
+    //     $conn = mysqli_connect($server,$username,$password,$db_name);
+    //     return $conn;
+    // }
+    // function retrieve($column, $table){
+    //     $conn=connect();
+    //     $sql="SELECT $column FROM $table";
+    //     $result=$conn->query($sql);
+    //     return $result;
+    // }
 
-    function retrieve($column, $table){
-        $conn=connect();
-        $sql="SELECT $column FROM $table";
-        $result=$conn->query($sql);
-        return $result;
-    }
-    $items=retrieve("*","items");
+    include("database.php");
+    $items=retrieve("*","items",true);
     
     if(isset($_POST["submit"])){
         $conn=connect();
@@ -36,13 +37,15 @@
         $id = $_POST['id'];
         if(!empty($_POST["itemname"])){
             $itemname=$_POST['itemname'];
-            $sql="UPDATE `items` SET name='$itemname' WHERE id='$id'";    
-            $conn->query($sql);
+            // $sql="UPDATE `items` SET name='$itemname' WHERE id='$id'";    
+            // $conn->query($sql);
+            update("`items`","name='$itemname'","id='$id'");
         }
         if(!empty($_POST["quantity"])){
             $quantity=$_POST['quantity'];
-            $sql="UPDATE `items` SET `quantity`='$quantity' WHERE id='$id'";
-            $conn->query($sql);
+            // $sql="UPDATE `items` SET `quantity`='$quantity' WHERE id='$id'";
+            // $conn->query($sql);
+            update("`items`","quantity='$quantity'","id='$id'");
         }
     
         mysqli_close($conn);
@@ -83,7 +86,7 @@
             <tr class="row-border">
                 <th>Item Name</th>
                 <th>Quantity</th>
-                <th>Borrowed</th>
+                <th>Reserved</th>
                 <th>Remaining</th>
                 <th>Action</th>
             </tr>

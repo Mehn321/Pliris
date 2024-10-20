@@ -120,7 +120,7 @@
             <tr class="row-border">
                 <th>Item Name</th>
                 <th>Quantity</th>
-                <th>Borrowed</th>
+                <th>Reserved</th>
                 <th>Remaining</th>
                 <th>Action</th>
             </tr>
@@ -210,17 +210,10 @@
         $quantity_toreserve = $_POST["quantity"];
 
         $conn=connect();
-        $sql = "SELECT * FROM reserved WHERE id = $id AND ((borrow_time <= '$borrow_time' AND return_time >= '$borrow_time') OR (borrow_time <= '$return_time' AND return_time >= '$return_time'))";
-        $result = $conn->query($sql);
+        // $sql = "SELECT * FROM reserved WHERE id = $id AND ((borrow_time <= '$borrow_time' AND return_time >= '$borrow_time') OR (borrow_time <= '$return_time' AND return_time >= '$return_time'))";
+        // $result = $conn->query($sql);
+        $result=retrieve("*","reserved","id = $id AND ((borrow_time <= '$borrow_time' AND return_time >= '$borrow_time') OR (borrow_time <= '$return_time' AND return_time >= '$return_time'))");
 
-        // $availableQuantity = 0;
-        // while ($row = $result->fetch_assoc()) {
-        //     $availableQuantity += $row['quantity'];
-        // }
-
-        // $itemSql = "SELECT quantity, borrowed FROM items WHERE id = $id";
-        // $itemResult = $conn->query($itemSql);
-        // $itemRow = $itemResult->fetch_assoc();
 
         $availableAtTime= $_POST['availableAtTime'];
         if ($availableAtTime < $quantity_toreserve) {
@@ -228,15 +221,17 @@
         }
         else{
             $borrowed += $quantity_toreserve;
-            $sql="UPDATE items SET borrowed=$borrowed WHERE id=$id";
-            if (!$conn->query($sql)) {
-                echo "<script>alert('Failed to update items table.');</script>";
-            }
+            // $sql="UPDATE items SET borrowed=$borrowed WHERE id=$id";
+            // if (!$conn->query($sql)) {
+            //     echo "<script>alert('Failed to update items table.');</script>";
+            // }
+            update("items","borrowed=$borrowed","id=$id");
 
-            $reserve ="INSERT INTO reserved(`id_number`,`id`,`quantity`,`borrow_time`,`return_time`,`return_stat`) values('$id_number','$id','$quantity_toreserve','$borrow_time','$return_time','borrowing' )";
-            if (!$conn->query($reserve)) {
-                echo "<script>alert('Failed to insert into reserved table.');</script>";
-            }
+            // $reserve ="INSERT INTO reserved(`id_number`,`id`,`quantity`,`borrow_time`,`return_time`,`return_stat`) values('$id_number','$id','$quantity_toreserve','$borrow_time','$return_time','borrowing' )";
+            // if (!$conn->query($reserve)) {
+            //     echo "<script>alert('Failed to insert into reserved table.');</script>";
+            // }
+            insert("reserved","`id_number`,`id`,`quantity`,`borrow_time`,`return_time`,`return_stat`","'$id_number','$id','$quantity_toreserve','$borrow_time','$return_time','borrowing'");
             header("Location:reserve_item.php");
         }
     }
@@ -282,7 +277,7 @@
                 <tr class="row-border">
                     <th>Item Name</th>
                     <th>Quantity</th>
-                    <th>Borrowed</th>
+                    <th>Reserved</th>
                     <th>Remaining</th>
                     <th>Action</th>
                 </tr>

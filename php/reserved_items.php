@@ -19,9 +19,10 @@
         $reserve_id = $_POST["reserve_id"];
         $conn=connect();
         
-        $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
-        $result = $conn->query($sql);
-        
+        // $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
+        // $result = $conn->query($sql);
+        $result=retrieve("*","reserved","reserve_id='$reserve_id'");
+
         if($result->num_rows > 0) {
             // $update_query = "UPDATE reserved SET return_stat='pending_return' WHERE reserve_id='$reserve_id'";
             // $insert_query = "INSERT INTO returned(`reserve_id`) values('$reserve_id')";
@@ -31,7 +32,7 @@
             update('reserved',"return_stat='pending_return'","reserve_id='$reserve_id'");
             insert("returned","`reserve_id`","'$reserve_id'");
             
-            header("Location:borrowed_items.php");
+            header("Location:reserved_items.php");
             
         }
     }
@@ -57,7 +58,7 @@
                 <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
             </button>
 
-            <h2>Borrowed Items</h2>
+            <h2>Reserved Items</h2>
 
         <div class="logout-container">
             <form action="" method="post">
@@ -72,7 +73,7 @@
             <tr class="row-border">
                 <th>Item Name</th>
                 <th>Quantity</th>
-                <th>Borrowed</th>
+                <th>Reserved</th>
                 <th>Remaining</th>
                 <th>Action</th>
             </tr>
@@ -98,7 +99,7 @@
                         <td>$quantity</td>
                         <td>$borrow_time</td>
                         <td>$return_time</td>
-                        <form action='borrowed_items.php' method='post'>
+                        <form action='reserved_items.php' method='post'>
                         <td>
                             <input type='hidden' name='reserve_id' value=$reserve_id>
                             <input type='submit' name='submit' value='return'>
@@ -113,7 +114,3 @@
 
 </body>
 </html>
-
-<?php
-
-?>

@@ -10,22 +10,8 @@
         header("Location: ../index.php");
         exit;
     }
+    include("database.php");
 
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-    }
-
-    function retrieve($column, $table, $where){
-        $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $where";
-        $result=$conn->query($sql);
-        return $result;
-    }
     $returned=retrieve("*","returned", true);
     if(isset($_POST["submit"])){
         $reserve_id = $_POST["reserve_id"];
@@ -131,7 +117,7 @@
                             <th>Borrower</th>
                             <th>Item Name</th>
                             <th>Quantity</th>
-                            <th>Borrowed Time</th>
+                            <th>Reserved Time</th>
                             <th>Returned Date</th>
                         </tr>";
                         

@@ -11,22 +11,23 @@
         exit;
     }
 
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-    }
+    // function connect(){
+    //     $server="localhost";
+    //     $username = "root";
+    //     $password="";
+    //     $db_name="mb_reserve";
+    //     $conn = mysqli_connect($server,$username,$password,$db_name);
+    //     return $conn;
+    // }
 
-    function retrieve($column, $table){
-        $conn=connect();
-        $sql="SELECT $column FROM $table";
-        $result=$conn->query($sql);
-        return $result;
-    }
-    $result=retrieve("*","items");
+    // function retrieve($column, $table){
+    //     $conn=connect();
+    //     $sql="SELECT $column FROM $table";
+    //     $result=$conn->query($sql);
+    //     return $result;
+    // }
+    include("database.php");
+    $result=retrieve("*","items",true);
 
 ?>
 <!DOCTYPE html>
@@ -66,7 +67,7 @@
                 $name=$row['name'];
                 $quantity=$row['quantity'];
                 if($quantity<=10){
-                    echo "<li> $name only has $quantity left. Please add more items. </li>";
+                    echo "<li> $name only has $quantity left. Please add more of this items. </li>";
                 }
                 
             }

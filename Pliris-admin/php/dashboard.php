@@ -11,21 +11,23 @@
         exit;
     }
 
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-    }
-    function retrieve($column, $table, $where){
-        $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $where";
-        $result=$conn->query($sql);
-        return $result;
-    }
-    $all_items=retrieve('name','items', true);
+    // function connect(){
+    //     $server="localhost";
+    //     $username = "root";
+    //     $password="";
+    //     $db_name="mb_reserve";
+    //     $conn = mysqli_connect($server,$username,$password,$db_name);
+    //     return $conn;
+    // }
+    // function retrieve($column, $table, $where){
+    //     $conn=connect();
+    //     $sql="SELECT $column FROM $table WHERE $where";
+    //     $result=$conn->query($sql);
+    //     return $result;
+    // }
+
+    include("database.php");
+    $all_items=retrieve('name','items',true);
     $quantity_of_allitems=$all_items->num_rows;
     $borrowed=retrieve('reserve_id','reserved',"return_stat='borrowing'");
     $borrowed_itemsquantity=$borrowed->num_rows;
@@ -83,7 +85,7 @@
 
             echo"
             <a href='items.php' class='red'><li><img src='../images/allitems.png' alt=''>All Items: $quantity_of_allitems </li></a>
-            <a href='borrowed_items.php' class='blue'><li><img src='../images/borrow.png' alt=''>Borrowed items: $borrowed_itemsquantity </li></a>
+            <a href='reserved_items.php' class='blue'><li><img src='../images/borrow.png' alt=''>Reserved items: $borrowed_itemsquantity </li></a>
             <a href='returned_items.php' class='green'><li><img src='../images/return.png' alt=''>Returned Items:$returned_items_quantity </li></a>
             <a href='add.php' class='purple'><li><img src='../images/add.png' alt=''>Add Items </li></a>
             <a href='accounts.php' class='pink'><li><img src='../images/accounts.png' alt=''>Accounts : $accounts_quantity</li></a>

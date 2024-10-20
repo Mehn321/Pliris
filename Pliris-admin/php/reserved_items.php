@@ -11,21 +11,22 @@
         exit;
     }
 
-    function connect(){
-        $server="localhost";
-        $username = "root";
-        $password="";
-        $db_name="mb_reserve";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
-        return $conn;
-    }
+    // function connect(){
+    //     $server="localhost";
+    //     $username = "root";
+    //     $password="";
+    //     $db_name="mb_reserve";
+    //     $conn = mysqli_connect($server,$username,$password,$db_name);
+    //     return $conn;
+    // }
 
-    function retrieve($column, $table, $where){
-        $conn=connect();
-        $sql="SELECT $column FROM $table WHERE $where";
-        $result=$conn->query($sql);
-        return $result;
-    }
+    // function retrieve($column, $table, $where){
+    //     $conn=connect();
+    //     $sql="SELECT $column FROM $table WHERE $where";
+    //     $result=$conn->query($sql);
+    //     return $result;
+    // }
+    include("database.php");
     $reserved=retrieve("*","reserved"," return_stat='borrowing'");
 
     if(isset($_POST["submit"])){
@@ -36,13 +37,15 @@
         $result = $conn->query($sql);
         
         if($result->num_rows > 0) {
-            $update_query = "UPDATE reserved SET return_stat='pending_return' WHERE reserve_id='$reserve_id'";
-            $insert_query = "INSERT INTO returned(`reserve_id`,`returned_time`) values('$reserve_id',NOW() )";
-            $conn->query($update_query);
-            $conn->query($insert_query);
-            
-        header("Location:borrowed_items.php");
-        mysqli_close($conn);
+            // $update_query = "UPDATE reserved SET return_stat='pending_return' WHERE reserve_id='$reserve_id'";
+            // $insert_query = "INSERT INTO returned(`reserve_id`,`returned_time`) values('$reserve_id',NOW() )";
+            // $conn->query($update_query);
+            // $conn->query($insert_query);
+            date_default_timezone_set('Asia/Manila');
+            update("reserved","return_stat='pending_return'","reserve_id='$reserve_id'");
+            insert("returned","`reserve_id`,`returned_time`","'$reserve_id', NOW()");
+            header("Location:reserved_items.php");
+            mysqli_close($conn);
         }
     }
 
@@ -67,7 +70,7 @@
                 <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
             </button>
 
-            <h2>All Items Borrowed</h2>
+            <h2>All Items Reserved</h2>
 
         <div class="logout-container">
             <form action="" method="post">
@@ -83,7 +86,7 @@
                 <th>Borrower</th>
                 <th>Item Name</th>
                 <th>Quantity</th>
-                <th>Borrowed</th>
+                <th>Reserved</th>
                 <th>Remaining</th>
                 <th>Action</th>
             </tr>
@@ -102,10 +105,6 @@
                     $users=retrieve('first_name', 'users',"id_number='$id_num'");
                     $row_users=$users->fetch_assoc();
                     $first_name=$row_users['first_name'];
-                    if($return_stat=='approved'){
-                        continue;
-                        // header("Refresh:0");
-                    }
 
                     echo "
                     <tr class='row-border'>
@@ -114,7 +113,7 @@
                         <td>$quantity</td>
                         <td>$borrow_time</td>
                         <td>$return_time</td>
-                        <form action='borrowed_items.php' method='post'>
+                        <form action='reserved_items.php' method='post'>
                         <td>
                             <input type='hidden' name='reserve_id' value=$reserve_id>
                             <input type='submit' name='submit' value='return'>

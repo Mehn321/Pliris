@@ -82,7 +82,7 @@
             </button>
             <a href="dashboard.php"><li>Dashboard</li></a>
             <a href="reserve_item.php"><li>Reserve Item</li></a>
-            <a href="borrowed_items.php"><li>Reserved Items</li></a>
+            <a href="reserved_items.php"><li>Reserved Items</li></a>
             <a href="notification.php"><li>Notifications</li></a>
             
         </ul>
