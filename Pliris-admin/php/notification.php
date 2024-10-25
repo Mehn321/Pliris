@@ -64,10 +64,10 @@
         <ul>
         <?php
             while ($row = mysqli_fetch_assoc($result)) {
-                $name=$row['name'];
+                $item_name=$row['item_name'];
                 $quantity=$row['quantity'];
                 if($quantity<=10){
-                    echo "<li> $name only has $quantity left. Please add more of this items. </li>";
+                    echo "<li> $item_name only has $quantity left. Please add more of this items. </li>";
                 }
                 
             }

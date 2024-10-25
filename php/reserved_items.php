@@ -93,10 +93,10 @@
                     $borrow_time = $row['borrow_time'];
                     $return_time = $row['return_time'];
                     $id = $row['id'];
-                    $items = retrieve("name","items","id=$id");
+                    $items = retrieve("item_name","items","id=$id");
                     $return_stat=$row['return_stat'];
                     $item_row = $items->fetch_assoc();
-                    $itemname = $item_row['name'];
+                    $itemname = $item_row['item_name'];
                     if($return_stat=='pending_return'){
                         continue;
                         // header("Refresh:0");

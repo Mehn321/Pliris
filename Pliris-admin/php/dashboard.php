@@ -27,7 +27,7 @@
     // }
 
     include("database.php");
-    $all_items=retrieve('name','items',true);
+    $all_items=retrieve('item_name','items',true);
     $quantity_of_allitems=$all_items->num_rows;
     $borrowed=retrieve('reserve_id','reserved',"return_stat='borrowing'");
     $borrowed_itemsquantity=$borrowed->num_rows;
@@ -40,7 +40,7 @@
 
     $result=retrieve("*","items",true);
     while ($row = mysqli_fetch_assoc($result)){
-        $name=$row['name'];
+        $item_name=$row['item_name'];
         $quantity=$row['quantity'];
         $notifications_quantity=0;
         if($quantity<=10){

@@ -126,7 +126,7 @@
             </tr>
             <?php
                 while($row=$items->fetch_assoc()){
-                    $itemname = $row['name'];
+                    $itemname = $row['item_name'];
                     $quantity = $row['quantity'];
                     $borrowed = $row['borrowed'];
                     $remaining = $quantity - $borrowed;
@@ -289,7 +289,7 @@
                 $items=retrieve("*","items",true);
                 // $reserved=retrieve("quantity,id","reserved","return_stat='borrowing'");
                 while($row=$items->fetch_assoc()){
-                    $itemname = $row['name'];
+                    $itemname = $row['item_name'];
                     $quantity = $row['quantity'];
                     // $borrowed = $row['borrowed'];
                     $id = $row['id'];

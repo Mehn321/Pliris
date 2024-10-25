@@ -8,123 +8,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>signup</title>
-    <style>
-    .wrapper {
-        width: 380px;
-        background: #fff;
-        border-radius: 15px;
-        box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.15);
-        padding: 30px;
-        margin: auto;
-    }
-
-    h2 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #000;
-    }
-
-    .input-box {
-        position: relative;
-        margin-bottom: 15px;
-    }
-
-    input {
-        width: 100%;
-        padding: 15px 0;
-        border: 1px solid #000;
-        outline: none;
-        background: none;
-        color: #000;
-        font-size: 16px;
-        letter-spacing: 1px;
-        transition: 0.5s;
-        border-radius: 5px;
-    }
-
-    label {
-        position: absolute;
-        top: 10px;
-        left: 0;
-        color: #000;
-        pointer-events: none;
-        transition: 0.5s;
-        margin-left: 5px;
-        margin-top: 5px;
-    }
-
-    input:focus ~ label,
-    input:valid ~ label {
-        top: -15px;
-        font-size: 12px;
-        color: #28a745;
-    }
-
-    input:focus {
-        border-color: #28a745; 
-    }
-
-    .btn {
-        width: 100%;
-        padding: 15px 0;
-        background: #28a745;
-        color: #fff;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        font-size: 16px;
-        letter-spacing: 1px;
-        border-radius: 5px;
-    }
-
-    .btn:hover {
-        background: #218838;
-    }
-
-    p {
-        text-align: center;
-        margin-top: 20px;
-        color: #000;
-    }
-
-    a {
-        color: #28a745;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-    </style>
+    <link rel="stylesheet" href="css/signup-in.css">
 </head>
 
 <body>
-    <h2>SIGN UP</h2>
-    <form action="signup.php" method="post">
+    <div class="wrapper">
+    <h1>SIGN UP</h1>
+        <form action="signup.php" method="post">
         <div class="input-box">
-        <input type="text" name="first_name" placeholder="first name" required>
+        <input type="text" required>
+        <label for="">First Name</label>
         </div>
         <div class="input-box">
-            <input type="text" name="last_name" placeholder="last name " required>
+            <input type="text" required>
+            <label for="">Last Name</label>
         </div>
         <div class="input-box">
-            <input type="text" name="id_number" placeholder="id number" required>
+            <input type="text" required>
+            <label for="">ID Number</label>
         </div>
         <div class="input-box">
-            <input type="email" name="email" placeholder="email" required>
+            <input type="text" required >
+            <label for="">Email</label>
         </div>
         <div class="input-box">
-            <input type="text" name="username" placeholder="username" required>
+            <input type="text" required>
+            <label for="">Username</label>
         </div>
         <div class="input-box">
-            <input type="password" name="password" placeholder="create password" required>
+            <input type="text" required >
+            <label for="">Create Password</label>
         </div>
         <br>  
         <button type="submit" name="submit"
         class="btn">Submit</button>
 
-    </form>
-    <p>Already have an account? <a href="index.php">Login</a></p>
+        </form>
+        <p>Already have an account? <a href="index.php">Login</a></p>
+    </div>
 
 </body>
 

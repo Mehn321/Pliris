@@ -91,10 +91,6 @@ table{
     border-collapse: collapse;
 
 }
-table td img{
-    width: 40px; 
-    padding-bottom: 0px;
-}
 
 table tr th, table tr td{
     font-size: 1.7vw;

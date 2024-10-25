@@ -98,10 +98,10 @@
                     $return_time = $row['return_time'];
                     $id = $row['id'];
                     $id_num = $row['id_number'];
-                    $items = retrieve("name","items","id=$id");
+                    $items = retrieve("item_name","items","id=$id");
                     $return_stat=$row['return_stat'];
                     $row = $items->fetch_assoc();
-                    $itemname = $row['name'];
+                    $itemname = $row['item_name'];
                     $users=retrieve('first_name', 'users',"id_number='$id_num'");
                     $row_users=$users->fetch_assoc();
                     $first_name=$row_users['first_name'];

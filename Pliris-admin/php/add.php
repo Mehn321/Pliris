@@ -21,11 +21,11 @@
             //     die("Connection failed: " . mysqli_connect_error());
             // }
         
-            // $sql = "INSERT INTO items (name, quantity) VALUES ('$item_name', '$quantity')";
+            // $sql = "INSERT INTO items (item_name, quantity) VALUES ('$item_name', '$quantity')";
             // mysqli_query($conn, $sql);
             // mysqli_close($conn);
 
-            insert("items","name, quantity","'$item_name', '$quantity'");
+            insert("items","item_name, quantity","'$item_name', '$quantity'");
             header("Location: add.php");
         }
     ?>

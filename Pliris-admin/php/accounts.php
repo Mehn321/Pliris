@@ -75,6 +75,26 @@
         mysqli_close($conn);
     }
 
+    if(isset($_POST["delete"])){
+        $id_number = $_POST['id_number'];
+        $item=retrieve("quantity","reserved","id_number='$id_number'");
+        $reserved=0;
+        while($item_row=$item->fetch_assoc()){
+            $reserved= $reserved+$item_row["quantity"];
+        }
+        
+        if($reserved<=0){
+            delete("users","id_number='$id_number'");
+            header("Location:items.php");
+        }else{
+            echo"
+            <script>
+                alert('This user is still reserving an item please wait for the user to return the item or you can force the return of the item in the system using the reserved items in the menu');
+            </script>";
+            header("Loaction: items.php");
+        }
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -169,6 +189,8 @@
                         <form action='accounts.php' method='post'>
                         <td>
                             <input type='submit' name='$id_number' value='edit'>
+                            <input type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete this account?');\">
+                            <input type='hidden' name='id_number' value=$id_number>
                         </td>
                         </form>
                     </tr>

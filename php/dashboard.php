@@ -12,7 +12,7 @@
     }
     include("../Pliris-admin/php/database.php");
     
-    $all_items=retrieve('name','items', true);
+    $all_items=retrieve('item_name','items', true);
     $quantity_of_allitems=$all_items->num_rows;
     $borrowed=retrieve('reserve_id','reserved',"id_number='$id_number'  AND return_stat='borrowing'");
     $borrowed_itemsquantity=$borrowed->num_rows;

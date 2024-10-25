@@ -27,7 +27,6 @@
     // }
 
     include("database.php");
-    $items=retrieve("*","items",true);
     
     if(isset($_POST["submit"])){
         $conn=connect();
@@ -37,9 +36,9 @@
         $id = $_POST['id'];
         if(!empty($_POST["itemname"])){
             $itemname=$_POST['itemname'];
-            // $sql="UPDATE `items` SET name='$itemname' WHERE id='$id'";    
+            // $sql="UPDATE `items` SET item_name='$itemname' WHERE id='$id'";    
             // $conn->query($sql);
-            update("`items`","name='$itemname'","id='$id'");
+            update("`items`","item_name='$itemname'","id='$id'");
         }
         if(!empty($_POST["quantity"])){
             $quantity=$_POST['quantity'];
@@ -50,7 +49,26 @@
     
         mysqli_close($conn);
         header("Location:items.php");
+    }
+    
+    if(isset($_POST["delete"])){
+        $id = $_POST['id'];
+        $item=retrieve("*","items","id='$id'");
+        $item_row=$item->fetch_assoc();
+        $borrowed=$item_row["borrowed"];
+        if($borrowed<=0){
+            delete("items","id='$id'");
+            header("Location:items.php");
+        }else{
+            echo"
+            <script>
+                alert('A user is still reserving the item please for the user to return the item or you can force the return of the item in the system using the reserved in the menu');
+            </script>";
+            header("Loaction: items.php");
         }
+        
+        
+    }
 
 ?>
 
@@ -91,8 +109,9 @@
                 <th>Action</th>
             </tr>
             <?php
+                $items=retrieve("*","items",true);
                 while($row=$items->fetch_assoc()){
-                    $itemname = $row['name'];
+                    $itemname = $row['item_name'];
                     $quantity = $row['quantity'];
                     $borrowed = $row['borrowed'];
                     $remaining = $quantity - $borrowed;
@@ -132,6 +151,8 @@
                         <form action='items.php' method='post'>
                         <td>
                             <input type='submit' name='$id' value='edit'>
+                            <input type='submit' name='delete' value='delete'>
+                            <input type='hidden' name='id' value=$id>
                         </td>
                         </form>
                     </tr>
@@ -144,7 +165,6 @@
 
 </body>
 </html>
+<script>
+</script>
 
-<?php
-
-?>

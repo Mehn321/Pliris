@@ -23,9 +23,10 @@
         $row=$result->fetch_assoc();
         $id=$row['id'];
         $id_number = $row['id_number'];
-        $name_borrowed=retrieve("name,borrowed","items",$id);
+        $borrow_time = $row['borrow_time'];
+        $name_borrowed=retrieve("item_name,borrowed","items",$id);
         $name_borrowedrow=$name_borrowed->fetch_assoc();
-        $itemname=$name_borrowedrow["name"];
+        $itemname=$name_borrowedrow["item_name"];
         $quantity_returned = retrieve("quantity", "reserved", "reserve_id = '$reserve_id'");
         $quantity_returned_row = $quantity_returned->fetch_assoc();
         $quantity_returned = $quantity_returned_row['quantity'];
@@ -46,9 +47,11 @@
             // $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
             // mysqli_query($conn, $query);
 
-            update("reserved", "return_stat='approved'","reserve_id='$reserve_id'");
+            insert("records", "`id_number`, `item_id`, `quantity`, `reserved_dateandtime`","'$id_number', '$id','$quantity','$borrow_time'");
             update("items", "borrowed='$borrowed'","id='$id'");
             insert("notifications", "id_number, notification_type, message","'$id_number', '$notification_type', '$message'");
+            delete("reserved", "reserve_id='$reserve_id'");
+            delete("returned", "reserve_id='$reserve_id'");
             header("Location: returned_items.php");
         }
 
@@ -63,9 +66,9 @@
         $row=$result->fetch_assoc();
         $id=$row['id'];
         $id_number = $row['id_number'];
-        $name_borrowed=retrieve("name,borrowed","items",$id);
+        $name_borrowed=retrieve("item_name,borrowed","items",$id);
         $name_borrowedrow=$name_borrowed->fetch_assoc();
-        $itemname=$name_borrowedrow["name"];
+        $itemname=$name_borrowedrow["item_name"];
         $notification_type = "item_returned_approved";
         $quantity=$_POST['quantity'];
         date_default_timezone_set('Asia/Manila');
@@ -134,9 +137,9 @@
                     $users=retrieve('first_name', 'users',"id_number = '$id_num'");
                     $row_users=$users->fetch_assoc();
                     $first_name=$row_users['first_name'];
-                    $items = retrieve("name", "items", "id = $id");
+                    $items = retrieve("item_name", "items", "id = $id");
                     $row_items = $items->fetch_assoc();
-                    $itemname = $row_items['name'];
+                    $itemname = $row_items['item_name'];
                     
                     if($return_stat=='approved'||$return_stat=='disaproved'){
                         continue;
