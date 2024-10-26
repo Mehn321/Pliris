@@ -105,7 +105,8 @@ while ($row = $records->fetch_assoc()) {
     $borrower_lastname=$row['borrower_lastname'];
     $itemname = $row['item'];
     $quantity = $row['quantity'];
-    $reserved_dateandtime=$row['reserved_dateandtime'];
+    $reserved_td=new DateTime($row['reserved_dateandtime']);
+    $reserved_dateandtime=$reserved_td->format('M-d-Y H:i:s');
     $returned_td = new DateTime($row['returned_dateandtime']);
     $returned_dateandtime = $returned_td->format('M-d-Y H:i:s');
     $month = $returned_td->format('F');
@@ -132,22 +133,22 @@ echo "
                             <th>Borrower</th>
                             <th>Item Name</th>
                             <th>Quantity</th>
-                            <th>Reserved Time</th>
-                            <th>Returned Date</th>
+                            <th>Reserved Date and Time</th>
+                            <th>Returned Date and Time</th>
                         </tr>";
 
 foreach ($months as $month => $items){
     echo "<tr><th colspan='5'>$month</th></tr>";
-    foreach ($items as $item_name) {
+    foreach ($items as $item) {
         echo"
                                     <tr class='row-border'>
-                                        <td>" . $item_name['first_name']." ". $item_name['last_name'] . "</td>
-                                        <td>" . $item_name['itemname'] . "</td>
-                                        <td>" . $item_name['quantity'] . "</td>
-                                        <td>" . $item_name['reserved_dateandtime'] . "</td>
-                                        <td>" . $item_name['returned_dateandtime'] . "</td>
+                                        <td>" . $item['first_name']." ". $item['last_name'] . "</td>
+                                        <td>" . $item['itemname'] . "</td>
+                                        <td>" . $item['quantity'] . "</td>
+                                        <td>" . $item['reserved_dateandtime'] . "</td>
+                                        <td>" . $item['returned_dateandtime'] . "</td>
                                         <form action='returned_items.php' method='post'>
-                                            <input type='hidden' name='quantity' value='" . $item_name['quantity'] . "'>
+                                            <input type='hidden' name='quantity' value='" . $item['quantity'] . "'>
                                         </form>
                                     </tr>
                                 ";

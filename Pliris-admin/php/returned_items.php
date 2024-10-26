@@ -15,18 +15,19 @@
     
     if(isset($_POST["approve"])){
         $reserve_id = $_POST["reserve_id"];
-
         // $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
         // $result = $conn->query($sql);
         $result=retrieve("*","reserved","reserve_id='$reserve_id'");
-        
         $row=$result->fetch_assoc();
         $id=$row['id'];
+
         $id_number = $row['id_number'];
         $borrow_time = $row['borrow_time'];
-        $name_borrowed=retrieve("item_name,borrowed","items",$id);
+
+        $name_borrowed=retrieve("item_name,borrowed","items","id='$id'");
         $name_borrowedrow=$name_borrowed->fetch_assoc();
         $itemname=$name_borrowedrow["item_name"];
+
         $quantity_returned = retrieve("quantity", "reserved", "reserve_id = '$reserve_id'");
         $quantity_returned_row = $quantity_returned->fetch_assoc();
         $quantity_returned = $quantity_returned_row['quantity'];
