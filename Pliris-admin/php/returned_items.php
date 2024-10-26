@@ -37,6 +37,13 @@
         $quantity=$_POST['quantity'];
         date_default_timezone_set('Asia/Manila');
         $currentTime = date('M-d-Y H:i:s');
+
+        $users=retrieve('first_name, last_name', 'users',"id_number='$id_number'");
+        $fullname_row=$users->fetch_assoc();
+        $borrower_firstname=$fullname_row["first_name"];
+        $borrower_lastname=$fullname_row["last_name"];
+
+
         $message = "Your returned item $itemname with the quantity of $quantity has been approved at $currentTime.";
         
         if($result->num_rows > 0) {
@@ -47,7 +54,7 @@
             // $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
             // mysqli_query($conn, $query);
 
-            insert("records", "`id_number`, `item_id`, `quantity`, `reserved_dateandtime`","'$id_number', '$id','$quantity','$borrow_time'");
+            insert("records", "`borrower_firstname`,`borrower_lastname`,`item`, `quantity`, `reserved_dateandtime`","'$borrower_firstname','$borrower_lastname', '$itemname','$quantity','$borrow_time'");
             update("items", "borrowed='$borrowed'","id='$id'");
             insert("notifications", "id_number, notification_type, message","'$id_number', '$notification_type', '$message'");
             delete("reserved", "reserve_id='$reserve_id'");
@@ -73,11 +80,8 @@
         $quantity=$_POST['quantity'];
         date_default_timezone_set('Asia/Manila');
         $currentTime = date('M-d-Y H:i:s');
-        $users=retrieve('first_name, last_name', 'users',"username='admin'");
-        $fullname_row=$users->fetch_assoc();
-        $first_name=$fullname_row["first_name"];
-        $last_name=$fullname_row["last_name"];
-        $message = "Your returned item $itemname with the quantity of $quantity is disaproved at $currentTime. Please return the item/items or you can aproach the moderator Mr/Maam: $first_name $last_name.";
+        
+        $message = "Your returned item $itemname with the quantity of $quantity is disaproved at $currentTime. Please return the item/items or you can aproach the moderator Mr/Maam: $borrower_firstname $borrower_lastname.";
         update("reserved", "return_stat='disaproved'","reserve_id='$reserve_id'");
         insert("notifications", "id_number, notification_type, message","'$id_number', '$notification_type', '$message'");
         header("Location: returned_items.php");
@@ -131,12 +135,12 @@
                     $reserved = retrieve("*", "reserved", "reserve_id = '$reserve_id'");
                     $row_reserved = $reserved->fetch_assoc();
                     $return_stat=$row_reserved['return_stat'];
-                    $id_num=$row_reserved['id_number'];
+                    $borrower_firstname=$row_reserved['id_number'];
                     $quantity = $row_reserved['quantity'];
                     $id = $row_reserved['id'];
-                    $users=retrieve('first_name', 'users',"id_number = '$id_num'");
+                    $users=retrieve('first_name', 'users',"id_number = '$borrower_firstname'");
                     $row_users=$users->fetch_assoc();
-                    $first_name=$row_users['first_name'];
+                    $borrower_firstname=$row_users['first_name'];
                     $items = retrieve("item_name", "items", "id = $id");
                     $row_items = $items->fetch_assoc();
                     $itemname = $row_items['item_name'];
@@ -149,7 +153,7 @@
                     
                     echo "
                     <tr class='row-border'>
-                        <td>$first_name</td>
+                        <td>$borrower_firstname</td>
                         <td>$itemname </td>
                         <td>$quantity</td>
                         <td>$returned_time</td>

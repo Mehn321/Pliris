@@ -101,20 +101,14 @@ include("sidebar.php");
 $months = array();
 $records=retrieve("*","records", true);
 while ($row = $records->fetch_assoc()) {
-    $id_num=$row['id_number'];
-    $item_id = $row['item_id'];
+    $borrower_firstname=$row['borrower_firstname'];
+    $borrower_lastname=$row['borrower_lastname'];
+    $itemname = $row['item'];
     $quantity = $row['quantity'];
     $reserved_dateandtime=$row['reserved_dateandtime'];
     $returned_td = new DateTime($row['returned_dateandtime']);
     $returned_dateandtime = $returned_td->format('M-d-Y H:i:s');
     $month = $returned_td->format('F');
-    $users=retrieve('first_name,last_name', 'users',"id_number='$id_num'");
-    $row_users=$users->fetch_assoc();
-    $first_name=$row_users['first_name'];
-    $last_name=$row_users['last_name'];
-    $items = retrieve("item_name", "items", "id = $item_id");
-    $row_items = $items->fetch_assoc();
-    $itemname = $row_items['item_name'];
     
     
     if (!isset($months[$month])) {
@@ -122,8 +116,8 @@ while ($row = $records->fetch_assoc()) {
     }
     
     $months[$month][] = array(
-        'first_name' => $first_name,
-        'last_name' => $last_name,
+        'first_name' => $borrower_firstname,
+        'last_name' => $borrower_lastname,
         'itemname' => $itemname,
         'quantity' => $quantity,
         'reserved_dateandtime' => $reserved_dateandtime,
@@ -144,16 +138,16 @@ echo "
 
 foreach ($months as $month => $items){
     echo "<tr><th colspan='5'>$month</th></tr>";
-    foreach ($items as $item) {
+    foreach ($items as $item_name) {
         echo"
                                     <tr class='row-border'>
-                                        <td>" . $item['first_name']." ". $item['last_name'] . "</td>
-                                        <td>" . $item['itemname'] . "</td>
-                                        <td>" . $item['quantity'] . "</td>
-                                        <td>" . $item['reserved_dateandtime'] . "</td>
-                                        <td>" . $item['returned_dateandtime'] . "</td>
+                                        <td>" . $item_name['first_name']." ". $item_name['last_name'] . "</td>
+                                        <td>" . $item_name['itemname'] . "</td>
+                                        <td>" . $item_name['quantity'] . "</td>
+                                        <td>" . $item_name['reserved_dateandtime'] . "</td>
+                                        <td>" . $item_name['returned_dateandtime'] . "</td>
                                         <form action='returned_items.php' method='post'>
-                                            <input type='hidden' name='quantity' value='" . $item['quantity'] . "'>
+                                            <input type='hidden' name='quantity' value='" . $item_name['quantity'] . "'>
                                         </form>
                                     </tr>
                                 ";
