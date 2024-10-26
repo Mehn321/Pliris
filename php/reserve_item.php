@@ -319,7 +319,7 @@
                                 <input type='hidden' name='return_time' value='$return_time'>
                                 <input type='hidden' name='availableAtTime' value='$availableAtTime'>
                                 <label>Quantity:</label>
-                                <input type='number' name='quantity' required>
+                                <input type='number' name='quantity'  min='0' required>
                                 <input type='submit' name='reserve' value='Reserve'>
                                 
                             </form>
