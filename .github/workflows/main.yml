@@ -12,14 +12,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Updated to use a more recent version
+        uses: actions/checkout@v3  # Use the latest version
+
+      - name: Install lftp
+        run: sudo apt-get install lftp
 
       - name: Deploy to FTP server
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: pliris.wuaze.com
-          username: ${{ secrets.FTPUSERNAME }}
-          password: ${{ secrets.FTPPASSWORD }}
-          protocol: ftp
-          local-dir: ./  # Ensure it ends with /
-          server-dir: /htdocs/
+        env:
+          FTP_USERNAME: ${{ secrets.FTPUSERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTPPASSWORD }}
+        run: |
+          lftp -c "
+          open -u $FTP_USERNAME,$FTP_PASSWORD ftp://pliris.wuaze.com;
+          mirror -R ./ /htdocs/;
+          bye
+          "
