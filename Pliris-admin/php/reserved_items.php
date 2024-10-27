@@ -27,7 +27,6 @@
     //     return $result;
     // }
     include("database.php");
-    $reserved=retrieve("*","reserved"," return_stat='borrowing'");
 
     if(isset($_POST["submit"])){
         $reserve_id = $_POST["reserve_id"];
@@ -91,6 +90,7 @@
                 <th>Action</th>
             </tr>
             <?php
+                $reserved=retrieve("*","reserved"," return_stat='borrowing'");
                 while($row=$reserved->fetch_assoc()){
                     $reserve_id=$row['reserve_id'];
                     $quantity = $row['quantity'];
