@@ -99,63 +99,62 @@ include("sidebar.php");
 //     }
 
 $months = array();
-$records=retrieve("*","records", true);
+$records = retrieve("*", "records", true);
 while ($row = $records->fetch_assoc()) {
-    $borrower_firstname=$row['borrower_firstname'];
-    $borrower_lastname=$row['borrower_lastname'];
+    $borrower_firstname = $row['borrower_firstname'];
+    $borrower_lastname = $row['borrower_lastname'];
     $itemname = $row['item'];
     $quantity = $row['quantity'];
-    $reserved_td=new DateTime($row['reserved_dateandtime']);
-    $reserved_dateandtime=$reserved_td->format('M-d-Y H:i:s');
+    $reserved_td = new DateTime($row['reserved_dateandtime']);
+    $reserved_dateandtime = $reserved_td->format('M-d-Y H:i:s');
     $returned_td = new DateTime($row['returned_dateandtime']);
     $returned_dateandtime = $returned_td->format('M-d-Y H:i:s');
+    
+    // Get the year and month
+    $year = $returned_td->format('Y');
     $month = $returned_td->format('F');
     
+    // Create a combined key of year and month
+    $year_month_key = "$year-$month";
     
-    if (!isset($months[$month])) {
-        $months[$month] = array();
+    if (!isset($months[$year_month_key])) {
+        $months[$year_month_key] = array();
     }
     
-    $months[$month][] = array(
+    $months[$year_month_key][] = array(
         'first_name' => $borrower_firstname,
         'last_name' => $borrower_lastname,
         'itemname' => $itemname,
         'quantity' => $quantity,
         'reserved_dateandtime' => $reserved_dateandtime,
         'returned_dateandtime' => $returned_dateandtime,
-        
     );
 }
 
 echo "
-                    <table>
-                        <tr class='row-border'>
-                            <th>Borrower</th>
-                            <th>Item Name</th>
-                            <th>Quantity</th>
-                            <th>Reserved Date and Time</th>
-                            <th>Returned Date and Time</th>
-                        </tr>";
+    <table>
+        <tr class='row-border'>
+            <th>Borrower</th>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Reserved Date and Time</th>
+            <th>Returned Date and Time</th>
+        </tr>";
 
-foreach ($months as $month => $items){
-    echo "<tr><th colspan='5'>$month</th></tr>";
+foreach ($months as $year_month => $items) {
+    echo "<tr><th colspan='5'>$year_month</th></tr>"; // Display year-month as the header
     foreach ($items as $item) {
-        echo"
-                                    <tr class='row-border'>
-                                        <td>" . $item['first_name']." ". $item['last_name'] . "</td>
-                                        <td>" . $item['itemname'] . "</td>
-                                        <td>" . $item['quantity'] . "</td>
-                                        <td>" . $item['reserved_dateandtime'] . "</td>
-                                        <td>" . $item['returned_dateandtime'] . "</td>
-                                        <form action='returned_items.php' method='post'>
-                                            <input type='hidden' name='quantity' value='" . $item['quantity'] . "'>
-                                        </form>
-                                    </tr>
-                                ";
+        echo "
+            <tr class='row-border'>
+                <td>" . $item['first_name'] . " " . $item['last_name'] . "</td>
+                <td>" . $item['itemname'] . "</td>
+                <td>" . $item['quantity'] . "</td>
+                <td>" . $item['reserved_dateandtime'] . "</td>
+                <td>" . $item['returned_dateandtime'] . "</td>
+            </tr>";
     }
-    
 }
-echo"</table>";
+echo "</table>";
 ?>
 </table>
 </div>

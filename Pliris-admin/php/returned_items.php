@@ -15,14 +15,15 @@
     
     if(isset($_POST["approve"])){
         $reserve_id = $_POST["reserve_id"];
+
         // $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
         // $result = $conn->query($sql);
         $result=retrieve("*","reserved","reserve_id='$reserve_id'");
         $row=$result->fetch_assoc();
         $id=$row['id'];
-
         $id_number = $row['id_number'];
         $borrow_time = $row['borrow_time'];
+        $return_time = $row['return_time'];
 
         $name_borrowed=retrieve("item_name,borrowed","items","id='$id'");
         $name_borrowedrow=$name_borrowed->fetch_assoc();
@@ -55,7 +56,7 @@
             // $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
             // mysqli_query($conn, $query);
 
-            insert("records", "`borrower_firstname`,`borrower_lastname`,`item`, `quantity`, `reserved_dateandtime`","'$borrower_firstname','$borrower_lastname', '$itemname','$quantity','$borrow_time'");
+            insert("records", "`borrower_firstname`,`borrower_lastname`,`item`, `quantity`,`reserved_dateandtime`,`returned_dateandtime`","'$borrower_firstname','$borrower_lastname', '$itemname','$quantity','$borrow_time','$return_time'");
             update("items", "borrowed='$borrowed'","id='$id'");
             insert("notifications", "id_number, notification_type, message","'$id_number', '$notification_type', '$message'");
             delete("reserved", "reserve_id='$reserve_id'");
@@ -163,6 +164,8 @@
                         <td>
                             <input type='hidden' name='quantity' value=$quantity>
                             <input type='hidden' name='reserve_id' value=$reserve_id>
+                            <input type='hidden' name='returned_time' value=$returned_time>
+
                             <input type='submit' name='approve' value='approve'>
                             <input type='submit' name='disaprove' value='disaprove'>
                         </td>
