@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Updated to use a more recent version
 
       - name: Deploy to FTP server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -20,7 +20,6 @@ jobs:
           server: pliris.wuaze.com
           username: ${{ secrets.FTPUSERNAME }}
           password: ${{ secrets.FTPPASSWORD }}
-          protocol: ftp  # Use 'ftp' for FTP
-          local-dir: .  # Adjust this to your local directory if needed
-          server-dir: /htdocs/  # The directory on your server
-
+          protocol: ftp
+          local-dir: ./  # Ensure it ends with /
+          server-dir: /htdocs/
