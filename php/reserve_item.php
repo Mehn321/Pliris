@@ -294,13 +294,13 @@
                     // $borrowed = $row['borrowed'];
                     $id = $row['id'];
 
-                    $conn=connect();
-                    $sql = "SELECT * FROM reserved WHERE id = '$id' AND return_stat='borrowing' AND (((borrow_time <= '$borrow_time' AND return_time >= '$borrow_time') OR (borrow_time >= '$return_time' AND return_time <= '$return_time')) OR ((borrow_time >= '$borrow_time' AND return_time <= '$borrow_time') OR (borrow_time >= '$return_time' AND return_time <= '$return_time')))";
-                    $reserved = $conn->query($sql);
+                    // $conn=connect();
+                    // $sql = "SELECT * FROM reserved WHERE id = '$id' AND return_stat='borrowing' AND (((borrow_time <= '$borrow_time' AND return_time >= '$borrow_time') OR (borrow_time >= '$return_time' AND return_time <= '$return_time')) OR ((borrow_time >= '$borrow_time' AND return_time <= '$borrow_time') OR (borrow_time >= '$return_time' AND return_time <= '$return_time')))";
+                    // $reserved = $conn->query($sql);
+                    $reserved=retrieve("*","reserved","id = '$id' AND return_stat='borrowing' AND (((borrow_time <= '$borrow_time' AND return_time >= '$borrow_time') OR (borrow_time >= '$return_time' AND return_time <= '$return_time')) OR ((borrow_time >= '$borrow_time' AND return_time <= '$borrow_time') OR (borrow_time >= '$return_time' AND return_time <= '$return_time')))");
                     $borrowed_Quantity = 0;
                     while ($row2 = $reserved->fetch_assoc()) {
                         $borrowed_Quantity += $row2['quantity'];
-
                     }
 
                     $availableAtTime=$quantity - $borrowed_Quantity;
