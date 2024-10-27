@@ -16,3 +16,4 @@ jobs:
         password: ${{ secrets.FTPPASSWORD }}
         protocol: ftps
         server-dir: /htdocs/
+        
