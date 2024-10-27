@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
     <style>
         * {
             box-sizing: border-box;
@@ -68,7 +69,9 @@
         .sidebar ul li:hover {
             background-color: #555;
         }
+
     </style>
+
 </head>
 <body>
     <div class="sidebar">
@@ -92,9 +95,7 @@
         const sidebar = document.querySelector('.sidebar');
         sidebar.style.display = 'none';
     }
-</script>
 
-<script>
     function showsidebar() {
         const sidebar = document.querySelector('.sidebar');
         sidebar.style.display = 'flex';
