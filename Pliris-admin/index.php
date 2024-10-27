@@ -3,7 +3,7 @@
     if(isset($_POST['login'])){
         $id_number = $_POST['id_number'];
         $password = $_POST['password'];
-        $result = retrieve("*", "users", "id_number='999999999'");
+        $result = retrieve("*", "accounts", "id_number='999999999'");
 
         if($result->num_rows > 0){
             $row = $result->fetch_assoc();

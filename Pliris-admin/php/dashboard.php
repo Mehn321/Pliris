@@ -35,7 +35,7 @@
     $notifications_quantity=$notifications->num_rows;
     $returned_items=retrieve('reserve_id','reserved',"return_stat='pending_return'");
     $returned_items_quantity=$returned_items->num_rows;
-    $accounts=retrieve('id_number','users',true);
+    $accounts=retrieve('id_number','accounts',true);
     $accounts_quantity=$accounts->num_rows;
 
     $result=retrieve("*","items",true);

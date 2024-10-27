@@ -19,7 +19,7 @@
     $notifications=retrieve('notif_id','notifications',"id_number='$id_number'");
     $notifications_quantity=$notifications->num_rows;
     
-    $accounts=retrieve('username','users',"id_number='$id_number'");
+    $accounts=retrieve('username','accounts',"id_number='$id_number'");
     $row_accounts=$accounts->fetch_assoc();
     $username=$row_accounts['username'];
 ?>

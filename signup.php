@@ -16,7 +16,7 @@
         $email = $_POST['email'];
         $username = $_POST['username'];
         $password = $_POST['password'];
-        // $insert="INSERT INTO `users`(`first_name`, `last_name`, `id_number`, `email`, `username`, `password`) VALUES ('$first_name','$last_name','$id_number','$email','$username','$password')";
+        // $insert="INSERT INTO `accounts`(`first_name`, `last_name`, `id_number`, `email`, `username`, `password`) VALUES ('$first_name','$last_name','$id_number','$email','$username','$password')";
         // if ($conn->query($insert) === TRUE) {
         //     header("Location: index.php");
         // } else {
@@ -24,17 +24,17 @@
         // }
         // $conn->close(); 
         include("Pliris-admin/php/database.php");
-        $result=retrieve("*","users","id_number='$id_number'");
+        $result=retrieve("*","accounts","id_number='$id_number'");
         if (mysqli_num_rows($result)  > 0) {
             // ID number already exists
-            $adminname = retrieve("*", "users", "id_number='999999999'");
+            $adminname = retrieve("*", "accounts", "id_number='999999999'");
             $row = $adminname->fetch_assoc();
             $adminfname=$row['first_name'];
             $adminlname=$row['last_name'];
             echo "<script>alert('Error: ID Number already exists. If you already have an account but you forgot your password please aproach Sir/Maam: $adminfname $adminlname.')</script>";
         }
         else{
-            insert("users","first_name, last_name, id_number, email, username, password","'$first_name','$last_name','$id_number','$email','$username','$password'");
+            insert("accounts","first_name, last_name, id_number, email, username, password","'$first_name','$last_name','$id_number','$email','$username','$password'");
             header("Location: index.php");
         }
     }

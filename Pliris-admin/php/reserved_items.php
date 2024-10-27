@@ -102,8 +102,8 @@
                     $return_stat=$row['return_stat'];
                     $row = $items->fetch_assoc();
                     $itemname = $row['item_name'];
-                    $users=retrieve('first_name', 'users',"id_number='$id_num'");
-                    $row_users=$users->fetch_assoc();
+                    $accounts=retrieve('first_name', 'accounts',"id_number='$id_num'");
+                    $row_users=$accounts->fetch_assoc();
                     $first_name=$row_users['first_name'];
 
                     echo "

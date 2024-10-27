@@ -27,48 +27,48 @@
     //     return $result;
     // }
     include("database.php");
-    $accounts=retrieve("*","users",true, "last_name");
+    $accounts=retrieve("*","accounts",true, "last_name");
 
     if(isset($_POST["submit"])){
         $id_number = $_POST['id_number'];
     
         if(!empty($_POST["first_name"])){
             $first_name=$_POST['first_name'];
-            // $sql="UPDATE users SET first_name='$first_name' WHERE id_number='$id_number'";
+            // $sql="UPDATE accounts SET first_name='$first_name' WHERE id_number='$id_number'";
             // $conn->query($sql);
-            update("users","first_name='$first_name'","id_number='$id_number'");
+            update("accounts","first_name='$first_name'","id_number='$id_number'");
         }
         if(!empty($_POST["last_name"])){
             $last_name=$_POST['last_name'];
-            // $sql="UPDATE users SET last_name='$last_name' WHERE id_number='$id_number'";
+            // $sql="UPDATE accounts SET last_name='$last_name' WHERE id_number='$id_number'";
             // $conn->query($sql);
-            update("users","last_name='$last_name'","id_number='$id_number'");
+            update("accounts","last_name='$last_name'","id_number='$id_number'");
         }
         if(!empty($_POST["id_num"])){
             echo"okay";
             $id_num=$_POST["id_num"];
-            // $sql="UPDATE users SET last_name='$last_name' WHERE id_number='$id_number'";
+            // $sql="UPDATE accounts SET last_name='$last_name' WHERE id_number='$id_number'";
             // $conn->query($sql);
-            update("users","id_number='$id_num'","id_number='$id_number'");
+            update("accounts","id_number='$id_num'","id_number='$id_number'");
         }
         if(!empty($_POST["email"])){
             $email=$_POST['email'];
-            // $sql="UPDATE users SET email='$email' WHERE id_number='$id_number'";
+            // $sql="UPDATE accounts SET email='$email' WHERE id_number='$id_number'";
             // $conn->query($sql);
-            update("users","email='$email'","id_number='$id_number'");
+            update("accounts","email='$email'","id_number='$id_number'");
         }
         if(!empty($_POST["username"])){
             $username=$_POST['username'];
-            // $sql="UPDATE users SET username='$username' WHERE id_number='$id_number'";
+            // $sql="UPDATE accounts SET username='$username' WHERE id_number='$id_number'";
             // $conn->query($sql);
-            update("users","username='$username'","id_number='$id_number'");
+            update("accounts","username='$username'","id_number='$id_number'");
 
         }
         if(!empty($_POST["password"])){
             $password=$_POST['password'];
-            // $sql="UPDATE users SET password='$password' WHERE id_number='$id_number'";
+            // $sql="UPDATE accounts SET password='$password' WHERE id_number='$id_number'";
             // $conn->query($sql);
-            update("users","password='$password'","id_number='$id_number'");
+            update("accounts","password='$password'","id_number='$id_number'");
 
         }
         header("Location: accounts.php");
@@ -84,7 +84,7 @@
         }
         
         if($reserved<=0){
-            delete("users","id_number='$id_number'");
+            delete("accounts","id_number='$id_number'");
             header("Location:items.php");
         }else{
             echo"

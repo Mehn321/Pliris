@@ -52,7 +52,7 @@
         $email = $_POST['email'];
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $insert="INSERT INTO `users`(`first_name`, `last_name`, `id_number`, `email`, `username`, `password`) VALUES ('$first_name','$last_name','$id_number','$email','$username','$password')";
+        $insert="INSERT INTO `accounts`(`first_name`, `last_name`, `id_number`, `email`, `username`, `password`) VALUES ('$first_name','$last_name','$id_number','$email','$username','$password')";
         if ($conn->query($insert) === TRUE) {
             header("Location: index.php");
         } else {

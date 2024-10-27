@@ -39,8 +39,8 @@
         date_default_timezone_set('Asia/Manila');
         $currentTime = date('M-d-Y H:i:s');
 
-        $users=retrieve('first_name, last_name', 'users',"id_number='$id_number'");
-        $fullname_row=$users->fetch_assoc();
+        $accounts=retrieve('first_name, last_name', 'accounts',"id_number='$id_number'");
+        $fullname_row=$accounts->fetch_assoc();
         $borrower_firstname=$fullname_row["first_name"];
         $borrower_lastname=$fullname_row["last_name"];
 
@@ -139,8 +139,8 @@
                     $borrower_firstname=$row_reserved['id_number'];
                     $quantity = $row_reserved['quantity'];
                     $id = $row_reserved['id'];
-                    $users=retrieve('first_name', 'users',"id_number = '$borrower_firstname'");
-                    $row_users=$users->fetch_assoc();
+                    $accounts=retrieve('first_name', 'accounts',"id_number = '$borrower_firstname'");
+                    $row_users=$accounts->fetch_assoc();
                     $borrower_firstname=$row_users['first_name'];
                     $items = retrieve("item_name", "items", "id = $id");
                     $row_items = $items->fetch_assoc();
