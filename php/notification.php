@@ -11,8 +11,12 @@
         exit;
     }
     include("../Pliris-admin/php/database.php");
+    include("sidebar.php");
     
-    $result=retrieve("*","notifications","id_number = '$id_number'");
+    $result=retrieve("*","notifications","id_number = '$id_number'","notif_id DESC");
+
+    
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,18 +26,13 @@
     <title>Notifications</title>
     <link rel="stylesheet" href="../css/notification.css">
 </head>
-<body>
-    <?php
-        include("sidebar.php");
-    ?>
-    <header class="header">
+<header class="header">
         <nav class="navbar">
             <button class="menu" onclick=showsidebar()>
                 <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
             </button>
             <img src="../images/ustplogo.png" alt="">
             <ul>
-                
                 <li> NOTIFICATIONS </li>
             </ul>
             <div class="logout-container">
@@ -42,16 +41,16 @@
                 </form>
             </div>
         </nav>
-    </header>
+</header>
+<body>
 
     <div class="notifications">
-        <ul>
-        <?php
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<li> {$row['message']} </li>";
-            }
-        ?>
-        </ul>
+            <?php
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $message =$row['message'];
+                    echo "<li>$message</li>";
+                }
+            ?>
     </div>
 </body>
 </html>
