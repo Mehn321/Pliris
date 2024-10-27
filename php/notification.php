@@ -13,7 +13,6 @@
     include("../Pliris-admin/php/database.php");
     include("sidebar.php");
     
-    $result=retrieve("*","notifications","id_number = '$id_number'","notif_id DESC");
 
     
     
@@ -43,10 +42,25 @@
         </nav>
 </header>
 <body>
-
     <div class="notifications">
             <?php
-                while ($row = mysqli_fetch_assoc($result)) {
+                $reserved=retrieve("*","reserved"," return_stat='borrowing' AND id_number='$id_number'");
+                    while($reserved_row=$reserved->fetch_assoc()){
+                        $returned_td = new DateTime($reserved_row['return_time']);
+                        $return_dateandtime = $returned_td->format('M-d-Y H:i:s');
+                        date_default_timezone_set('Asia/Manila');
+                        $currentTime = date('M-d-Y H:i:s');
+                        if($return_dateandtime<=$currentTime){
+                            $item_id=$reserved_row['id'];
+                            $items=retrieve("item_name","items","id='$item_id'");
+                            if ($itemrow = $items->fetch_assoc()) { // Check if item exists
+                                $item_name = $itemrow["item_name"];
+                                echo "<li>Please return the $item_name you borrowed</li>";
+                            }
+                        }
+                    }
+                $notifications=retrieve("*","notifications","id_number = '$id_number'","notif_id DESC");
+                while ($row = mysqli_fetch_assoc($notifications)) {
                     $message =$row['message'];
                     echo "<li>$message</li>";
                 }
