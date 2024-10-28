@@ -85,7 +85,7 @@
         
         if($reserved<=0){
             delete("accounts","id_number='$id_number'");
-            header("Location:items.php");
+            header("Location:accounts.php");
         }else{
             echo"
             <script>
