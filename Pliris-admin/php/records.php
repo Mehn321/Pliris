@@ -20,16 +20,16 @@ if(isset($_POST["submit"])){
     $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
     $result = $conn->query($sql);
     $row=$result->fetch_assoc();
-    $id=$row['id'];
+    $item_id=$row['item_id'];
     $id_number = $row['id_number'];
-    $item_name=retrieve("item_name","items",$id);
+    $item_name=retrieve("item_name","items",$item_id);
     $namerow=$item_name->fetch_assoc();
     $itemname=$namerow["item_name"];
     $quantity=$_POST["quantity"];
     $notification_type = "item_returned_approved";
     $message = "Your returned item $itemname with the quantity of $quantity has been approved.";
     if($result->num_rows > 0) {
-        $update_query = "UPDATE reserved SET return_stat='approved' WHERE reserve_id='$reserve_id'";
+        $update_query = "UPDATE reserved SET return_status='approved' WHERE reserve_id='$reserve_id'";
         $conn->query($update_query);
         $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
         mysqli_query($conn, $query);
@@ -82,19 +82,19 @@ include("sidebar.php");
 //     $month = $returned_td->format('F');
 //     $reserved = retrieve("*", "reserved", "reserve_id = '$reserve_id'");
 //     $row_reserved = $reserved->fetch_assoc();
-//     $return_stat=$row_reserved['return_stat'];
-//     $reserved_dateandtime=$row_reserved['borrow_time'];
+//     $return_status=$row_reserved['return_status'];
+//     $reserved_dateandtime=$row_reserved['scheduled_reserve_datetime'];
 //     $id_num=$row_reserved['id_number'];
 //     $quantity = $row_reserved['quantity'];
-//     $id = $row_reserved['id'];
+//     $item_id = $row_reserved['item_id'];
 //     $accounts=retrieve('first_name', 'accounts',"id_number='$id_num'");
 //     $row_users=$accounts->fetch_assoc();
 //     $first_name=$row_users['first_name'];
-//     $items = retrieve("item_name", "items", "id = $id");
+//     $items = retrieve("item_name", "items", "item_id = $item_id");
 //     $row_items = $items->fetch_assoc();
 //     $itemname = $row_items['item_name'];
 
-//     if(!($return_stat=='approved')){
+//     if(!($return_status=='approved')){
 //         continue;
 //     }
 

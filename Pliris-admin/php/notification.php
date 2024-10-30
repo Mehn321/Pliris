@@ -11,23 +11,7 @@
         exit;
     }
 
-    // function connect(){
-    //     $server="localhost";
-    //     $username = "root";
-    //     $password="";
-    //     $db_name="pliris";
-    //     $conn = mysqli_connect($server,$username,$password,$db_name);
-    //     return $conn;
-    // }
-
-    // function retrieve($column, $table){
-    //     $conn=connect();
-    //     $sql="SELECT $column FROM $table";
-    //     $result=$conn->query($sql);
-    //     return $result;
-    // }
     include("database.php");
-    $result=retrieve("*","items",true);
 
 ?>
 <!DOCTYPE html>
@@ -63,11 +47,12 @@
     <div class="container">
         <ul>
         <?php
+            $result=retrieve("*","items",true);
             while ($row = mysqli_fetch_assoc($result)) {
                 $item_name=$row['item_name'];
-                $quantity=$row['quantity'];
-                if($quantity<=10){
-                    echo "<li> $item_name only has $quantity left. Please add more of this items. </li>";
+                $item_quantity=$row['item_quantity'];
+                if($item_quantity<=10){
+                    echo "<li> $item_name only has $item_quantity left. Please add more of this items. </li>";
                 }
                 
             }

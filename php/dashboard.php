@@ -14,7 +14,7 @@
     
     $all_items=retrieve('item_name','items', true);
     $quantity_of_allitems=$all_items->num_rows;
-    $borrowed=retrieve('reserve_id','reserved',"id_number='$id_number'  AND return_stat='borrowing'");
+    $borrowed=retrieve('reserve_id','reserved',"id_number='$id_number'  AND return_status='borrowing'");
     $borrowed_itemsquantity=$borrowed->num_rows;
     $notifications=retrieve('notif_id','notifications',"id_number='$id_number'");
     $notifications_quantity=$notifications->num_rows;

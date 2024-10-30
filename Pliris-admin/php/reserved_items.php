@@ -36,12 +36,12 @@
         $result = $conn->query($sql);
         
         if($result->num_rows > 0) {
-            // $update_query = "UPDATE reserved SET return_stat='pending_return' WHERE reserve_id='$reserve_id'";
+            // $update_query = "UPDATE reserved SET return_status='pending_return' WHERE reserve_id='$reserve_id'";
             // $insert_query = "INSERT INTO returned(`reserve_id`,`returned_time`) values('$reserve_id',NOW() )";
             // $conn->query($update_query);
             // $conn->query($insert_query);
             date_default_timezone_set('Asia/Manila');
-            update("reserved","return_stat='pending_return'","reserve_id='$reserve_id'");
+            update("reserved","return_status='pending_return'","reserve_id='$reserve_id'");
             insert("returned","`reserve_id`,`returned_time`","'$reserve_id', NOW()");
             header("Location:reserved_items.php");
             mysqli_close($conn);
@@ -90,16 +90,16 @@
                 <th>Action</th>
             </tr>
             <?php
-                $reserved=retrieve("*","reserved"," return_stat='borrowing'");
+                $reserved=retrieve("*","reserved"," return_status='borrowing'");
                 while($row=$reserved->fetch_assoc()){
                     $reserve_id=$row['reserve_id'];
-                    $quantity = $row['quantity'];
-                    $borrow_time = $row['borrow_time'];
-                    $return_time = $row['return_time'];
-                    $id = $row['id'];
+                    $quantity_reserved = $row['quantity_reserved'];
+                    $scheduled_reserve_datetime = $row['scheduled_reserve_datetime'];
+                    $scheduled_return_datetime = $row['scheduled_return_datetime'];
+                    $item_id = $row['item_id'];
                     $id_num = $row['id_number'];
-                    $items = retrieve("item_name","items","id=$id");
-                    $return_stat=$row['return_stat'];
+                    $items = retrieve("item_name","items","item_id=$item_id");
+                    $return_status=$row['return_status'];
                     $row = $items->fetch_assoc();
                     $itemname = $row['item_name'];
                     $accounts=retrieve('first_name', 'accounts',"id_number='$id_num'");
@@ -110,9 +110,9 @@
                     <tr class='row-border'>
                         <td>$first_name</td>
                         <td>$itemname </td>
-                        <td>$quantity</td>
-                        <td>$borrow_time</td>
-                        <td>$return_time</td>
+                        <td>$quantity_reserved</td>
+                        <td>$scheduled_reserve_datetime</td>
+                        <td>$scheduled_return_datetime</td>
                         <form action='reserved_items.php' method='post'>
                         <td>
                             <input type='hidden' name='reserve_id' value=$reserve_id>

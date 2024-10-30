@@ -24,19 +24,19 @@
         $result=retrieve("*","reserved","reserve_id='$reserve_id'");
 
         if($result->num_rows > 0) {
-            // $update_query = "UPDATE reserved SET return_stat='pending_return' WHERE reserve_id='$reserve_id'";
+            // $update_query = "UPDATE reserved SET return_status='pending_return' WHERE reserve_id='$reserve_id'";
             // $insert_query = "INSERT INTO returned(`reserve_id`) values('$reserve_id')";
             // $conn->query($update_query);
             // $conn->query($insert_query);
-            $return_stat=$_POST["return_stat"];
-            if($return_stat=="disaproved"){
-                update('reserved',"return_stat='pending_return'","reserve_id='$reserve_id'");
-                // update("reserved","return_stat='pending_return","'$reserve_id'");
+            $return_status=$_POST["return_status"];
+            if($return_status=="disaproved"){
+                update('reserved',"return_status='pending_return'","reserve_id='$reserve_id'");
+                // update("reserved","return_status='pending_return","'$reserve_id'");
                 
                 header("Location:reserved_items.php");
             }
             else{
-                update('reserved',"return_stat='pending_return'","reserve_id='$reserve_id'");
+                update('reserved',"return_status='pending_return'","reserve_id='$reserve_id'");
                 insert("returned","`reserve_id`","'$reserve_id'");
                 
                 header("Location:reserved_items.php");
@@ -82,22 +82,22 @@
                 <th>Item Name</th>
                 <th>Quantity</th>
                 <th>Reserved</th>
-                <th>Remaining</th>
+                <th>Return</th>
                 <th>Action</th>
             </tr>
             <?php
-                $reserved=retrieve("*","reserved","id_number='$id_number' AND (return_stat='borrowing' OR return_stat='disaproved')");
+                $reserved=retrieve("*","reserved","id_number='$id_number' AND (return_status='borrowing' OR return_status='disaproved')");
                 while($row=$reserved->fetch_assoc()){
                     $reserve_id=$row['reserve_id'];
-                    $quantity = $row['quantity'];
-                    $borrow_time = $row['borrow_time'];
-                    $return_time = $row['return_time'];
-                    $id = $row['id'];
-                    $items = retrieve("item_name","items","id=$id");
-                    $return_stat=$row['return_stat'];
+                    $quantity_reserved = $row['quantity_reserved'];
+                    $scheduled_reserve_datetime = $row['scheduled_reserve_datetime'];
+                    $scheduled_return_datetime = $row['scheduled_return_datetime'];
+                    $item_id = $row['item_id'];
+                    $items = retrieve("item_name","items","item_id=$item_id");
+                    $return_status=$row['return_status'];
                     $item_row = $items->fetch_assoc();
                     $itemname = $item_row['item_name'];
-                    if($return_stat=='pending_return'){
+                    if($return_status=='pending_return'){
                         continue;
                         // header("Refresh:0");
                     }
@@ -105,13 +105,13 @@
                     echo "
                     <tr class='row-border'>
                         <td>$itemname </td>
-                        <td>$quantity</td>
-                        <td>$borrow_time</td>
-                        <td>$return_time</td>
+                        <td>$quantity_reserved</td>
+                        <td>$scheduled_reserve_datetime</td>
+                        <td>$scheduled_return_datetime</td>
                         <form action='reserved_items.php' method='post'>
                         <td>
                             <input type='hidden' name='reserve_id' value=$reserve_id>
-                            <input type='hidden' name='return_stat' value=$return_stat>
+                            <input type='hidden' name='return_status' value=$return_status>
                             <input type='submit' name='submit' value='return'>
                         </td>
                         </form>

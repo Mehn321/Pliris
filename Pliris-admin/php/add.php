@@ -14,18 +14,18 @@
 
         if (isset($_POST["add"])) {
             $item_name = $_POST['item_name'];
-            $quantity = $_POST['quantity'];
+            $item_quantity = $_POST['item_quantity'];
         
             // $conn = mysqli_connect('localhost', 'root', '', 'pliris');
             // if (!$conn) {
             //     die("Connection failed: " . mysqli_connect_error());
             // }
         
-            // $sql = "INSERT INTO items (item_name, quantity) VALUES ('$item_name', '$quantity')";
+            // $sql = "INSERT INTO items (item_name, item_quantity) VALUES ('$item_name', '$item_quantity')";
             // mysqli_query($conn, $sql);
             // mysqli_close($conn);
 
-            insert("items","item_name, quantity","'$item_name', '$quantity'");
+            insert("items","item_name, item_quantity","'$item_name', '$item_quantity'");
             header("Location: add.php");
         }
     ?>
@@ -67,7 +67,7 @@
             <div class="form-group2">
                 <div class="input-group">
                     <label for="">Quantity:</label>
-                    <input type="number" name="quantity">
+                    <input type="number" name="item_quantity">
                 </div>
             </div>
             </div>

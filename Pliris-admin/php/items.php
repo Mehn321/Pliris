@@ -33,18 +33,18 @@
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
-        $id = $_POST['id'];
+        $item_id = $_POST['item_id'];
         if(!empty($_POST["itemname"])){
             $itemname=$_POST['itemname'];
-            // $sql="UPDATE `items` SET item_name='$itemname' WHERE id='$id'";    
+            // $sql="UPDATE `items` SET item_name='$itemname' WHERE item_id='$item_id'";    
             // $conn->query($sql);
-            update("`items`","item_name='$itemname'","id='$id'");
+            update("`items`","item_name='$itemname'","item_id='$item_id'");
         }
-        if(!empty($_POST["quantity"])){
-            $quantity=$_POST['quantity'];
-            // $sql="UPDATE `items` SET `quantity`='$quantity' WHERE id='$id'";
+        if(!empty($_POST["item_quantity"])){
+            $item_quantity=$_POST['item_quantity'];
+            // $sql="UPDATE `items` SET `item_quantity`='$item_quantity' WHERE item_id='$item_id'";
             // $conn->query($sql);
-            update("`items`","quantity='$quantity'","id='$id'");
+            update("`items`","item_quantity='$item_quantity'","item_id='$item_id'");
         }
     
         mysqli_close($conn);
@@ -52,12 +52,12 @@
     }
     
     if(isset($_POST["delete"])){
-        $id = $_POST['id'];
-        $item=retrieve("*","items","id='$id'");
+        $item_id = $_POST['item_id'];
+        $item=retrieve("*","items","item_id='$item_id'");
         $item_row=$item->fetch_assoc();
         $borrowed=$item_row["borrowed"];
         if($borrowed<=0){
-            delete("items","id='$id'");
+            delete("items","item_id='$item_id'");
             header("Location:items.php");
         }else{
             echo"
@@ -112,11 +112,11 @@
                 $items=retrieve("*","items",true,"item_name");
                 while($row=$items->fetch_assoc()){
                     $itemname = $row['item_name'];
-                    $quantity = $row['quantity'];
+                    $item_quantity = $row['item_quantity'];
                     $borrowed = $row['borrowed'];
-                    $remaining = $quantity - $borrowed;
-                    $id = $row['id'];
-                    if(isset($_POST["$id"])){
+                    $remaining = $item_quantity - $borrowed;
+                    $item_id = $row['item_id'];
+                    if(isset($_POST["$item_id"])){
                         echo "
                         <tr class='row-border'>
                             <form action='items.php' method='post'>
@@ -124,8 +124,8 @@
                             <input type='text' name='itemname'>
                             </td>
                             <td>
-                                $quantity <br>
-                                <input type='number' name='quantity'>
+                                $item_quantity <br>
+                                <input type='number' name='item_quantity'>
                             </td>
                             <td>
                                 $borrowed
@@ -136,23 +136,23 @@
                             <td>
                                 <input type='submit' name='submit'>
                             </td>
-                                <input type='hidden' name='id' value='$id'>
+                                <input type='hidden' name='item_id' value='$item_id'>
                             </form>
                         </tr>
                         ";
                     }
-                    elseif(isset($_POST["$id"])==false){
+                    elseif(isset($_POST["$item_id"])==false){
                     echo "
                     <tr class='row-border'>
                         <td class='itemname'>$itemname </td>
-                        <td>$quantity</td>
+                        <td>$item_quantity</td>
                         <td>$borrowed</td>
                         <td>$remaining</td>
                         <form action='items.php' method='post'>
                         <td>
-                            <input type='submit' name='$id' value='edit'>
+                            <input type='submit' name='$item_id' value='edit'>
                             <input type='submit' name='delete' value='delete'>
-                            <input type='hidden' name='id' value=$id>
+                            <input type='hidden' name='item_id' value=$item_id>
                         </td>
                         </form>
                     </tr>

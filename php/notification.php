@@ -44,15 +44,15 @@
 <body>
     <div class="notifications">
             <?php
-                $reserved=retrieve("*","reserved"," return_stat='borrowing' AND id_number='$id_number'");
+                $reserved=retrieve("*","reserved"," return_status='borrowing' AND id_number='$id_number'");
                     while($reserved_row=$reserved->fetch_assoc()){
-                        $returned_td = new DateTime($reserved_row['return_time']);
+                        $returned_td = new DateTime($reserved_row['scheduled_return_datetime']);
                         $return_dateandtime = $returned_td->format('M-d-Y H:i:s');
                         date_default_timezone_set('Asia/Manila');
                         $currentTime = date('M-d-Y H:i:s');
                         if($return_dateandtime<=$currentTime){
-                            $item_id=$reserved_row['id'];
-                            $items=retrieve("item_name","items","id='$item_id'");
+                            $item_id=$reserved_row['item_id'];
+                            $items=retrieve("item_name","items","item_id='$item_id'");
                             if ($itemrow = $items->fetch_assoc()) { // Check if item exists
                                 $item_name = $itemrow["item_name"];
                                 echo "<li>Please return the $item_name you borrowed</li>";

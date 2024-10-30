@@ -4,7 +4,7 @@
         $username = "root";
         $password="";
         $db_name="pliris";
-        $conn = mysqli_connect($server,$username,$password,$db_name);
+        $conn = new mysqli($server,$username,$password,$db_name);
         return $conn;
     }
 

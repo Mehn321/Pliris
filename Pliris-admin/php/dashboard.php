@@ -29,11 +29,11 @@
     include("database.php");
     $all_items=retrieve('item_name','items',true);
     $quantity_of_allitems=$all_items->num_rows;
-    $borrowed=retrieve('reserve_id','reserved',"return_stat='borrowing'");
+    $borrowed=retrieve('reserve_id','reserved',"return_status='borrowing'");
     $borrowed_itemsquantity=$borrowed->num_rows;
     $notifications=retrieve('notif_id','notifications',"id_number='$id_number'");
     $notifications_quantity=$notifications->num_rows;
-    $returned_items=retrieve('reserve_id','reserved',"return_stat='pending_return'");
+    $returned_items=retrieve('reserve_id','reserved',"return_status='pending_return'");
     $returned_items_quantity=$returned_items->num_rows;
     $accounts=retrieve('id_number','accounts',true);
     $accounts_quantity=$accounts->num_rows;
@@ -41,9 +41,9 @@
     $result=retrieve("*","items",true);
     while ($row = mysqli_fetch_assoc($result)){
         $item_name=$row['item_name'];
-        $quantity=$row['quantity'];
+        $item_quantity=$row['item_quantity'];
         $notifications_quantity=0;
-        if($quantity<=10){
+        if($item_quantity<=10){
             $notifications_quantity++;
         }
     }
