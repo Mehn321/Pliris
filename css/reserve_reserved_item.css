@@ -100,7 +100,7 @@ table tr th{
     font-size: 1.7vw;
 }
 
-table tr th, table tr td, table tr td input[type="number"]{
+table tr th, table tr td{
     padding: 10px;
     text-align: center;
 }
@@ -119,9 +119,24 @@ input[type="number"] {
     text-align: center;
 }
 
-input[type="submit"] {
-    height: 20opx;
+input[type="submit"]{
+    font-size: 1.5vw;
+    height: 2.5vw;
+    width: 6vw;
+    color: #fff; 
+    background-color: #3498db; 
+    border: none;
+    border-radius: 5px;
+}
 
+table tr td input[type="submit"]{
+    font-size: 1vw;
+    height: 1.8vw;
+    width: 4vw;
+    color: #fff; 
+    background-color: #3498db; 
+    border: none;
+    border-radius: 5px;
 }
 
 table tr {
@@ -129,3 +144,6 @@ table tr {
     border-bottom: 2px solid #000000;
 }
 
+.itemname{
+    text-align: left;
+}

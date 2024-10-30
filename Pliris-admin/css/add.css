@@ -105,43 +105,6 @@ table tr th, table tr td, table tr td input[type="number"]{
   text-align: center;
 }
 
-table input[type="number"]{
-  width: 10VW;
-  height: 8px;
-  padding: 0;
-}
-table input[type="file"]{
-  width: 10vw;
-  padding: 0px;
-}
-
-input[type="text"]{
-  width: 10vw;
-
-}
-table tr {
-  width: 100%;
-  border-bottom: 2px solid #000000;
-}
-
-
-
-form {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff; /* white background */
-}
-
-label {
-  margin-bottom: 5px; /* reduce margin */
-  font-weight: bold;
-  color: #333;
-}
-
 input[type="text"], input[type="number"] {
   padding: 10px;
   border: 1px solid #ccc;

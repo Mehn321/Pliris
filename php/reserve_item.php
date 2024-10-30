@@ -308,7 +308,7 @@
 
                     echo "
                     <tr class='row-border'>
-                        <td>$itemname </td>
+                        <td class='itemname'>$itemname </td>
                         <td>$quantity</td>
                         <td>$borrowedAtTime</td>
                         <td>$availableAtTime</td>
@@ -318,7 +318,6 @@
                                 <input type='hidden' name='borrow_time' value='$borrow_time'>
                                 <input type='hidden' name='return_time' value='$return_time'>
                                 <input type='hidden' name='availableAtTime' value='$availableAtTime'>
-                                <label>Quantity:</label>
                                 <input type='number' name='quantity'  min='0' required>
                                 <input type='submit' name='reserve' value='Reserve'>
                                 

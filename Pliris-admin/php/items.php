@@ -109,7 +109,7 @@
                 <th>Action</th>
             </tr>
             <?php
-                $items=retrieve("*","items",true);
+                $items=retrieve("*","items",true,"item_name");
                 while($row=$items->fetch_assoc()){
                     $itemname = $row['item_name'];
                     $quantity = $row['quantity'];
@@ -120,7 +120,7 @@
                         echo "
                         <tr class='row-border'>
                             <form action='items.php' method='post'>
-                            <td>$itemname
+                            <td class='itemname'>$itemname
                             <input type='text' name='itemname'>
                             </td>
                             <td>
@@ -144,7 +144,7 @@
                     elseif(isset($_POST["$id"])==false){
                     echo "
                     <tr class='row-border'>
-                        <td>$itemname </td>
+                        <td class='itemname'>$itemname </td>
                         <td>$quantity</td>
                         <td>$borrowed</td>
                         <td>$remaining</td>

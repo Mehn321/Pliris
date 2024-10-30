@@ -74,7 +74,6 @@ body {
 }
 
 .container{
-    
     display: block;
     flex-direction: column;
     padding: 20px;
@@ -101,26 +100,39 @@ table tr th, table tr td{
 }
 
 table tr th, table tr td, table tr td input[type="number"]{
-    padding: 10px;
+    padding: 5px;
     text-align: center;
 }
 
-table input[type="number"]{
-    width: 10VW;
-    height: 8px;
-    padding: 0;
-}
-table input[type="file"]{
-    width: 10vw;
-    padding: 0px;
+table tr td input[type="number"]{
+    font-size: 2.5;
+    height: 2.5vw;
+    width: 7VW;
 }
 
-input[type="text"]{
-    width: 10vw;
-
+table tr td form input[type="text"]{
+    font-size: 2.5;
+    height: 2.5vw;
+    width: 18VW;
 }
+
+
+table tr td input[type="submit"]{
+    font-size: 1.5vw;
+    height: 2.5vw;
+    width: 7vw;
+    color: #fff; 
+    background-color: #3498db; 
+    border: none;
+    border-radius: 5px;
+}
+
 table tr {
     width: 100%;
     border-bottom: 2px solid #000000;
+}
+
+.itemname{
+    text-align: left;
 }
 
