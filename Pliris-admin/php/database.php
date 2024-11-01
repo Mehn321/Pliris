@@ -29,6 +29,22 @@
         return $result;
     }
 
+    function joinTables($columns, $jointables, $on, $where = true, $order = null, $group=null) {
+        $conn = connect();
+        $sql = "SELECT $columns FROM $jointables ON $on WHERE $where";
+        
+        if (isset($order)) {
+            $sql .= " ORDER BY $order";
+        }
+        if(isset($group)){
+            $sql .= " GROUP BY $group";
+        }
+        
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
+
     // Update function
     function update($table, $set, $where) {
         $conn = connect();

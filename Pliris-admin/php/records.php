@@ -29,7 +29,7 @@ if(isset($_POST["submit"])){
     $notification_type = "item_returned_approved";
     $message = "Your returned item $itemname with the quantity of $quantity has been approved.";
     if($result->num_rows > 0) {
-        $update_query = "UPDATE reserved SET return_status='approved' WHERE reserve_id='$reserve_id'";
+        $update_query = "UPDATE reserved SET reservation_status='approved' WHERE reserve_id='$reserve_id'";
         $conn->query($update_query);
         $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
         mysqli_query($conn, $query);
@@ -82,7 +82,7 @@ include("sidebar.php");
 //     $month = $returned_td->format('F');
 //     $reserved = retrieve("*", "reserved", "reserve_id = '$reserve_id'");
 //     $row_reserved = $reserved->fetch_assoc();
-//     $return_status=$row_reserved['return_status'];
+//     $reservation_status=$row_reserved['reservation_status'];
 //     $reserved_dateandtime=$row_reserved['scheduled_reserve_datetime'];
 //     $id_num=$row_reserved['id_number'];
 //     $quantity = $row_reserved['quantity'];
@@ -94,12 +94,12 @@ include("sidebar.php");
 //     $row_items = $items->fetch_assoc();
 //     $itemname = $row_items['item_name'];
 
-//     if(!($return_status=='approved')){
+//     if(!($reservation_status=='approved')){
 //         continue;
 //     }
 
 $months = array();
-$records = retrieve("*", "records", true);
+$records = retrieve("*", "records");
 while ($row = $records->fetch_assoc()) {
     $borrower_firstname = $row['borrower_firstname'];
     $borrower_lastname = $row['borrower_lastname'];

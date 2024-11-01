@@ -21,28 +21,27 @@
         
         // $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
         // $result = $conn->query($sql);
-        $result=retrieve("*","reserved","reserve_id='$reserve_id'");
+        // $result=retrieve("","reserved","reserve_id='$reserve_id'");
 
-        if($result->num_rows > 0) {
-            // $update_query = "UPDATE reserved SET return_status='pending_return' WHERE reserve_id='$reserve_id'";
+        // if($result->num_rows > 0) {
+            // $update_query = "UPDATE reserved SET reservation_status='pending_return' WHERE reserve_id='$reserve_id'";
             // $insert_query = "INSERT INTO returned(`reserve_id`) values('$reserve_id')";
             // $conn->query($update_query);
             // $conn->query($insert_query);
-            $return_status=$_POST["return_status"];
-            if($return_status=="disaproved"){
-                update('reserved',"return_status='pending_return'","reserve_id='$reserve_id'");
-                // update("reserved","return_status='pending_return","'$reserve_id'");
-                
-                header("Location:reserved_items.php");
-            }
-            else{
-                update('reserved',"return_status='pending_return'","reserve_id='$reserve_id'");
-                insert("returned","`reserve_id`","'$reserve_id'");
-                
-                header("Location:reserved_items.php");
-            }
+        $reservation_status=$_POST["reservation_status"];
+        if($reservation_status=="disapproved"){
+            update('reserved',"reservation_status='pending_return'","reserve_id='$reserve_id'");
+            // update("reserved","reservation_status='pending_return","'$reserve_id'");
             
+            header("Location:reserved_items.php");
         }
+        else{
+            update('reserved',"reservation_status='pending_return'","reserve_id='$reserve_id'");
+            insert("returned","`reserve_id`","'$reserve_id'");
+            header("Location:reserved_items.php");
+        }
+            
+        // }
     }
 
 ?>
@@ -86,22 +85,30 @@
                 <th>Action</th>
             </tr>
             <?php
-                $reserved=retrieve("*","reserved","id_number='$id_number' AND (return_status='borrowing' OR return_status='disaproved')");
-                while($row=$reserved->fetch_assoc()){
-                    $reserve_id=$row['reserve_id'];
-                    $quantity_reserved = $row['quantity_reserved'];
-                    $scheduled_reserve_datetime = $row['scheduled_reserve_datetime'];
-                    $scheduled_return_datetime = $row['scheduled_return_datetime'];
-                    $item_id = $row['item_id'];
-                    $items = retrieve("item_name","items","item_id=$item_id");
-                    $return_status=$row['return_status'];
-                    $item_row = $items->fetch_assoc();
-                    $itemname = $item_row['item_name'];
-                    if($return_status=='pending_return'){
-                        continue;
-                        // header("Refresh:0");
-                    }
+                // $reserved=retrieve("*","reserved","id_number='$id_number' AND (reservation_status='borrowing' OR reservation_status='disapproved')");
+                // while($row=$reserved->fetch_assoc()){
+                //     $reserve_id=$row['reserve_id'];
+                //     $quantity_reserved = $row['quantity_reserved'];
+                //     $scheduled_reserve_datetime = $row['scheduled_reserve_datetime'];
+                //     $scheduled_return_datetime = $row['scheduled_return_datetime'];
+                //     $item_id = $row['item_id'];
+                //     $items = retrieve("item_name","items","item_id=$item_id");
+                //     $reservation_status=$row['reservation_status'];
+                //     $item_row = $items->fetch_assoc();
+                //     $itemname = $item_row['item_name'];
+                    // if($reservation_status=='pending_return'){
+                    //     continue;
+                    // }
 
+                    $reserved_items = joinTables("reserved.*, items.item_name", "reserved INNER JOIN items", "reserved.item_id = items.item_id", "reserved.id_number='$id_number' AND (reserved.reservation_status='borrowing' OR reserved.reservation_status='disapproved')");
+                    while($row=$reserved_items->fetch_assoc()){
+                        $reserve_id = $row['reserve_id'];
+                        $quantity_reserved = $row['quantity_reserved'];
+                        $scheduled_reserve_datetime = $row['scheduled_reserve_datetime'];
+                        $scheduled_return_datetime = $row['scheduled_return_datetime'];
+                        $itemname = $row['item_name'];
+                        $reservation_status = $row['reservation_status'];
+                    
                     echo "
                     <tr class='row-border'>
                         <td>$itemname </td>
@@ -111,7 +118,7 @@
                         <form action='reserved_items.php' method='post'>
                         <td>
                             <input type='hidden' name='reserve_id' value=$reserve_id>
-                            <input type='hidden' name='return_status' value=$return_status>
+                            <input type='hidden' name='reservation_status' value=$reservation_status>
                             <input type='submit' name='submit' value='return'>
                         </td>
                         </form>

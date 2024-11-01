@@ -57,7 +57,7 @@
         $item_row=$item->fetch_assoc();
         $borrowed=$item_row["borrowed"];
         if($borrowed<=0){
-            delete("items","item_id='$item_id'");
+            update("items","item_status='deleted'","item_id='$item_id'");
             header("Location:items.php");
         }else{
             echo"
@@ -109,7 +109,7 @@
                 <th>Action</th>
             </tr>
             <?php
-                $items=retrieve("*","items",true,"item_name");
+                $items=retrieve("*","items","item_status='active'","item_name");
                 while($row=$items->fetch_assoc()){
                     $itemname = $row['item_name'];
                     $item_quantity = $row['item_quantity'];
@@ -120,12 +120,11 @@
                         echo "
                         <tr class='row-border'>
                             <form action='items.php' method='post'>
-                            <td class='itemname'>$itemname
-                            <input type='text' name='itemname'>
+                            <td class='itemname'>
+                                <input type='text' name='itemname' value='$itemname'>
                             </td>
                             <td>
-                                $item_quantity <br>
-                                <input type='number' name='item_quantity'>
+                                <input type='number' name='item_quantity' value='$item_quantity'>
                             </td>
                             <td>
                                 $borrowed
@@ -151,7 +150,7 @@
                         <form action='items.php' method='post'>
                         <td>
                             <input type='submit' name='$item_id' value='edit'>
-                            <input type='submit' name='delete' value='delete'>
+                            <input type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete this item?');\">
                             <input type='hidden' name='item_id' value=$item_id>
                         </td>
                         </form>

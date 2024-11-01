@@ -22,7 +22,7 @@
         $conn=connect();
         // $sql = "SELECT * FROM reserved WHERE item_id = $item_id AND ((scheduled_reserve_datetime <= '$scheduled_reserve_datetime' AND scheduled_return_datetime >= '$scheduled_reserve_datetime') OR (scheduled_reserve_datetime <= '$scheduled_return_datetime' AND scheduled_return_datetime >= '$scheduled_return_datetime'))";
         // $result = $conn->query($sql);
-        $result=retrieve("*","reserved","item_id = $item_id AND ((scheduled_reserve_datetime <= '$scheduled_reserve_datetime' AND scheduled_return_datetime >= '$scheduled_reserve_datetime') OR (scheduled_reserve_datetime <= '$scheduled_return_datetime' AND scheduled_return_datetime >= '$scheduled_return_datetime'))");
+        // $result=retrieve("*","reserved","item_id = $item_id AND ((scheduled_reserve_datetime <= '$scheduled_reserve_datetime' AND scheduled_return_datetime >= '$scheduled_reserve_datetime') OR (scheduled_reserve_datetime <= '$scheduled_return_datetime' AND scheduled_return_datetime >= '$scheduled_return_datetime'))");
 
 
         $availableAtTime= $_POST['availableAtTime'];
@@ -37,11 +37,11 @@
             // }
             update("items","borrowed=$borrowed","item_id=$item_id");
 
-            // $reserve ="INSERT INTO reserved(`id_number`,`item_id`,`quantity`,`scheduled_reserve_datetime`,`scheduled_return_datetime`,`return_status`) values('$id_number','$item_id','$quantity_toreserve','$scheduled_reserve_datetime','$scheduled_return_datetime','borrowing' )";
+            // $reserve ="INSERT INTO reserved(`id_number`,`item_id`,`quantity`,`scheduled_reserve_datetime`,`scheduled_return_datetime`,`reservation_status`) values('$id_number','$item_id','$quantity_toreserve','$scheduled_reserve_datetime','$scheduled_return_datetime','borrowing' )";
             // if (!$conn->query($reserve)) {
             //     echo "<script>alert('Failed to insert into reserved table.');</script>";
             // }
-            insert("reserved","`id_number`,`item_id`,`quantity_reserved`,`scheduled_reserve_datetime`,`scheduled_return_datetime`,`return_status`","'$id_number','$item_id','$quantity_toreserve','$scheduled_reserve_datetime','$scheduled_return_datetime','borrowing'");
+            insert("reserved","`id_number`,`item_id`,`quantity_reserved`,`scheduled_reserve_datetime`,`scheduled_return_datetime`,`reservation_status`","'$id_number','$item_id','$quantity_toreserve','$scheduled_reserve_datetime','$scheduled_return_datetime','borrowing'");
             header("Location:reserve_item.php");
         }
     }
@@ -92,29 +92,32 @@
                     <th>Action</th>
                 </tr>
 
-        <?php if(isset($_POST["submit"])){ 
+        <?php 
+            if(isset($_POST["submit"])){ 
                 $scheduled_reserve_datetime=$_POST["scheduled_reserve_datetime"];
                 $scheduled_return_datetime=$_POST["scheduled_return_datetime"];
-                $items=retrieve("*","items",true);
-                // $reserved=retrieve("quantity,item_id","reserved","return_status='borrowing'");
+                $items=retrieve("*","items","item_status='active'");
                 while($row=$items->fetch_assoc()){
                     $itemname = $row['item_name'];
                     $quantity = $row['item_quantity'];
-                    // $borrowed = $row['borrowed'];
                     $item_id = $row['item_id'];
 
-                    // $conn=connect();
-                    // $sql = "SELECT * FROM reserved WHERE item_id = '$item_id' AND return_status='borrowing' AND (((scheduled_reserve_datetime <= '$scheduled_reserve_datetime' AND scheduled_return_datetime >= '$scheduled_reserve_datetime') OR (scheduled_reserve_datetime >= '$scheduled_return_datetime' AND scheduled_return_datetime <= '$scheduled_return_datetime')) OR ((scheduled_reserve_datetime >= '$scheduled_reserve_datetime' AND scheduled_return_datetime <= '$scheduled_reserve_datetime') OR (scheduled_reserve_datetime >= '$scheduled_return_datetime' AND scheduled_return_datetime <= '$scheduled_return_datetime')))";
-                    // $reserved = $conn->query($sql);
-                    $reserved=retrieve("*","reserved","item_id = '$item_id' AND return_status='borrowing' AND (((scheduled_reserve_datetime <= '$scheduled_reserve_datetime' AND scheduled_return_datetime >= '$scheduled_reserve_datetime') OR (scheduled_reserve_datetime >= '$scheduled_return_datetime' AND scheduled_return_datetime <= '$scheduled_return_datetime')) OR ((scheduled_reserve_datetime >= '$scheduled_reserve_datetime' AND scheduled_return_datetime <= '$scheduled_reserve_datetime') OR (scheduled_reserve_datetime >= '$scheduled_return_datetime' AND scheduled_return_datetime <= '$scheduled_return_datetime')))");
+                    $reserved=retrieve("*","reserved","item_id = '$item_id' AND reservation_status='borrowing' AND (((scheduled_reserve_datetime <= '$scheduled_reserve_datetime' AND scheduled_return_datetime >= '$scheduled_reserve_datetime') OR (scheduled_reserve_datetime >= '$scheduled_return_datetime' AND scheduled_return_datetime <= '$scheduled_return_datetime')) OR ((scheduled_reserve_datetime >= '$scheduled_reserve_datetime' AND scheduled_return_datetime <= '$scheduled_reserve_datetime') OR (scheduled_reserve_datetime >= '$scheduled_return_datetime' AND scheduled_return_datetime <= '$scheduled_return_datetime')))");
                     $borrowed_Quantity = 0;
                     while ($row2 = $reserved->fetch_assoc()) {
                         $borrowed_Quantity += $row2['quantity_reserved'];
                     }
-
                     $availableAtTime=$quantity - $borrowed_Quantity;
                     $borrowedAtTime = $borrowed_Quantity;
-
+                
+                // $items_reserved= joinTables("SUM(reserved.quantity_reserved) AS borrowed_Quantity, items.*", "reserved RIGHT JOIN items", "reserved.item_id = items.item_id AND reservation_status='borrowing' AND (((reserved.scheduled_reserve_datetime <= '$scheduled_reserve_datetime' AND reserved.scheduled_return_datetime >= '$scheduled_reserve_datetime') OR (reserved.scheduled_reserve_datetime >= '$scheduled_return_datetime' AND reserved.scheduled_return_datetime <= '$scheduled_return_datetime')) OR ((reserved.scheduled_reserve_datetime >= '$scheduled_reserve_datetime' AND reserved.scheduled_return_datetime <= '$scheduled_reserve_datetime') OR (reserved.scheduled_reserve_datetime >= '$scheduled_return_datetime' AND reserved.scheduled_return_datetime <= '$scheduled_return_datetime')))");
+                // while ($row = $items_reserved->fetch_assoc()) {
+                //     $borrowed_Quantity=$row['borrowed_Quantity'];
+                //     $itemname = $row['item_name'];
+                //     $quantity = $row['item_quantity'];
+                //     $item_id = $row['item_id'];
+                //     $availableAtTime=$quantity - $borrowed_Quantity;
+                //     $borrowedAtTime = $borrowed_Quantity;
                     echo "
                     <tr class='row-border'>
                         <td class='itemname'>$itemname </td>

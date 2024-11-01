@@ -32,20 +32,29 @@
         $reserve_id = $_POST["reserve_id"];
         $conn=connect();
         
-        $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
-        $result = $conn->query($sql);
-        
-        if($result->num_rows > 0) {
-            // $update_query = "UPDATE reserved SET return_status='pending_return' WHERE reserve_id='$reserve_id'";
-            // $insert_query = "INSERT INTO returned(`reserve_id`,`returned_time`) values('$reserve_id',NOW() )";
+        // $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
+        // $result = $conn->query($sql);
+        // $result=retrieve("","reserved","reserve_id='$reserve_id'");
+
+        // if($result->num_rows > 0) {
+            // $update_query = "UPDATE reserved SET reservation_status='pending_return' WHERE reserve_id='$reserve_id'";
+            // $insert_query = "INSERT INTO returned(`reserve_id`) values('$reserve_id')";
             // $conn->query($update_query);
             // $conn->query($insert_query);
-            date_default_timezone_set('Asia/Manila');
-            update("reserved","return_status='pending_return'","reserve_id='$reserve_id'");
-            insert("returned","`reserve_id`,`returned_time`","'$reserve_id', NOW()");
+        $reservation_status=$_POST["reservation_status"];
+        if($reservation_status=="disapproved"){
+            update('reserved',"reservation_status='pending_return'","reserve_id='$reserve_id'");
+            // update("reserved","reservation_status='pending_return","'$reserve_id'");
+            
             header("Location:reserved_items.php");
-            mysqli_close($conn);
         }
+        else{
+            update('reserved',"reservation_status='pending_return'","reserve_id='$reserve_id'");
+            insert("returned","`reserve_id`","'$reserve_id'");
+            header("Location:reserved_items.php");
+        }
+            
+        // }
     }
 
 ?>
@@ -90,22 +99,36 @@
                 <th>Action</th>
             </tr>
             <?php
-                $reserved=retrieve("*","reserved"," return_status='borrowing'");
-                while($row=$reserved->fetch_assoc()){
-                    $reserve_id=$row['reserve_id'];
+                // $reserved=retrieve("*","reserved"," reservation_status='borrowing'");
+                // while($row=$reserved->fetch_assoc()){
+                //     $reserve_id=$row['reserve_id'];
+                //     $quantity_reserved = $row['quantity_reserved'];
+                //     $scheduled_reserve_datetime = $row['scheduled_reserve_datetime'];
+                //     $scheduled_return_datetime = $row['scheduled_return_datetime'];
+                //     $item_id = $row['item_id'];
+                //     $id_num = $row['id_number'];
+                //     $items = retrieve("item_name","items","item_id=$item_id");
+                //     $reservation_status=$row['reservation_status'];
+                //     $row = $items->fetch_assoc();
+                //     $itemname = $row['item_name'];
+                //     $accounts=retrieve('first_name', 'accounts',"id_number='$id_num'");
+                //     $row_users=$accounts->fetch_assoc();
+                //     $first_name=$row_users['first_name'];
+                $sql="
+                    SELECT reserved.*, items.item_name, accounts.first_name 
+                    FROM reserved 
+                    JOIN items ON reserved.item_id = items.item_id 
+                    JOIN accounts ON reserved.id_number = accounts.id_number 
+                    WHERE reserved.reservation_status = 'borrowing' OR reserved.reservation_status = 'disapproved' 
+                ";
+                $reserved = $conn->query($sql);
+                while($row = $reserved->fetch_assoc()){
+                    $reserve_id = $row['reserve_id'];
                     $quantity_reserved = $row['quantity_reserved'];
                     $scheduled_reserve_datetime = $row['scheduled_reserve_datetime'];
                     $scheduled_return_datetime = $row['scheduled_return_datetime'];
-                    $item_id = $row['item_id'];
-                    $id_num = $row['id_number'];
-                    $items = retrieve("item_name","items","item_id=$item_id");
-                    $return_status=$row['return_status'];
-                    $row = $items->fetch_assoc();
                     $itemname = $row['item_name'];
-                    $accounts=retrieve('first_name', 'accounts',"id_number='$id_num'");
-                    $row_users=$accounts->fetch_assoc();
-                    $first_name=$row_users['first_name'];
-
+                    $first_name = $row['first_name'];
                     echo "
                     <tr class='row-border'>
                         <td>$first_name</td>

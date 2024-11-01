@@ -11,17 +11,6 @@
         exit;
     }
     include("../Pliris-admin/php/database.php");
-    
-    $all_items=retrieve('item_name','items', true);
-    $quantity_of_allitems=$all_items->num_rows;
-    $borrowed=retrieve('reserve_id','reserved',"id_number='$id_number'  AND return_status='borrowing'");
-    $borrowed_itemsquantity=$borrowed->num_rows;
-    $notifications=retrieve('notif_id','notifications',"id_number='$id_number'");
-    $notifications_quantity=$notifications->num_rows;
-    
-    $accounts=retrieve('username','accounts',"id_number='$id_number'");
-    $row_accounts=$accounts->fetch_assoc();
-    $username=$row_accounts['username'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +32,10 @@
             <img src="../images/ustplogo.png" alt="">
             <ul>
                 <?php
-                echo"<li>Welcome $username :)</li>";
+                    $accounts=retrieve('username','accounts',"id_number='$id_number'");
+                    $row_accounts=$accounts->fetch_assoc();
+                    $username=$row_accounts['username'];
+                    echo"<li>Welcome $username :)</li>";
                 ?>
             </ul>
         <div class="logout-container">
@@ -58,7 +50,15 @@
     <div class="box">
         <ul>
             <?php
-
+                // $all_items=retrieve('item_name','items', true);
+                // $quantity_of_allitems=$all_items->num_rows;
+                
+                // not use if e join or dli kay walay connection or relationship
+                $reserved=retrieve('reserve_id','reserved',"id_number='$id_number'  AND reservation_status='borrowing'");
+                $borrowed_itemsquantity=$reserved->num_rows;
+                $notifications=retrieve('notif_id','notifications',"id_number='$id_number'");
+                $notifications_quantity=$notifications->num_rows;
+                
             echo"
             <a href='reserve_item.php' class='red'><li><img src='../images/allitems.png' alt=''>Reserve item</li></a>
             <a href='reserved_items.php' class='blue'><li><img src='../images/borrow.png' alt=''>Reserved items: $borrowed_itemsquantity </li></a>

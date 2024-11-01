@@ -44,21 +44,27 @@
 <body>
     <div class="notifications">
             <?php
-                $reserved=retrieve("*","reserved"," return_status='borrowing' AND id_number='$id_number'");
-                    while($reserved_row=$reserved->fetch_assoc()){
-                        $returned_td = new DateTime($reserved_row['scheduled_return_datetime']);
-                        $return_dateandtime = $returned_td->format('M-d-Y H:i:s');
-                        date_default_timezone_set('Asia/Manila');
-                        $currentTime = date('M-d-Y H:i:s');
-                        if($return_dateandtime<=$currentTime){
-                            $item_id=$reserved_row['item_id'];
-                            $items=retrieve("item_name","items","item_id='$item_id'");
-                            if ($itemrow = $items->fetch_assoc()) { // Check if item exists
-                                $item_name = $itemrow["item_name"];
-                                echo "<li>Please return the $item_name you borrowed</li>";
-                            }
-                        }
-                    }
+                // $reserved=retrieve("*","reserved"," reservation_status='borrowing' AND id_number='$id_number'");
+                //     while($reserved_row=$reserved->fetch_assoc()){
+                //         $returned_td = new DateTime($reserved_row['scheduled_return_datetime']);
+                //         $return_dateandtime = $returned_td->format('M-d-Y H:i:s');
+                //         date_default_timezone_set('Asia/Manila');
+                //         $currentTime = date('M-d-Y H:i:s');
+                //         if($return_dateandtime<=$currentTime){
+                //             $item_id=$reserved_row['item_id'];
+                //             $items=retrieve("item_name","items","item_id='$item_id'");
+                //             if ($itemrow = $items->fetch_assoc()) {
+                //                 $item_name = $itemrow["item_name"];
+                //                 echo "<li>Please return the $item_name you borrowed</li>";
+                //             }
+                //         }
+                //     }
+                
+                $reservedItems = joinTables("items.item_name", "reserved INNER JOIN items","reserved.item_id = items.item_id", "reserved.reservation_status='borrowing' AND reserved.id_number='$id_number' AND reserved.scheduled_return_datetime <= NOW()");
+                while ($reserved_row = $reservedItems->fetch_assoc()) {
+                    $itemName = $reserved_row["item_name"];
+                    echo "<li>Please return the " . $itemName . " you borrowed</li>";
+                }
                 $notifications=retrieve("*","notifications","id_number = '$id_number'","notif_id DESC");
                 while ($row = mysqli_fetch_assoc($notifications)) {
                     $message =$row['message'];

@@ -27,7 +27,6 @@
     //     return $result;
     // }
     include("database.php");
-    $accounts=retrieve("*","accounts",true, "last_name");
 
     if(isset($_POST["submit"])){
         $id_number = $_POST['id_number'];
@@ -77,14 +76,10 @@
 
     if(isset($_POST["delete"])){
         $id_number = $_POST['id_number'];
-        $item=retrieve("quantity","reserved","id_number='$id_number'");
-        $reserved=0;
-        while($item_row=$item->fetch_assoc()){
-            $reserved= $reserved+$item_row["quantity"];
-        }
-        
+        $items_reserved=retrieve("quantity_reserved","reserved","id_number='$id_number'");
+        $reserved=$items_reserved->num_rows;
         if($reserved<=0){
-            delete("accounts","id_number='$id_number'");
+            update("accounts","account_status='deleted'","id_number='$id_number'");
             header("Location:accounts.php");
         }else{
             echo"
@@ -136,6 +131,7 @@
                 <th>Password</th>
             </tr>
             <?php
+                $accounts=retrieve("*","accounts","account_status='active'", "last_name");
                 while($row=$accounts->fetch_assoc()){
                     $first_name = $row['first_name'];
                     $last_name = $row['last_name'];
@@ -148,28 +144,22 @@
                         <tr class='row-border'>
                         <form action='accounts.php' method='post'>
                         <td>
-                            $last_name
-                            <input type='text' name='last_name'>
+                            <input type='text' name='last_name' value='$last_name'>
                         </td>
                         <td>
-                            $first_name
-                            <input type='text' name='first_name'>
+                            <input type='text' name='first_name' value='$first_name'>
                         </td>
                         <td>
-                            $id_number
-                            <input type='number' name='id_num'>
+                            <input type='number' name='id_num' value='$id_number'>
                         </td>
                         <td>
-                            $email
-                            <input type='email' name='email'>
+                            <input type='email' name='email' value='$email'>
                         </td>
                         <td>
-                            $username
-                            <input type='text' name='username'>
+                            <input type='text' name='username' value='$username'>
                         </td>
                         <td>
-                            $password
-                            <input type='text' name='password'>
+                            <input type='text' name='password' value='$password'>
                             <input type='hidden' name='id_number' value=$id_number>
                         </td>
                         <td><input type='submit' name='submit' value='submit'></td>
