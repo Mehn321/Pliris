@@ -125,9 +125,8 @@ include("sidebar.php");
 
     $year = $returned_td->format('Y');
     $month = $returned_td->format('F');
-    
-    // Create a combined key of year and month    $year_month_key = "$year-$month";
-    
+        
+    $year_month_key = "$year-$month";
     if (!isset($months[$year_month_key])) {
         $months[$year_month_key] = array();
     }
@@ -153,7 +152,7 @@ echo "
         </tr>";
 
 foreach ($months as $year_month => $items) {
-    echo "<tr><th colspan='5'>$year_month</th></tr>"; // Display year-month as the header
+    echo "<tr><th colspan='5'>$year_month</th></tr>";
     foreach ($items as $item) {
         echo "
             <tr class='row-border'>

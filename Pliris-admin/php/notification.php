@@ -44,7 +44,7 @@
         </nav>
     </header>
 
-    <div class="container">
+    <div class="notifications">
         <ul>
         <?php
             $result=retrieve("*","items",true);
@@ -52,7 +52,7 @@
                 $item_name=$row['item_name'];
                 $item_quantity=$row['item_quantity'];
                 if($item_quantity<=10){
-                    echo "<li> $item_name only has $item_quantity left. Please add more of this items. </li>";
+                    echo "<li>Reminder: $item_name only has $item_quantity left. Please add more of this items. </li>";
                 }
                 
             }

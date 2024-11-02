@@ -1,79 +1,97 @@
+:root {
+    --color-primary: #3498db;
+    --color-primary-hover: rgba(129, 211, 211, 0.542);
+    --color-text: #fff;
+    --color-background: #fff;
+    --transition-speed: 0.3s;
+}
 
 .navbar {
-    background-color: #3498db; /* blue background */
+    background-color: var(--color-primary);
     padding: 1em;
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     position: relative;
     align-items: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1;
-    justify-content: space-between;
-    
 }
 
-.menu{
-    background-color: #3498db;
+.menu {
+    background-color: var(--color-primary);
     border: none;
-    padding: 0px;
+    padding: 0;
+    transition: background-color var(--transition-speed);
 }
 
-.menu:hover{
-    background-color: rgba(129, 211, 211, 0.542);
+.menu:hover {
+    background-color: var(--color-primary-hover);
 }
 
-.navbar img{
-    display: flex;
+.navbar img {
     width: 50px;
     padding: 0;
     border-radius: 7px;
 }
 
-.navbar ul{
+.navbar ul {
     list-style-type: none;
     display: flex;
     margin-left: 15vw;
 }
 
-
-.navbar ul li{
-    margin-top: 0px;
+.navbar ul li {
+    margin-top: 0;
     text-decoration: none;
-    color: white;
+    color: var(--color-text);
     font-size: 3.5vw;
 }
-
 
 .logout-container {
     margin-right: 1vw;
 }
 
 .logout-container button {
-    background-color: #fff;
+    background-color: var(--color-background);
     border: none;
     padding: 10px 2vw;
     font-size: 2vw;
     cursor: pointer;
     border-radius: 5px;
-    color: #3498db; /* blue text */
+    color: var(--color-primary);
+    transition: background-color var(--transition-speed);
 }
 
 .logout-container button:hover {
     background-color: #ccc;
 }
 
-.container{
+.container {
     display: block;
     flex-direction: column;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff; /* white background */
+    background-color: var(--color-background);
     margin-top: 20px;
 }
 
-.notifications{
+.notifications {
     margin-left: 10px;
+    list-style-type: none; /* Remove the default bullet points */
+    padding: 0;
+}
+
+.notifications li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.notifications li:hover {
+    background-color: #eaeaea;
 }

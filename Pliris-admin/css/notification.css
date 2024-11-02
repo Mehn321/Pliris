@@ -1,49 +1,44 @@
-
 .navbar {
-    background-color: #3498db; /* blue background */
+    background-color: #3498db;
     padding: 1em;
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     position: relative;
     align-items: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1;
-    justify-content: space-between;
-    
 }
 
-.menu{
+.menu {
     background-color: #3498db;
     border: none;
-    padding: 0px;
+    padding: 0;
+    transition: background-color 0.3s;
 }
 
-.menu:hover{
+.menu:hover {
     background-color: rgba(129, 211, 211, 0.542);
 }
 
-.navbar img{
-    display: flex;
+.navbar img {
     width: 50px;
     padding: 0;
     border-radius: 7px;
 }
 
-.navbar ul{
+.navbar ul {
     list-style-type: none;
     display: flex;
     margin-left: 15vw;
 }
 
-
-.navbar ul li{
-    margin-top: 0px;
+.navbar ul li {
+    margin-top: 0;
     text-decoration: none;
-    color: white;
+    color: #fff;
     font-size: 3.5vw;
 }
-
 
 .logout-container {
     margin-right: 1vw;
@@ -56,20 +51,38 @@
     font-size: 2vw;
     cursor: pointer;
     border-radius: 5px;
-    color: #3498db; /* blue text */
+    color: #3498db;
 }
 
 .logout-container button:hover {
     background-color: #ccc;
 }
 
-.container{
+.container {
     display: block;
     flex-direction: column;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff; /* white background */
+    background-color: #fff;
     margin-top: 20px;
+}
+
+.notifications {
+    margin-left: 10px;
+    list-style-type: none; /* Remove the default bullet points */
+    padding: 0;
+}
+
+.notifications li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.notifications li:hover {
+    background-color: #eaeaea;
 }

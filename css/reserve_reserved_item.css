@@ -115,26 +115,24 @@ input[type="datetime-local"], input[type="number"] {
 }
 
 input[type="number"] {
+    display: flex;
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
     height: 30px; /* Increased height for better usability */
+    width: 10vw;
     text-align: center;
+    margin: 0 auto; /* Center the input element */
 }
 
 input[type="submit"]{
-    font-size: 1.5vw;
-    height: 2.5vw;
-    width: 6vw;
+    font-size: 10px;
+    height: 25px;
+    width: 60px;
     color: #fff; 
-    background-color: #3498db; 
-    border: none;
-    border-radius: 5px;
-}
-
-table tr td input[type="submit"]{
-    font-size: 1vw;
-    height: 1.8vw;
-    width: 4vw;
-    color: #fff; 
-    background-color: #3498db; 
+    background-color: #3498db;
     border: none;
     border-radius: 5px;
 }

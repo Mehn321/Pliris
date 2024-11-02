@@ -63,7 +63,7 @@
                 $reservedItems = joinTables("items.item_name", "reserved INNER JOIN items","reserved.item_id = items.item_id", "reserved.reservation_status='borrowing' AND reserved.id_number='$id_number' AND reserved.scheduled_return_datetime <= NOW()");
                 while ($reserved_row = $reservedItems->fetch_assoc()) {
                     $itemName = $reserved_row["item_name"];
-                    echo "<li>Please return the " . $itemName . " you borrowed</li>";
+                    echo "<li>Reminder: Please return the $itemName you borrowed</li>";
                 }
                 $notifications=retrieve("*","notifications","id_number = '$id_number'","notif_id DESC");
                 while ($row = mysqli_fetch_assoc($notifications)) {
