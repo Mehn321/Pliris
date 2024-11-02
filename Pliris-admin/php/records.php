@@ -13,32 +13,32 @@ if(isset($_POST['logout'])) {
 include("database.php");
 
 
-if(isset($_POST["submit"])){
-    $reserve_id = $_POST["reserve_id"];
-    $conn=connect();
+// if(isset($_POST["submit"])){
+//     $reserve_id = $_POST["reserve_id"];
+//     $conn=connect();
     
-    $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
-    $result = $conn->query($sql);
-    $row=$result->fetch_assoc();
-    $item_id=$row['item_id'];
-    $id_number = $row['id_number'];
-    $item_name=retrieve("item_name","items",$item_id);
-    $namerow=$item_name->fetch_assoc();
-    $itemname=$namerow["item_name"];
-    $quantity=$_POST["quantity"];
-    $notification_type = "item_returned_approved";
-    $message = "Your returned item $itemname with the quantity of $quantity has been approved.";
-    if($result->num_rows > 0) {
-        $update_query = "UPDATE reserved SET reservation_status='approved' WHERE reserve_id='$reserve_id'";
-        $conn->query($update_query);
-        $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
-        mysqli_query($conn, $query);
-        header("Location: returned_items.php");
-        exit;
-    }
+//     $sql = "SELECT * FROM reserved WHERE reserve_id='$reserve_id'";
+//     $result = $conn->query($sql);
+//     $row=$result->fetch_assoc();
+//     $item_id=$row['item_id'];
+//     $id_number = $row['id_number'];
+//     $item_name=retrieve("item_name","items",$item_id);
+//     $namerow=$item_name->fetch_assoc();
+//     $itemname=$namerow["item_name"];
+//     $quantity=$_POST["quantity"];
+//     $notification_type = "item_returned_approved";
+//     $message = "Your returned item $itemname with the quantity of $quantity has been approved.";
+//     if($result->num_rows > 0) {
+//         $update_query = "UPDATE reserved SET reservation_status='approved' WHERE reserve_id='$reserve_id'";
+//         $conn->query($update_query);
+//         $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
+//         mysqli_query($conn, $query);
+//         header("Location: returned_items.php");
+//         exit;
+//     }
     
     
-}
+// }
 
 ?>
 
@@ -98,32 +98,43 @@ include("sidebar.php");
 //         continue;
 //     }
 
-$months = array();
-$records = retrieve("*", "records");
-while ($row = $records->fetch_assoc()) {
-    $borrower_firstname = $row['borrower_firstname'];
-    $borrower_lastname = $row['borrower_lastname'];
-    $itemname = $row['item'];
-    $quantity = $row['quantity'];
-    $reserved_td = new DateTime($row['reserved_dateandtime']);
-    $reserved_dateandtime = $reserved_td->format('M-d-Y H:i:s');
-    $returned_td = new DateTime($row['returned_dateandtime']);
-    $returned_dateandtime = $returned_td->format('M-d-Y H:i:s');
-    
-    // Get the year and month
+    $months = array();
+    // $records = retrieve("*", "records");
+    // while ($row = $records->fetch_assoc()) {
+    //     $reserver_firstname = $row['reserver_firstname'];
+    //     $reserver_lastname = $row['reserver_lastname'];
+    //     $itemname = $row['item'];
+    //     $quantity = $row['quantity'];
+    //     $reserved_td = new DateTime($row['reserved_dateandtime']);
+    //     $reserved_dateandtime = $reserved_td->format('M-d-Y H:i:s');
+    //     $returned_td = new DateTime($row['returned_dateandtime']);
+    //     $returned_dateandtime = $returned_td->format('M-d-Y H:i:s');
+
+    $sql="SELECT reserved.quantity_reserved, reserved.scheduled_reserve_datetime, accounts.first_name, accounts.last_name, items.item_name, returned.returned_time FROM records INNER JOIN reserved ON records.reserve_id = reserved.reserve_id INNER JOIN accounts ON reserved.id_number = accounts.id_number INNER JOIN items ON reserved.id_number = accounts.id_number INNER JOIN returned ON reserved.reserve_id = returned.reserve_id";
+    $records=$conn->query($sql);
+    while($row=$records->fetch_assoc()){
+
+        $reserver_firstname = $row['first_name'];
+        $reserver_lastname = $row['last_name'];
+        $itemname = $row['item_name'];
+        $quantity = $row['quantity_reserved'];
+        $reserved_td = new DateTime($row['scheduled_reserve_datetime']);
+        $reserved_dateandtime = $reserved_td->format('M-d-Y H:i:s');
+        $returned_td = new DateTime($row['returned_time']);
+        $returned_dateandtime = $returned_td->format('M-d-Y H:i:s');
+
     $year = $returned_td->format('Y');
     $month = $returned_td->format('F');
     
-    // Create a combined key of year and month
-    $year_month_key = "$year-$month";
+    // Create a combined key of year and month    $year_month_key = "$year-$month";
     
     if (!isset($months[$year_month_key])) {
         $months[$year_month_key] = array();
     }
     
     $months[$year_month_key][] = array(
-        'first_name' => $borrower_firstname,
-        'last_name' => $borrower_lastname,
+        'first_name' => $reserver_firstname,
+        'last_name' => $reserver_lastname,
         'itemname' => $itemname,
         'quantity' => $quantity,
         'reserved_dateandtime' => $reserved_dateandtime,
