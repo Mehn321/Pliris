@@ -49,12 +49,16 @@
             header("Location:reserved_items.php");
         }
         else{
+            $sql = "SELECT * FROM returned WHERE reserve_id = '$reserve_id'";
+            $result = $conn->query($sql);
+            if($result->num_rows == 0){
+                // If the reserve_id does not exist, insert it into the returned table
+                insert("returned","`reserve_id`","'$reserve_id'");
+            }
             update('reserved',"reservation_status='pending_return'","reserve_id='$reserve_id'");
-            insert("returned","`reserve_id`","'$reserve_id'");
             header("Location:reserved_items.php");
         }
-            
-        // }
+
     }
 
 ?>

@@ -110,7 +110,7 @@ include("sidebar.php");
     //     $returned_td = new DateTime($row['returned_dateandtime']);
     //     $returned_dateandtime = $returned_td->format('M-d-Y H:i:s');
 
-    $sql="SELECT reserved.quantity_reserved, reserved.scheduled_reserve_datetime, accounts.first_name, accounts.last_name, items.item_name, returned.returned_time FROM records INNER JOIN reserved ON records.reserve_id = reserved.reserve_id INNER JOIN accounts ON reserved.id_number = accounts.id_number INNER JOIN items ON reserved.id_number = accounts.id_number INNER JOIN returned ON reserved.reserve_id = returned.reserve_id";
+    $sql="SELECT reserved.quantity_reserved, reserved.scheduled_reserve_datetime, accounts.first_name, accounts.last_name, items.item_name, returned.returned_time FROM records INNER JOIN reserved ON records.reserve_id = reserved.reserve_id INNER JOIN accounts ON reserved.id_number = accounts.id_number INNER JOIN items ON reserved.item_id = items.item_id INNER JOIN returned ON reserved.reserve_id = returned.reserve_id";
     $records=$conn->query($sql);
     while($row=$records->fetch_assoc()){
 

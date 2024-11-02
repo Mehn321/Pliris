@@ -13,7 +13,7 @@
 
     include("database.php");
     $conn=connect();
-        if(isset($_POST["approve"])){
+    if(isset($_POST["approve"])){
         $reserve_id = $_POST["reserve_id"];
         $return_id= $_POST['return_id'];
         $quantity_reserved=$_POST['quantity_reserved'];
@@ -72,14 +72,21 @@
             // $conn->query($update_borrowed);
             // $query = "INSERT INTO notifications (id_number, notification_type, message) VALUES ('$id_number', '$notification_type', '$message')";
             // mysqli_query($conn, $query);
-
-            insert("records", "`reserve_id`,`return_id`,`id_number`, `item_id`","'$reserve_id','$return_id', '$id_number','$item_id'");
-            update("items", "borrowed='$borrowed'","item_id='$item_id'");
-            insert("notifications", "id_number, notification_type, message","'$id_number', '$notification_type', '$message'");
-            update("reserved", "reservation_status='approved'","reserve_id='$reserve_id'");
+            $sql = "SELECT * FROM records WHERE reserve_id = '$reserve_id'";
+            $result = $conn->query($sql);
+            if($result->num_rows == 0){
+                insert("records", "`reserve_id`,`return_id`,`id_number`, `item_id`","'$reserve_id','$return_id', '$id_number','$item_id'");
+                insert("notifications", "id_number, notification_type, message","'$id_number', '$notification_type', '$message'");
+                
+            }
             // delete("reserved", "reserve_id='$reserve_id'");
             // delete("returned", "reserve_id='$reserve_id'");
+            update("items", "borrowed='$borrowed'","item_id='$item_id'");
+            update("reserved", "reservation_status='approved'","reserve_id='$reserve_id'");
             header("Location: returned_items.php");
+
+
+            
         }
 
     }
