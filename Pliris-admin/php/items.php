@@ -11,23 +11,8 @@
         exit;
     }
 
-    // function connect(){
-    //     $server="localhost";
-    //     $username = "root";
-    //     $password="";
-    //     $db_name="pliris";
-    //     $conn = mysqli_connect($server,$username,$password,$db_name);
-    //     return $conn;
-    // }
-    // function retrieve($column, $table){
-    //     $conn=connect();
-    //     $sql="SELECT $column FROM $table";
-    //     $result=$conn->query($sql);
-    //     return $result;
-    // }
-
     include("database.php");
-    
+
     if(isset($_POST["submit"])){
         $conn=connect();
         if (!$conn) {
@@ -36,15 +21,11 @@
         $item_id = $_POST['item_id'];
         if(!empty($_POST["itemname"])){
             $itemname=$_POST['itemname'];
-            // $sql="UPDATE `items` SET item_name='$itemname' WHERE item_id='$item_id'";    
-            // $conn->query($sql);
-            update("`items`","item_name='$itemname'","item_id='$item_id'");
+            update("items","item_name='$itemname'","item_id='$item_id'");
         }
         if(!empty($_POST["item_quantity"])){
             $item_quantity=$_POST['item_quantity'];
-            // $sql="UPDATE `items` SET `item_quantity`='$item_quantity' WHERE item_id='$item_id'";
-            // $conn->query($sql);
-            update("`items`","item_quantity='$item_quantity'","item_id='$item_id'");
+            update("items","item_quantity='$item_quantity'","item_id='$item_id'");
         }
     
         mysqli_close($conn);
@@ -52,26 +33,27 @@
     }
     
     if(isset($_POST["delete"])){
+        $conn=connect();
         $item_id = $_POST['item_id'];
-        $item=retrieve("*","items","item_id='$item_id'");
-        $item_row=$item->fetch_assoc();
-        $borrowed=$item_row["borrowed"];
-        if($borrowed<=0){
-            update("items","item_status='deleted'","item_id='$item_id'");
+        $item=mysqli_query($conn, "SELECT items.item_id, items.item_name, items.item_quantity, items.item_quantity_reserved, active_status.active_stat 
+        FROM items 
+        JOIN active_status ON items.active_status_ID = active_status.active_status_ID 
+        WHERE items.item_id = $item_id");
+        $item_row=mysqli_fetch_assoc($item);
+        $quantity_reserved=$item_row["quantity_reserved"];
+        if($quantity_reserved<=0){
+            update("items","active_status_ID='2'","item_id='$item_id'");
             header("Location:items.php");
         }else{
             echo"
             <script>
-                alert('A user is still reserving the item please for the user to return the item or you can force the return of the item in the system using the reserved in the menu');
+                alert('A user is still reserving the item please for the user to return the item or you can force the return of the item in the system using the reservations in the menu');
             </script>";
-            header("Loaction: items.php");
+            header("Location: items.php");
         }
-        
-        
     }
 
-?>
-
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,40 +63,32 @@
     <link rel="stylesheet" href="../css/items_records_reserved_returned.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
+
 <body>
     <?php
-        include("sidebar.php");
+        include("header.php");
+        text_head("items");
     ?>
-    <header class="header">
-        <nav class="navbar">
-            <button class="menu" onclick=showsidebar()>
-                <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
-            </button>
-            <h2>All Items</h2>
-        <div class="logout-container">
-            <form action="" method="post">
-            <button name="logout" value="logout">Log Out</button>
-            </form>
-        </div>
-        </nav>
-
-    </header>
+    
     <div class="container">
     <table>
             <tr class="row-border">
                 <th>Item Name</th>
                 <th>Quantity</th>
-                <th>Reserved</th>
-                <th>Remaining</th>
+                <th>Reservations</th>
                 <th>Action</th>
             </tr>
             <?php
-                $items=retrieve("*","items","item_status='active'","item_name");
-                while($row=$items->fetch_assoc()){
+                $conn=connect();
+                $items=mysqli_query($conn, "SELECT items.item_id, items.item_name, items.item_quantity, items.item_quantity_reserved, active_status.active_stat 
+                FROM items 
+                JOIN active_status ON items.active_status_ID = active_status.active_status_ID 
+                WHERE active_status.active_stat='active'
+                ORDER BY items.item_name");
+                while($row=mysqli_fetch_assoc($items)){
                     $itemname = $row['item_name'];
                     $item_quantity = $row['item_quantity'];
-                    $borrowed = $row['borrowed'];
-                    $remaining = $item_quantity - $borrowed;
+                    $quantity_reserved = $row['item_quantity_reserved'];
                     $item_id = $row['item_id'];
                     if(isset($_POST["$item_id"])){
                         echo "
@@ -127,10 +101,7 @@
                                 <input type='number' name='item_quantity' value='$item_quantity'>
                             </td>
                             <td>
-                                $borrowed
-                            </td>
-                            <td>
-                                $remaining
+                                $quantity_reserved
                             </td>
                             <td>
                                 <input type='submit' name='submit'>
@@ -140,13 +111,14 @@
                         </tr>
                         ";
                     }
-                    elseif(isset($_POST["$item_id"])==false){
+
+
+                    elseif(!isset($_POST["$item_id"])){
                     echo "
                     <tr class='row-border'>
                         <td class='itemname'>$itemname </td>
                         <td>$item_quantity</td>
-                        <td>$borrowed</td>
-                        <td>$remaining</td>
+                        <td>$quantity_reserved</td>
                         <form action='items.php' method='post'>
                         <td>
                             <input type='submit' name='$item_id' value='edit'>
@@ -158,6 +130,7 @@
                     ";
                     }
                 }
+                mysqli_close($conn);
             ?>
         </table>
     </div>

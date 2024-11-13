@@ -10,8 +10,16 @@
         header("Location: ../index.php");
         exit;
     }
-    include("../Pliris-admin/php/database.php");
+
+    include("header.php");
+    $sql="SELECT first_name FROM accounts WHERE id_number='$id_number'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    $first_name = $row['first_name'];
+    
+    text_head("Welcome $first_name", $id_number);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,53 +29,22 @@
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
-    <?php
-        include("sidebar.php");
-    ?>
-    <header class="header">
-        <nav class="navbar">
-            <button class="menu" onclick=showsidebar()>
-                <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
-            </button>
-            <img src="../images/ustplogo.png" alt="">
-            <ul>
-                <?php
-                    $accounts=retrieve('username','accounts',"id_number='$id_number'");
-                    $row_accounts=$accounts->fetch_assoc();
-                    $username=$row_accounts['username'];
-                    echo"<li>Welcome $username :)</li>";
-                ?>
-            </ul>
-        <div class="logout-container">
-            <form action="" method="post">
-            <button name="logout" value="logout">Log Out</button>
-            </form>
-        </div>
-        </nav>
-    </header>
-
-
     <div class="box">
         <ul>
             <?php
-                // $all_items=retrieve('item_name','items', true);
-                // $quantity_of_allitems=$all_items->num_rows;
-                
-                // not use if e join or dli kay walay connection or relationship
-                $reserved=retrieve('reserve_id','reserved',"id_number='$id_number'  AND reservation_status='borrowing'");
-                $borrowed_itemsquantity=$reserved->num_rows;
-                // $notifications=retrieve('notif_id','notifications',"id_number='$id_number'");
-                // $notifications_quantity=$notifications->num_rows;
-                
+                $reservations = "SELECT COUNT(reservations.reservation_status_ID) as borrowed_itemsquantity
+                FROM reservations INNER JOIN reservation_status ON reservations.reservation_status_ID = reservation_status.reservation_status_ID 
+                WHERE id_number='$id_number' AND reservation_stat='reserving'";
+                $result = $conn->query($reservations);
+                $row = $result->fetch_assoc();
+                $borrowed_itemsquantity = $row['borrowed_itemsquantity'];
             echo"
             <a href='reserve_item.php' class='red'><li><img src='../images/allitems.png' alt=''>Reserve item</li></a>
             <a href='reserved_items.php' class='blue'><li><img src='../images/borrow.png' alt=''>Reserved items: $borrowed_itemsquantity </li></a>
-            <a href='notification.php' class='yellow'><li><img src='../images/notification.png' alt=''>Notifications</li></a>
             ";
             ?>
         </ul>
     </div>
-
 </body>
 </html>
 

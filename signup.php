@@ -1,10 +1,10 @@
 <?php
     // function connect(){
     //     $server="localhost";
-    //     $username = "root";
+    //     $middle_initial = "root";
     //     $password="";
     //     $db_name="pliris";
-    //     $conn = mysqli_connect($server,$username,$password,$db_name);
+    //     $conn = mysqli_connect($server,$middle_initial,$password,$db_name);
     //     return $conn;
     //     }
     
@@ -14,9 +14,9 @@
         $last_name = $_POST['last_name'];
         $id_number = $_POST['id_number'];
         $email = $_POST['email'];
-        $username = $_POST['username'];
+        $middle_initial = $_POST['middle_initial'];
         $password = $_POST['password'];
-        // $insert="INSERT INTO `accounts`(`first_name`, `last_name`, `id_number`, `email`, `username`, `password`) VALUES ('$first_name','$last_name','$id_number','$email','$username','$password')";
+        // $insert="INSERT INTO `accounts`(`first_name`, `last_name`, `id_number`, `email`, `middle_initial`, `password`) VALUES ('$first_name','$last_name','$id_number','$email','$middle_initial','$password')";
         // if ($conn->query($insert) === TRUE) {
         //     header("Location: index.php");
         // } else {
@@ -34,7 +34,7 @@
             echo "<script>alert('Error: ID Number already exists. If you already have an account but you forgot your password please aproach Sir/Maam: $adminfname $adminlname.')</script>";
         }
         else{
-            insert("accounts","first_name, last_name, id_number, email, username, password","'$first_name','$last_name','$id_number','$email','$username','$password'");
+            insert("accounts","first_name, last_name, id_number, email, middle_initial, password","'$first_name','$last_name','$id_number','$email','$middle_initial','$password'");
             header("Location: index.php");
         }
     }
@@ -62,16 +62,16 @@
             <label for="">Last Name</label>
         </div>
         <div class="input-box">
+            <input type="text" name="middle_initial" maxlength="1" required>
+            <label for="">Middle Initial</label>
+        </div>
+        <div class="input-box">
             <input type="number" name="id_number" step="1" required>
             <label for="">ID Number</label>
         </div>
         <div class="input-box">
             <input type="email" name="email" required >
             <label for="">Email</label>
-        </div>
-        <div class="input-box">
-            <input type="text" name="username" required>
-            <label for="">Username</label>
         </div>
         <div class="input-box">
             <input type="text" name="password" required >

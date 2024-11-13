@@ -10,11 +10,9 @@
         header("Location: ../index.php");
         exit;
     }
-    include("../Pliris-admin/php/database.php");
-    include("sidebar.php");
-    
 
-    
+    include("header.php");
+    text_head("Notifications", $id_number);
     
 ?>
 <!DOCTYPE html>
@@ -25,51 +23,30 @@
     <title>Notifications</title>
     <link rel="stylesheet" href="../css/notification.css">
 </head>
-<header class="header">
-        <nav class="navbar">
-            <button class="menu" onclick=showsidebar()>
-                <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
-            </button>
-            <img src="../images/ustplogo.png" alt="">
-            <ul>
-                <li> NOTIFICATIONS </li>
-            </ul>
-            <div class="logout-container">
-                <form action="" method="post">
-                <button name="logout" value="logout">Log Out</button>
-                </form>
-            </div>
-        </nav>
-</header>
 <body>
     <div class="notifications">
             <?php
-                // $reserved=retrieve("*","reserved"," reservation_status='borrowing' AND id_number='$id_number'");
-                //     while($reserved_row=$reserved->fetch_assoc()){
-                //         $returned_td = new DateTime($reserved_row['scheduled_return_datetime']);
-                //         $return_dateandtime = $returned_td->format('M-d-Y H:i:s');
-                //         date_default_timezone_set('Asia/Manila');
-                //         $currentTime = date('M-d-Y H:i:s');
-                //         if($return_dateandtime<=$currentTime){
-                //             $item_id=$reserved_row['item_id'];
-                //             $items=retrieve("item_name","items","item_id='$item_id'");
-                //             if ($itemrow = $items->fetch_assoc()) {
-                //                 $item_name = $itemrow["item_name"];
-                //                 echo "<li>Please return the $item_name you borrowed</li>";
-                //             }
-                //         }
-                //     }
-                
-                $reservedItems = joinTables("items.item_name", "reserved INNER JOIN items","reserved.item_id = items.item_id", "reserved.reservation_status='borrowing' AND reserved.id_number='$id_number' AND reserved.scheduled_return_datetime <= NOW()");
-                while ($reserved_row = $reservedItems->fetch_assoc()) {
-                    $itemName = $reserved_row["item_name"];
-                    echo "<li>Reminder: Please return the $itemName you borrowed</li>";
+                $reserved = $conn->query("SELECT * FROM reservations 
+                INNER JOIN reservation_status ON reservations.reservation_status_ID = reservation_status.reservation_status_ID 
+                WHERE reservation_status.reservation_stat='reserving' AND reservations.id_number='$id_number' AND scheduled_return_datetime <= NOW()");
+                while ($reserved_row = $reserved->fetch_assoc()) {
+                    $item_id = $reserved_row['item_id'];
+                    $items = retrieve("item_name", "items", "item_id='$item_id'");
+                    if ($itemrow = $items->fetch_assoc()) {
+                        $item_name = $itemrow["item_name"];
+                        echo "<li class='reminder'>REMINDER: Please return <strong>$item_name</strong> you borrowed</li>";
+                    }
                 }
-                $notifications=retrieve("*","notifications","id_number = '$id_number'","notif_id DESC");
+                
+                $conn->query("UPDATE notifications SET notification_status_id='1' WHERE id_number='$id_number' AND notification_status_id='2'");
+                $notifications = $conn->query(
+                    "SELECT * FROM notifications WHERE id_number = '$id_number' ORDER BY notification_id DESC"
+                );
                 while ($row = mysqli_fetch_assoc($notifications)) {
-                    $message =$row['message'];
+                    $message = $row['message'];
                     echo "<li>$message</li>";
                 }
+                
             ?>
     </div>
 </body>

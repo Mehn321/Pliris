@@ -10,24 +10,21 @@
             header("Location: ../index.php");
             exit;
         }
-        include("database.php");
+    include("database.php");
+    include("header.php");
 
-        if (isset($_POST["add"])) {
-            $item_name = $_POST['item_name'];
-            $item_quantity = $_POST['item_quantity'];
-        
-            // $conn = mysqli_connect('localhost', 'root', '', 'pliris');
-            // if (!$conn) {
-            //     die("Connection failed: " . mysqli_connect_error());
-            // }
-        
-            // $sql = "INSERT INTO items (item_name, item_quantity) VALUES ('$item_name', '$item_quantity')";
-            // mysqli_query($conn, $sql);
-            // mysqli_close($conn);
 
-            insert("items","item_name, item_quantity","'$item_name', '$item_quantity'");
-            header("Location: add.php");
-        }
+    if (isset($_POST["add"])) {
+        $item_name = $_POST['item_name'];
+        $item_quantity = $_POST['item_quantity'];
+
+        insert("items","item_name, item_quantity","'$item_name', '$item_quantity'");
+        header("Location: add.php");
+    }
+
+    text_head("Add Items");
+
+
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,24 +35,6 @@
     <link rel="stylesheet" href="../css/add.css">
 </head>
 <body>
-<?php
-        include("sidebar.php");
-    ?>
-    <header class="header">
-        <nav class="navbar">
-            <button class="menu" onclick=showsidebar()>
-                <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
-            </button>
-            <h2>Add Item</h2>
-
-        <div class="logout-container">
-            <form action="" method="post">
-                <button name="logout" value="logout">Log Out</button>
-            </form>
-        </div>
-        </nav>
-
-    </header>
     <div class="container">
         <h1>Add Item</h1>
         <br>
@@ -77,7 +56,3 @@
     
 </body>
 </html>
-
-<?php
-
-?>

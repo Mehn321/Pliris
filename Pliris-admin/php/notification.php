@@ -12,6 +12,8 @@
     }
 
     include("database.php");
+    include("header.php");
+    text_head("Notifications");
 
 ?>
 <!DOCTYPE html>
@@ -23,26 +25,6 @@
     <link rel="stylesheet" href="../css/notification.css">
 </head>
 <body>
-    <?php
-        include("sidebar.php");
-    ?>
-    <header class="header">
-        <nav class="navbar">
-            <button class="menu" onclick=showsidebar()>
-                <img src="../images/menuwhite.png" alt="menu"height="40px" width="45" >
-            </button>
-            <img src="../images/ustplogo.png" alt="">
-            <ul>
-                
-                <li> NOTIFICATIONS </li>
-            </ul>
-            <div class="logout-container">
-                <form action="" method="post">
-                <button name="logout" value="logout">Log Out</button>
-                </form>
-            </div>
-        </nav>
-    </header>
 
     <div class="notifications">
         <ul>
