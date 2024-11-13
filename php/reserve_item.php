@@ -96,14 +96,14 @@
                     $query = "SELECT items.item_name, items.item_quantity, items.item_id, 
                             IFNULL(SUM(reservations.quantity_reserved), 0) AS borrowed_Quantity
                             FROM items
-                            LEFT JOIN reservations ON items.item_id = reservations.item_id 
+                            LEFT JOIN reservations ON items.item_id = reservations.item_id AND reservations.reservation_status_ID = 1 
                             AND (
                                 (reservations.scheduled_reserve_datetime <= '$scheduled_reserve_datetime' AND reservations.scheduled_return_datetime >= '$scheduled_reserve_datetime') OR 
                                 (reservations.scheduled_reserve_datetime <= '$scheduled_return_datetime' AND reservations.scheduled_return_datetime >= '$scheduled_return_datetime') OR
                                 (reservations.scheduled_reserve_datetime <= '$scheduled_reserve_datetime' AND reservations.scheduled_return_datetime >= '$scheduled_return_datetime')
                             )
                             JOIN active_status ON items.active_status_ID = active_status.active_status_ID
-                            WHERE active_status.active_stat = 'active'
+                            WHERE active_status.active_stat = 'active' 
                             GROUP BY items.item_id";
                     $items_result = $conn->query($query);
                     while ($row = $items_result->fetch_assoc()) {
