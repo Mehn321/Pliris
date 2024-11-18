@@ -1,0 +1,132 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f7f7f7;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 15vw;
+    height: 100vh;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.sidebar ul a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5vw;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.sidebar a:hover {
+    color: #001572;
+}
+
+.sidebar ul button{
+    margin-bottom: 15px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li:hover {
+    background-color: #555;
+}
+
+.navbar {
+    background-color: #3498db;
+    padding: 1em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.menu {
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    border-radius: 2px;
+}
+
+.menu:hover {
+    background-color: rgba(129, 211, 211, 0.542);
+}
+
+.navbar img {
+    width: 50px;
+    border-radius: 7px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar ul li {
+    color: white;
+    font-size: 3.5vw;
+}
+
+.logout-container {
+    margin-right: 1vw;
+}
+
+.logout-container button {
+    background-color: #fff;
+    border: none;
+    padding: 10px 2vw;
+    font-size: 2vw;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #3498db;
+}
+
+.logout-container button:hover {
+    background-color: #ccc;
+}
+
+.badge1 img {
+    width: 5vw !important;
+}
+
+.badge1 {
+    display: flex !important;
+    padding: 0 !important;
+    position: absolute !important;
+    top: 25px !important;
+}
+
+.badge {
+    background-color: red;
+    border-radius: 100px !important;
+    position: absolute !important;
+    font-size: 1.2vw !important;
+    top: 0.5px !important;
+    right: 0.4vw !important;
+    padding: 0.1px 0.6vw !important;
+    color: white !important;
+}

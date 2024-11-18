@@ -52,7 +52,6 @@
             header("Location: items.php");
         }
     }
-
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,7 +111,6 @@
                         ";
                     }
 
-
                     elseif(!isset($_POST["$item_id"])){
                     echo "
                     <tr class='row-border'>
@@ -139,4 +137,3 @@
 </html>
 <script>
 </script>
-
