@@ -1,0 +1,121 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: sans-serif;
+    background:url('/Biolab.jpeg')no-repeat;
+    background-size: cover;
+}
+
+.wrapper {
+    width: 380px;
+    background: transparent;
+    border-radius: 15px;
+    box-shadow: 0px 10px 50px rgba(15, 0, 15, 0.15);
+    backdrop-filter:blur(20px);
+    border: 2px solid blur(255,255,-1);
+    padding: 30px;
+    margin: auto;
+}
+
+.wrapper img {
+    width: 120px;
+    height: 120px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.wrapper h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #000;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.wrapper h3 {
+    text-align: center;
+    color: #3498db;
+    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 15px 0;
+    border: 1px solid black;
+    outline: none;
+    background: none;
+    color: #000;
+    font-size: 16px;
+    letter-spacing: 1px;
+    transition: 0.5s;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    color: black;
+    pointer-events: none;
+    transition: 0.5s;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+    top: -10px;
+    font-size: 15px;
+    color: #3498db;
+    transform: translateX(10px) translate(-7px);
+    padding: 0 10px;
+    background: #fff;
+    border: 1px solid #3498db;
+}
+
+input:focus {
+    border-color: #3498db;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px 0;
+    background: #3498db;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    letter-spacing: 1px;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #2980b9;
+}
+
+p {
+    text-align: center;
+    margin-top: 20px;
+    color: #000;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
