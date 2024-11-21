@@ -29,24 +29,21 @@ text_head("Records", $sessionManager->getAdminId());
                 <th>Item Name</th>
                 <th>Quantity</th>
                 <th>Reserved Schedule</th>
-                <th>Return Schedule</th>
-                <th>Status</th>
+                <th>Returned At</th>
             </tr>
             <?php foreach($recordsList as $record): 
                 $reserve_datetime = new DateTime($record['scheduled_reserve_datetime']);
-                $return_datetime = new DateTime($record['scheduled_return_datetime']);
+                $return_datetime = new DateTime($record['returned_datetime']);
             ?>
             <tr class="row-border">
-                <td><?= $record['first_name'] ?></td>
+                <td><?= $record['first_name'] ?> <?= $record['last_name'] ?></td>
                 <td><?= $record['item_name'] ?></td>
                 <td><?= $record['quantity_reserved'] ?></td>
                 <td><?= $reserve_datetime->format('M-d-Y h:i:s:a') ?></td>
                 <td><?= $return_datetime->format('M-d-Y h:i:s:a') ?></td>
-                <td><?= $record['reservation_stat'] ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
     </div>
-    
 </body>
 </html>

@@ -26,7 +26,7 @@ class UserReturnedItemsManager extends Database {
     }
 
     private function getUserReturns() {
-        $userId = $this->sessionManager->getUserId();
+        $userId = $this->sessionManager->getUserId_number();
         return $this->retrieve(
             'reservations.*, items.item_name, reservation_status.reservation_stat',
             'reservations 

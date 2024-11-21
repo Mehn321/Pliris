@@ -20,7 +20,7 @@ class SessionManager {
         return $_SESSION['id_admin'] ?? null;
     }
 
-    public function getUserId() {
+    public function getUserId_number() {
         return $_SESSION['id_number'] ?? null;
     }
 
@@ -47,7 +47,6 @@ class SessionManager {
     public function handleLogout() {
         if (isset($_POST['logout'])) {
             $this->logout();
-            $this->redirectToLogin();
         }
     }
 

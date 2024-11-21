@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,13 +10,16 @@
 <?php
 
 function text_head($headertext) {
-    require_once "../../src/admin/notifications.php";
-    require_once "../../src/shared/SessionManager.php";
+    require_once '../../src/shared/SessionManager.php';
+    require_once '../../src/user/notifications.php';
     $sessionManager = new SessionManager();
-    $notificication=new AdminNotificationsManager($sessionManager);
-    $notSeenNotifications= $notificication->getNotseenNotificationsCount();
-    $lowStockItems = $notificication->getlowstockNotificationCount();
-    $totalrednotif = $notSeenNotifications + $lowStockItems; // total number of
+    $notificationManager =new UserNotificationsManager($sessionManager);
+    $totalrednotif = $notificationManager->not_seenNotificationCount();
+    if (isset($_POST['logout'])) {
+        $sessionManager->handleLogout();
+        header("Location: index.php");
+        exit();
+    }
     echo '<header class="header">
         <nav class="navbar">
             <button class="menu" onclick="showsidebar()">
@@ -42,14 +44,10 @@ function text_head($headertext) {
                 <button class="menu" onclick="hidesidebar()">
                     <img src="../../assets/images/menublue.png" alt="menu" height="40px" width="45px">
                 </button>
-                <a href="dashboard.php"><li>Dashboard</li></a>
-                <a href="items.php"><li>Items</li></a>
-                <a href="reserved_items.php"><li>Reserved items</li></a>
-                <a href="returned_items.php"><li>Returned items</li></a>
-                <a href="add.php"><li>Add Items</li></a>
-                <a href="accounts.php"><li>Accounts</li></a>
-                <a href="records.php"><li>Records</li></a>
-                <a href="notifications.php"><li>Notifications</li></a>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="reserve_item.php">Reserve Items</a></li>
+                <li><a href="my_reservations.php">My Reservations</a></li>
+                <li><a href="notifications.php">notifications</a></li>
             </ul>
         </div>
     </header>';

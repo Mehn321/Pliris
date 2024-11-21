@@ -21,6 +21,8 @@ if (isset($_POST['submit'])) {
 if (isset($_POST['delete'])) {
     $items->deleteItem($_POST['item_id']);
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +59,7 @@ if (isset($_POST['delete'])) {
                         <input type='text' name='itemname' value='$itemname'>
                     </td>
                     <td>
-                        <input type='number' name='item_quantity' value='$item_quantity'>
+                        <input type='number' name='item_quantity' value='$item_quantity' min='0'>
                     </td>
                     <td>
                         $quantity_reserved

@@ -30,6 +30,7 @@ body {
 }
 
 .notifications li {
+    list-style: none;
     margin-bottom: 10px;
     padding: 10px;
     background-color: #f9f9f9;
@@ -41,3 +42,17 @@ body {
     background-color: #eaeaea;
 }
 
+.notification-time {
+    display: block;
+    font-size: 10px;
+    color: #666;
+}
+
+.not-seen-notifications{
+    border-left: 4px solid #3498db;
+}
+
+.seen-notifications li {
+    border-left: 4px solid #95a5a6;
+    opacity: 0.8;
+}

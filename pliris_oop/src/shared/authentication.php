@@ -1,5 +1,4 @@
 <?php
-require_once "database.php";
 class Authentication extends Database {
     private $sessionManager;
     
@@ -8,44 +7,42 @@ class Authentication extends Database {
         $this->sessionManager = $sessionManager;
     }
     
-    public function handleUserLogin($credentials) {
-        $result = $this->validateUserCredentials($credentials);
+    public function handleUserLogin($id_number, $password) {
+        $result = $this->validateUserCredentials($id_number, $password);
         if ($result['success']) {
-            $this->sessionManager->setUserSession($credentials['id_number']);
+            $this->sessionManager->setUserSession($id_number);
         }
         return $result;
     }
     
-    public function handleAdminLogin($credentials) {
-        if ($credentials['id_number'] !== '999999999') {
+    public function handleAdminLogin($id_number, $password) {
+        if ($id_number !== '999999999') {
             return ['success' => false, 'message' => 'Invalid admin credentials'];
-        }else{
-            $result = $this->validateAdminCredentials($credentials);
-            if ($result['success']) {
-                $this->sessionManager->setAdminSession($credentials['id_number']);
-            }
-            return $result;
         }
-        
+        $result = $this->validateAdminCredentials($id_number, $password);
+        if ($result['success']) {
+            $this->sessionManager->setAdminSession($id_number);
+        }
+        return $result;
     }
     
-    private function validateUserCredentials($credentials) {
-        $result = $this->retrieve("*", "accounts", "id_number='{$credentials['id_number']}'");
+    private function validateUserCredentials($id_number, $password) {
+        $result = $this->retrieve("*", "accounts", "id_number='$id_number'");
         if ($result->num_rows === 0) {
             return ['success' => false, 'message' => 'ID number not found'];
         }
         $user = $result->fetch_assoc();
-        if ($user['password'] === $credentials['password']) {
+        if ($user['password'] === $password) {
             return ['success' => true];
         } else {
             return ['success' => false, 'message' => 'Invalid password'];
         }
     }
     
-    private function validateAdminCredentials($credentials) {
+    private function validateAdminCredentials($id_number, $password) {
         $result = $this->retrieve("password", "accounts", "id_number='999999999'");
         $admin = $result->fetch_assoc();
-        if ($admin['password'] === $credentials['password']) {
+        if ($admin['password'] === $password) {
             return ['success' => true];
         } else {
             return ['success' => false, 'message' => 'Invalid admin password'];
@@ -75,4 +72,10 @@ class Authentication extends Database {
     private function getAdminInfo() {
         return $this->retrieve('first_name, last_name', 'accounts', "id_number='999999999'")->fetch_assoc();
     }
+    
+    public function getUserinfo($userid_number) {
+        return $this->retrieve('first_name, last_name, middle_initial', 'accounts', "id_number='$userid_number'")->fetch_assoc();
+        
+    }
+
 }

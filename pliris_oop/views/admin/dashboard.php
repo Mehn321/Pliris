@@ -3,7 +3,7 @@ include "header.php";
 require_once '../../src/shared/database.php';
 require_once '../../src/shared/SessionManager.php';
 require_once '../../src/admin/dashboard.php';
-require_once '../../src/admin/notification.php';
+require_once '../../src/admin/notifications.php';
 
 $sessionManager = new SessionManager();
 
@@ -11,9 +11,11 @@ $sessionManager->setRedirectPath("index.php");
 $sessionManager->checkAdminAccess();
 $sessionManager->handleLogout();
 
-$notificationManager = new NotificationManager();
+$notificationManager = new AdminNotificationsManager($sessionManager);
 $dashboard = new AdminDashboard();
-text_head("Welcome Admin")
+text_head("Welcome Admin");
+$notificationManager->createShortageNotification(0);
+
 ?>
 <!DOCTYPE html>
 <html>

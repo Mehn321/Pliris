@@ -1,15 +1,5 @@
 <?php
 class ItemManager extends Database {
-    private $table = 'items';
-
-    public function handleItemActions() {
-        if (isset($_POST['submit'])) {
-            $this->updateItem($_POST);
-        }
-        if (isset($_POST['delete'])) {
-            $this->deleteItem($_POST['item_id']);
-        }
-    }
 
 
     public function getActiveItems() {
@@ -22,15 +12,15 @@ class ItemManager extends Database {
     }
 
     public function updateItem($item_id, $item_name=NULL, $item_quantity=NULL) {
-        if (!empty($item_name)) {
-            $this->update($this->table, "item_name='{$item_name}'", "item_id='$item_id'");
+        if ($item_name != NULL) {
+            $this->update("items", "item_name='{$item_name}'", "item_id='$item_id'");
         }
-        if (!empty($item_quantity)) {
-            $this->update($this->table, "item_quantity='{$item_quantity}'", "item_id='$item_id'");
+        if ($item_quantity != NULL) {
+            $this->update("items", "item_quantity='{$item_quantity}'", "item_id='$item_id'");
         }
     }
 
     public function deleteItem($item_id) {
-        $this->update($this->table, "active_status_ID=2", "item_id='$item_id'");
+        $this->update("items", "active_status_ID=2", "item_id='$item_id'");
     }
 }

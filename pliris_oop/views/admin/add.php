@@ -20,23 +20,25 @@
     $addItem = new AddItemManager();
 
     if(isset($_POST['submit'])) {
-        $addItem->addNewItem($_POST);
+        $item_quantity = $_POST['item_quantity'];
+        $item_name = $_POST['item_name'];
+        $addItem->addNewItem($item_name, $item_quantity);
     }
 
     text_head("Add Item", $sessionManager->getAdminId());
     ?>
 
     <div class="container">
-        <form action="" method="post">
+        <form class="add-items-form" action="" method="post">
             <div class="input-box">
+            <label>Item Name</label>
                 <input type="text" name="item_name" required>
-                <label>Item Name</label>
             </div>
             <div class="input-box">
-                <input type="number" name="quantity" required>
-                <label>Quantity</label>
+            <label>Quantity</label>
+                <input type="number" name="item_quantity" required>
             </div>
-            <input type="submit" name="submit" value="Add" class="btn">
+            <input class="add-items-table" type="submit" name="submit" value="Add" class="btn">
         </form>
     </div>
 </body>

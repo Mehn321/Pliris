@@ -1,5 +1,5 @@
 <?php 
-class ReservationsManager extends Database {
+class MyReservationsManager extends Database {
     private $sessionManager;
 
     public function __construct(SessionManager $sessionManager) {
@@ -36,16 +36,5 @@ class ReservationsManager extends Database {
             "reserve_id = '$reserve_id'"
         );
         return true;
-    }
-
-    public function getReservations() {
-        return $this->retrieve(
-            'reservations.*, items.item_name, accounts.first_name, accounts.last_name, reservation_status.reservation_stat',
-            'reservations 
-            JOIN items ON reservations.item_id = items.item_id 
-            JOIN accounts ON reservations.id_number = accounts.id_number 
-            JOIN reservation_status ON reservations.reservation_status_ID = reservation_status.reservation_status_ID',
-            "reservation_status.reservation_stat = 'reserving' OR reservation_status.reservation_stat = 'disapproved'"
-        );
     }
 }

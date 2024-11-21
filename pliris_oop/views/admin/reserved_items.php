@@ -18,8 +18,13 @@
     $sessionManager->handleLogout();
 
     $admin_id_number = $sessionManager->getAdminId();
-    $reservedItems = new ReservationManager();
-    $reservedList = $reservedItems->getReservations($admin_id_number);
+    $reservedItems = new ReservationsManager($sessionManager);
+
+    if (isset($_POST['return'])) {
+        $reservedItems->returnItem($_POST['reserve_id']);
+        header("Location: reserved_items.php");
+        exit();
+    }
 
     text_head("Reserved Items", $sessionManager->getAdminId());
     ?>
@@ -38,12 +43,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($item = $reservedList->fetch_assoc()){
+                    <?php
+                        $reservedList = $reservedItems->getReservations();
+                        while($item = $reservedList->fetch_assoc()){
                         $reserve_datetime = new DateTime($item['scheduled_reserve_datetime']);
                         $return_datetime = new DateTime($item['scheduled_return_datetime']);
                         echo "
                         <tr class='row-border'>
-                            <td>". $item['first_name'] ."</td>
+                            <td>". $item['first_name']." ". $item['last_name'] ."</td>
                             <td>". $item['item_name'] ."</td>
                             <td>". $item['quantity_reserved'] ."</td>
                             <td>". $reserve_datetime->format('M-d-Y h:i:s:a') ."</td>
