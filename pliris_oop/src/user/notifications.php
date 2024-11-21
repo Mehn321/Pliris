@@ -1,5 +1,5 @@
 <?php
-class UserNotificationManager extends Database {
+class UserNotificationsManager extends Database {
     private $sessionManager;
 
     public function __construct(SessionManager $sessionManager) {
@@ -7,49 +7,32 @@ class UserNotificationManager extends Database {
         $this->sessionManager = $sessionManager;
     }
 
-    public function displayNotifications() {
-        echo '<div class="notifications">';
-        
-        $this->displayOverdueNotifications();
-        $this->displaySystemNotifications();
-        
-        echo '</div>';
-    }
-
-    private function displayOverdueNotifications() {
-        $overdue = $this->getOverdueReservations();
-        while ($row = $overdue->fetch_assoc()) {
-            $item = $this->retrieve('item_name', 'items', "item_id='{$row['item_id']}'")->fetch_assoc();
-            echo "<li class='reminder'>REMINDER: Please return <strong>{$item['item_name']}</strong> you borrowed</li>";
-        }
-    }
-
-    private function displaySystemNotifications() {
-        $notifications = $this->getSystemNotifications();
-        while ($row = $notifications->fetch_assoc()) {
-            echo "<li>{$row['message']}</li>";
-        }
-    }
-
-    private function getOverdueReservations() {
-        $userId = $this->sessionManager->getUserId();
+    public function getUserNotifications() {
+        $id_number = $this->sessionManager->getUserId_number();
         return $this->retrieve(
-            '*', 
-            'reservations 
-            JOIN reservation_status ON reservations.reservation_status_ID = reservation_status.reservation_status_ID',
-            "reservation_status.reservation_stat='reserving' 
-            AND reservations.id_number='$userId' 
-            AND scheduled_return_datetime <= NOW()"
+            '*',
+            'notifications',
+            "id_number = '$id_number'",
+            'notification_id DESC'
         );
     }
 
-    private function getSystemNotifications() {
-        $userId = $this->sessionManager->getUserId();
-        return $this->retrieve(
-            '*', 
-            'notifications', 
-            "id_number='$userId' 
-            AND notification_status_id=1"
+    public function markAllAsSeen() {
+        $id_number = $this->sessionManager->getUserId_number();
+        $this->update(
+            'notifications',
+            'notification_status_id = 1',
+            "id_number = '$id_number' AND notification_status_id = 0"
         );
+    }
+
+    public function not_seenNotificationCount() {
+        $id_number = $this->sessionManager->getUserId_number();
+        $result = $this->retrieve(
+            'COUNT(*) as count',
+            'notifications',
+            "id_number = '$id_number' AND notification_status_id = 0"
+        );
+        return $result->fetch_assoc()['count'];
     }
 }

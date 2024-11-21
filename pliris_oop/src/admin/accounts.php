@@ -32,19 +32,4 @@ class AccountManager extends Database {
         $this->delete($this->table, "id_number = '$idNumber'");
     }
 
-    private function renderAccountRow($row) {
-        return "<tr class='row-border'>
-            <form action='accounts.php' method='post'>
-                <td><input type='text' name='last_name' value='{$row['last_name']}'></td>
-                <td><input type='text' name='first_name' value='{$row['first_name']}'></td>
-                <td><input type='text' class='mi' name='middle_initial' value='{$row['middle_initial']}'></td>
-                <td><input type='number' name='id_num' value='{$row['id_number']}'></td>
-                <td><input type='email' name='email' value='{$row['email']}'></td>
-                <td><input type='text' name='password' value='{$row['password']}'>
-                <input type='hidden' name='id_number' value='{$row['id_number']}'></td>
-                <td><input type='submit' name='submit' value='submit'></td>
-                <td><input type='submit' name='delete' value='delete'></td>
-            </form>
-        </tr>";
-    }
 }

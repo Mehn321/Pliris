@@ -7,7 +7,7 @@ $sessionManager = new SessionManager();
 $auth = new Authentication($sessionManager);
 
 if(isset($_POST['login'])){
-    $result = $auth->handleAdminLogin($_POST);
+    $result = $auth->handleAdminLogin($_POST["id_number"],$_POST["password"]);
     if($result['success']){
         header("Location: dashboard.php");
         exit;

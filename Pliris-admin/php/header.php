@@ -170,7 +170,7 @@ function text_head($welcomeMessage) {
             <img src="../images/ustplogo.png" alt="">
             <ul><li>' . $welcomeMessage . '</li></ul>
             <div class="notification">
-                <a href="notification.php" class="badge1">
+                <a href="notifications.php" class="badge1">
                     <img src="../images/bell.png" alt="">
                     <span class="badge">' . $unseenNotifications . '</span>
                 </a>
@@ -193,7 +193,7 @@ function text_head($welcomeMessage) {
                 <a href="add.php"><li>Add Items</li></a>
                 <a href="accounts.php"><li>Accounts</li></a>
                 <a href="records.php"><li>Records</li></a>
-                <a href="notification.php"><li>Notifications</li></a>
+                <a href="notifications.php"><li>Notifications</li></a>
             </ul>
         </div>
     </header>';

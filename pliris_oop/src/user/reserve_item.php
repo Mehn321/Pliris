@@ -1,56 +1,23 @@
+<?php 
 class ReserveItemManager extends Database {
     private $sessionManager;
-
-    public function __construct($connection, SessionManager $sessionManager) {
-        parent::__construct($connection);
+    
+    public function __construct(SessionManager $sessionManager) {
+        parent::__construct();
         $this->sessionManager = $sessionManager;
     }
-
-    public function handleReservationForm() {
+    
+    public function handleDateTimeSubmission() {
         if (isset($_POST['submit'])) {
             $_SESSION['scheduled_reserve_datetime'] = $_POST['scheduled_reserve_datetime'];
             $_SESSION['scheduled_return_datetime'] = $_POST['scheduled_return_datetime'];
+            return true;
         }
-
-        $this->displayReservationForm();
-        
-        if (isset($_SESSION['scheduled_reserve_datetime'])) {
-            $this->displayAvailableItems();
-        }
+        return false;
     }
-
-    private function displayReservationForm() {
-        echo '<div class="container">
-            <form action="reserve_item.php" method="post">
-                <p>Please submit first the date and time you want to borrow and return the item to show the list of items available at that time</p>
-                <label>Reserve Time:</label>
-                <input type="datetime-local" name="scheduled_reserve_datetime" value="' . 
-                ($_SESSION['scheduled_reserve_datetime'] ?? '') . '" required>
-                <label>Return Time:</label>
-                <input type="datetime-local" name="scheduled_return_datetime" value="' . 
-                ($_SESSION['scheduled_return_datetime'] ?? '') . '" required>
-                <input type="submit" name="submit" value="Submit">
-            </form>';
-    }
-
-    private function displayAvailableItems() {
-        echo '<table>
-            <tr class="row-border">
-                <th>Item Name</th>
-                <th>Quantity</th>
-                <th>Reserved</th>
-                <th>Available</th>
-                <th>Action</th>
-            </tr>';
-
-        $items = $this->getAvailableItems();
-        while ($row = $items->fetch_assoc()) {
-            echo $this->renderItemRow($row);
-        }
-        echo '</table></div>';
-    }
-
-    private function getAvailableItems() {
+    
+    
+    public function getAvailableItems() {
         return $this->retrieve(
             'items.*, active_status.active_stat',
             'items JOIN active_status ON items.active_status_ID = active_status.active_status_ID',
@@ -58,50 +25,54 @@ class ReserveItemManager extends Database {
             'items.item_name'
         );
     }
-
-    private function renderItemRow($row) {
-        $availableAtTime = $this->calculateAvailableQuantity($row);
-        
-        return "<tr class='row-border'>
-            <td>{$row['item_name']}</td>
-            <td>{$row['item_quantity']}</td>
-            <td>{$row['item_quantity_reserved']}</td>
-            <td>$availableAtTime</td>
-            <td>
-                <form action='reserve_item.php' method='post'>
-                    <input type='hidden' name='item_id' value='{$row['item_id']}'>
-                    <input type='hidden' name='scheduled_reserve_datetime' value='{$_SESSION['scheduled_reserve_datetime']}'>
-                    <input type='hidden' name='scheduled_return_datetime' value='{$_SESSION['scheduled_return_datetime']}'>
-                    <input type='hidden' name='availableAtTime' value='$availableAtTime'>
-                    <input type='number' name='quantity' min='1' required>
-                    <input type='submit' name='reserve' value='Reserve'>
-                </form>
-            </td>
-        </tr>";
+    
+    public function calculateAvailableQuantity($item_id,$quantity) {
+        $reservedAtTime = $this->getReservedQuantityAtTime($item_id);
+        return $quantity-$reservedAtTime;
     }
-
-    private function calculateAvailableQuantity($item) {
-        $reservedAtTime = $this->getReservedQuantityAtTime(
-            $item['item_id'],
-            $_SESSION['scheduled_reserve_datetime'],
-            $_SESSION['scheduled_return_datetime']
-        );
-        return $item['item_quantity'] - $reservedAtTime;
-    }
-
-    private function getReservedQuantityAtTime($itemId, $startTime, $endTime) {
+    
+    public function getReservedQuantityAtTime($itemId) {
+        $startTime = $_SESSION['scheduled_reserve_datetime'];
+        $endTime = $_SESSION['scheduled_return_datetime'];
         $result = $this->retrieve(
-            'SUM(quantity_reserved) as total_reserved',
+            'SUM(quantity_reserved) AS total_reserved',
             'reservations',
-            "item_id = '$itemId' 
+            "item_id = '$itemId'
             AND reservation_status_ID = 1
-            AND (
-                (scheduled_reserve_datetime BETWEEN '$startTime' AND '$endTime')
-                OR (scheduled_return_datetime BETWEEN '$startTime' AND '$endTime')
-                OR ('$startTime' BETWEEN scheduled_reserve_datetime AND scheduled_return_datetime)
+            AND(
+                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime >= '$startTime') OR 
+                (scheduled_reserve_datetime <= '$endTime' AND scheduled_return_datetime >= '$endTime') OR
+                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime >= '$endTime')
             )"
-        )->fetch_assoc();
+            )->fetch_assoc();
+            
+            if(isset($result['total_reserved'])){
+                return $result['total_reserved'];
+            }else{
+                return 0;
+            }
+        }
         
-        return $result['total_reserved'] ?? 0;
+        public function createReservation($item_id, $quantity, $user_id) {
+            $columns = 'id_number, item_id, quantity_reserved, scheduled_reserve_datetime, scheduled_return_datetime, reservation_status_ID';
+            $values = "'$user_id', 
+                '$item_id', 
+                '$quantity', 
+                '{$_SESSION['scheduled_reserve_datetime']}', 
+                '{$_SESSION['scheduled_return_datetime']}',
+                1";
+            
+            $this->insert('reservations', $columns, $values);
+            
+            $this->update("items","item_quantity_reserved='$quantity'", "item_id = '$item_id'");
+            return true;
+        }
+    
+    public function isquantityValid($quantity, $availableAtTime){
+        if ($quantity > $availableAtTime) {
+            return false;
+        }else {
+            return true;
+        }
     }
 }

@@ -91,10 +91,6 @@ body {
     font-size: 3.5vw;
 }
 
-.logout-container {
-    margin-right: 1vw;
-}
-
 .logout-container button {
     background-color: #fff;
     border: none;
@@ -110,7 +106,9 @@ body {
 }
 
 .badge1 img {
-    width: 5vw !important;
+    width: 5vw; /* Adjusts size based on viewport width */
+    max-width: 60px; /* Prevents it from getting too large */
+    height: auto; /* Maintains aspect ratio */
 }
 
 .badge1 {
