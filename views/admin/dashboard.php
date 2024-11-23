@@ -34,22 +34,22 @@ $notificationManager->createShortageNotification(0);
     <div class="box">
         <ul>
             <a href="items.php" class="red">
-                <li><img src="../images/allitems.png" alt=""><br>All Items: ' . $stats['items'] . '</li>
+                <li><img src="../../assets/images/allitems.png" alt=""><br>All Items: ' . $stats['items'] . '</li>
             </a>
             <a href="reserved_items.php" class="blue">
-                <li><img src="../images/borrow.png" alt=""><br>Reserved items: ' . $stats['reserved'] . '</li>
+                <li><img src="../../assets/images/borrow.png" alt=""><br>Reserved items: ' . $stats['reserved'] . '</li>
             </a>
             <a href="returned_items.php" class="green">
-                <li><img src="../images/return.png" alt=""><br>Returned Items: ' . $stats['returned'] . '</li>
+                <li><img src="../../assets/images/return.png" alt=""><br>Returned Items: ' . $stats['returned'] . '</li>
             </a>
             <a href="add.php" class="purple">
-                <li><img src="../images/add.png" alt=""><br>Add Items</li>
+                <li><img src="../../assets/images/add.png" alt=""><br>Add Items</li>
             </a>
             <a href="accounts.php" class="pink">
-                <li><img src="../images/accounts.png" alt=""><br>Accounts: ' . $stats['accounts'] . '</li>
+                <li><img src="../../assets/images/accounts.png" alt=""><br>Accounts: ' . $stats['accounts'] . '</li>
             </a>
             <a href="records.php" class="brown">
-                <li><img src="../images/records.png" alt=""><br>Records</li>
+                <li><img src="../../assets/images/records.png" alt=""><br>Records</li>
             </a>
         </ul>
     </div>';

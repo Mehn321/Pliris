@@ -87,9 +87,6 @@
                         $item_id = $row['item_id'];
                         $availableAtTime = $reserveItem->calculateAvailableQuantity($item_id, $quantity);
                         $item_quantity_reserved = $reserveItem->getReservedQuantityAtTime($item_id);
-                        
-                        
-                        
                         echo "
                         <tr class='row-border'>
                             <td class='itemname'>$itemname </td>

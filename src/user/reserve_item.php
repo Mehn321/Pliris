@@ -1,6 +1,7 @@
 <?php 
 class ReserveItemManager extends Database {
     private $sessionManager;
+    private $available_quantity;
     
     public function __construct(SessionManager $sessionManager) {
         parent::__construct();
@@ -28,7 +29,11 @@ class ReserveItemManager extends Database {
     
     public function calculateAvailableQuantity($item_id,$quantity) {
         $reservedAtTime = $this->getReservedQuantityAtTime($item_id);
-        return $quantity-$reservedAtTime;
+        $this->available_quantity = $quantity - $reservedAtTime;
+        if($this->available_quantity < 0){
+            $this->available_quantity = 0;
+        }
+        return $this->available_quantity;
     }
     
     public function getReservedQuantityAtTime($itemId) {
@@ -40,9 +45,10 @@ class ReserveItemManager extends Database {
             "item_id = '$itemId'
             AND reservation_status_ID = 1
             AND(
-                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime >= '$startTime') OR 
-                (scheduled_reserve_datetime <= '$endTime' AND scheduled_return_datetime >= '$endTime') OR
-                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime >= '$endTime')
+                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime <= '$endTime') OR
+                (scheduled_reserve_datetime >= '$startTime' AND scheduled_return_datetime >= '$endTime') OR
+                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime >= '$endTime') OR
+                (scheduled_reserve_datetime >= '$startTime' AND scheduled_return_datetime <= '$endTime')
             )"
             )->fetch_assoc();
             
