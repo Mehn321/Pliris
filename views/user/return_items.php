@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Reservations</title>
+    <title>Return Items</title>
     <link rel="stylesheet" href="../../assets/css/items_records_reserved_returned.css">
 </head>
 <body>
@@ -21,17 +21,17 @@
 
     if (isset($_POST['cancel'])) {
         $myReservations->cancelReservation($_POST['reserve_id']);
-        header("Location: my_reservations.php");
+        header("Location: return_items.php");
         exit();
     }
     
     if (isset($_POST['return'])) {
         $myReservations->returnItem($_POST['reserve_id']);
-        header("Location: my_reservations.php");
+        header("Location: return_items.php");
         exit();
     }
     
-    text_head("My Reservations");
+    text_head("Return Items");
     ?>
 
     <div class="container">

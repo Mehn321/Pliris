@@ -35,11 +35,11 @@
             <a href='reserve_item.php' class='red'>
                 <li><img src='../../assets/images/allitems.png' alt=''><br>Reserve Items</li>
             </a>
-            <a href='reserved_items.php' class='blue'>
-                <li><img src='../../assets/images/borrow.png' alt=''><br>Reserved items: <?= $stats['reserved'] ?></li>
+            <a href='reserve_item.php' class='blue'>
+                <li><img src='../../assets/images/borrow.png' alt=''><br>Reserve items</li>
             </a>
-            <a href='returned_items.php' class='green'>
-                <li><img src='../../assets/images/return.png' alt=''><br>Returned Items: <?= $stats['returned'] ?></li>
+            <a href='return_items.php' class='green'>
+                <li><img src='../../assets/images/return.png' alt=''><br>Return Items: <?= $stats['reserved'] ?></li>
             </a>
         </ul>
     </div>
