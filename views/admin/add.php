@@ -15,7 +15,7 @@
 
     $sessionManager = new SessionManager();
     $sessionManager->checkAdminAccess();
-    $sessionManager->handleLogout();
+    // $sessionManager->handleAdminLogout();
 
     $addItem = new AddItemManager();
 
@@ -25,7 +25,7 @@
         $addItem->addNewItem($item_name, $item_quantity);
     }
 
-    text_head("Add Item", $sessionManager->getAdminId());
+    text_head("Add Item");
     ?>
 
     <div class="container">

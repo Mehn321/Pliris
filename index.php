@@ -8,10 +8,11 @@
 </head>
 <body>
     <?php
+    
     require_once 'src/shared/database.php';
     require_once 'src/shared/SessionManager.php';
     require_once 'src/shared/authentication.php';
-
+    $message;
     $sessionManager = new SessionManager();
     $auth = new Authentication($sessionManager);
 
@@ -23,7 +24,7 @@
             header("Location: views/user/dashboard.php");
             exit;
         }else{
-            $_SESSION['error'] = $result['message'];
+            $message = $result['message'];
         }
     }
     ?>
@@ -33,11 +34,10 @@
         <h2>Welcome to PLIRIS</h2>
         <h3>Physics Laboratory Item Reservation and Inventory System</h3>
         
-        <?php if (isset($_SESSION['error'])): ?>
+        <?php if (isset($message)): ?>
             <div class="error-message">
                 <?php 
-                echo $_SESSION['error'];
-                unset($_SESSION['error']);
+                echo $message;
                 ?>
             </div>
         <?php endif; ?>

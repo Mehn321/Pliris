@@ -18,8 +18,8 @@ function text_head($headertext) {
     $not_seenNotificationcount = $notificationManager->not_seenNotificationCount();
 
     if (isset($_POST['logout'])) {
-        $sessionManager->handleLogout();
-        header("Location: index.php");
+        $sessionManager->handleUserLogout();
+        header("Location: ../../index.php");
         exit();
     }
     echo '<header class="header">
@@ -49,7 +49,6 @@ function text_head($headertext) {
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="reserve_item.php">Reserve Items</a></li>
                 <li><a href="return_items.php">Return Items</a></li>
-                <li><a href="notifications.php">notifications</a></li>
             </ul>
         </div>
     </header>';

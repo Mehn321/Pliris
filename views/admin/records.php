@@ -6,12 +6,12 @@ include 'header.php';
 
 $sessionManager = new SessionManager();
 $sessionManager->checkAdminAccess();
-$sessionManager->handleLogout();
+// $sessionManager->handleAdminLogout();
 
 $records = new RecordsManager();
 $recordsList = $records->getAllRecords();
 
-text_head("Records", $sessionManager->getAdminId());
+text_head("Records");
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -45,13 +45,12 @@ class ReserveItemManager extends Database {
             "item_id = '$itemId'
             AND reservation_status_ID = 1
             AND(
-                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime <= '$endTime') OR
-                (scheduled_reserve_datetime >= '$startTime' AND scheduled_return_datetime >= '$endTime') OR
-                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime >= '$endTime') OR
-                (scheduled_reserve_datetime >= '$startTime' AND scheduled_return_datetime <= '$endTime')
-            )"
-            )->fetch_assoc();
-            
+                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime <= '$startTime') OR
+                (scheduled_reserve_datetime >= '$endTime' AND scheduled_return_datetime >= '$endTime') OR
+                (scheduled_reserve_datetime = '$startTime' AND scheduled_return_datetime = '$endTime') OR
+                (scheduled_reserve_datetime >= '$startTime' AND scheduled_return_datetime <= '$endTime') OR
+                (scheduled_reserve_datetime <= '$startTime' AND scheduled_return_datetime >= '$endTime')
+            )")->fetch_assoc();
             if(isset($result['total_reserved'])){
                 return $result['total_reserved'];
             }else{

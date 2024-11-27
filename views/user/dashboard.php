@@ -17,7 +17,7 @@
 
     $sessionManager = new SessionManager();
     $sessionManager->checkUserAccess();
-    $sessionManager->handleLogout();
+    // $sessionManager->handleUserLogout();
 
     $dashboard = new UserDashboard();
     $stats = $dashboard->getDashboardStats($sessionManager->getUserId_number());

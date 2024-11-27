@@ -6,12 +6,12 @@ include 'header.php';
 
 $sessionManager = new SessionManager();
 $sessionManager->checkAdminAccess();
-$sessionManager->handleLogout();
+// $sessionManager->handleAdminLogout();
 
 $items = new ItemManager();
 $itemsList = $items->getActiveItems();
 
-text_head("Items", $sessionManager->getAdminId());
+text_head("Items");
 
 
 if (isset($_POST['submit'])) {
