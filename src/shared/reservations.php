@@ -21,13 +21,13 @@ class ReservationsManager extends Database {
         );
     }
 
-    public function cancelReservation($reserve_id) {
-        $this->delete(
-            'reservations',
-            "reserve_id = '$reserve_id'"
-        );
-        return true;
-    }
+    // public function cancelReservation($reserve_id) {
+    //     $this->delete(
+    //         'reservations',
+    //         "reserve_id = '$reserve_id'"
+    //     );
+    //     return true;
+    // }
 
     public function returnItem($reserve_id) {
         $this->update(

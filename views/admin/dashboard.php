@@ -9,7 +9,7 @@ $sessionManager = new SessionManager();
 
 $sessionManager->setRedirectPath("index.php");
 $sessionManager->checkAdminAccess();
-$sessionManager->handleLogout();
+// $sessionManager->handleAdminLogout();
 
 $notificationManager = new AdminNotificationsManager($sessionManager);
 $dashboard = new AdminDashboard();

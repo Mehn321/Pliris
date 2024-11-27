@@ -1,7 +1,7 @@
 <?php
-require_once '../../src/shared/database.php';
-require_once '../../src/shared/SessionManager.php';
-require_once '../../src/shared/authentication.php';
+require_once 'src/shared/database.php';
+require_once 'src/shared/SessionManager.php';
+require_once 'src/shared/authentication.php';
 
 $sessionManager = new SessionManager();
 $auth = new Authentication($sessionManager);
@@ -20,11 +20,11 @@ if(isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Physics Laboratory Item Reservation and Inventory System</title>
-    <link rel="stylesheet" href="../../assets/css/signup-in.css">
+    <link rel="stylesheet" href="assets/css/signup-in.css">
 </head>
 <body>
     <div class="wrapper">
-        <img src="../../assets/images/ustplogo.png" alt="USTP Logo">
+        <img src="assets/images/ustplogo.png" alt="USTP Logo">
         <h2>Physics Laboratory Item Reservation and Inventory System</h2>
         <h3>PLIRIS</h3>
         <form action="" method="post">

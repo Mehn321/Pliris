@@ -15,11 +15,6 @@ class AccountManager extends Database {
     }
 
     public function updateAccount($oldID_number, $newID_number, $last_name, $first_name, $middle_initial, $email, $password) {
-        // $_SESSION['id_number']=$id_number;
-        // $id_num=$_SESSION['id_number'];
-            // if($oldID_number==$this->sessionManager->getAdminId()){
-            //     $this->sessionManager->setAdminId($newID_number);
-            // }
         if($oldID_number==99999999){
             echo "alert('you can't change the admin id number sorry')";
         }

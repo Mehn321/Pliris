@@ -1,6 +1,6 @@
 <?php
 class SessionManager {
-    private $redirectPath = 'index.php';
+    private $redirectPath = '../../index.php';
 
     public function __construct() {
         if (session_status() === PHP_SESSION_NONE) {
@@ -28,7 +28,7 @@ class SessionManager {
         return isset($_SESSION['id_admin']);
     }
 
-    public function isUserLoggedIn() {
+    private function isUserLoggedIn() {
         return isset($_SESSION['id_number']);
     }
 
@@ -44,20 +44,22 @@ class SessionManager {
         }
     }
 
-    public function handleLogout() {
+    public function handleUserLogout() {
         if (isset($_POST['logout'])) {
-            $this->logout();
+            if ($this->isUserLoggedIn()) {
+                unset($_SESSION['id_number']);
+            }
+            session_destroy();
         }
     }
 
-    public function logout() {
-        if ($this->isAdminLoggedIn()) {
-            unset($_SESSION['id_admin']);
+    public function handleAdminLogout() {
+        if (isset($_POST['logout'])) {
+            if ($this->isAdminLoggedIn()) {
+                unset($_SESSION['id_admin']);
+            }
+            session_destroy();
         }
-        if ($this->isUserLoggedIn()) {
-            unset($_SESSION['id_number']);
-        }
-        session_destroy();
     }
 
     private function redirectToLogin() {

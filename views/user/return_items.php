@@ -19,11 +19,11 @@
     $myReservations = new ReservationsManager($sessionManager);
 
 
-    if (isset($_POST['cancel'])) {
-        $myReservations->cancelReservation($_POST['reserve_id']);
-        header("Location: return_items.php");
-        exit();
-    }
+    // if (isset($_POST['cancel'])) {
+    //     $myReservations->cancelReservation($_POST['reserve_id']);
+    //     header("Location: return_items.php");
+    //     exit();
+    // }
     
     if (isset($_POST['return'])) {
         $myReservations->returnItem($_POST['reserve_id']);
@@ -58,7 +58,6 @@
                         <td>{$row['reservation_stat']}</td>
                         <td><form action='' method='post'>
                                 <input type='hidden' name='reserve_id' value='{$row['reserve_id']}'>
-                                <input type='submit' name='cancel' value='Cancel'>
                                 <input type='submit' name='return' value='Return'>
                             </form>";
                     }

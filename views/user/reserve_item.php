@@ -6,11 +6,10 @@
 
     $sessionManager = new SessionManager();
     $sessionManager->checkUserAccess();
-    $sessionManager->handleLogout();
+    // $sessionManager->handleUserLogout();
 
     $reserveItem = new ReserveItemManager($sessionManager);
     text_head("Reserve Items");
-
     if (isset($_POST['reserve'])) {
         $quantity_toreserve = $_POST['quantity_toreserve'];
         $availableAtTime = $_POST['availableAtTime'];
@@ -45,7 +44,6 @@
             $_SESSION['scheduled_return_datetime'] = $_POST["scheduled_return_datetime"];
             $scheduled_reserve_datetime = $_POST["scheduled_reserve_datetime"];
             $scheduled_return_datetime = $_POST["scheduled_return_datetime"];
-
         }
         if (isset($_SESSION['scheduled_reserve_datetime'])) { 
             

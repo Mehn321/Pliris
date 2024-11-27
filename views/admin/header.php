@@ -15,6 +15,7 @@ function text_head($headertext) {
     require_once "../../src/shared/SessionManager.php";
     $sessionManager = new SessionManager();
     $notificication=new AdminNotificationsManager($sessionManager);
+    $sessionManager->handleAdminLogout();
     $not_seenNotificationcount= $notificication->getNotseenNotificationsCount();
     echo '<header class="header">
         <nav class="navbar">

@@ -16,7 +16,7 @@
 
     $sessionManager = new SessionManager();
     $sessionManager->checkAdminAccess();
-    $sessionManager->handleLogout();
+    // $sessionManager->handleAdminLogout();
 
     $returnedItems = new ReturnedItemsManager();
     $returnedList = $returnedItems->getReturnedItems();
