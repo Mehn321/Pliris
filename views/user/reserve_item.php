@@ -9,8 +9,7 @@
     $sessionManager->handleLogout();
 
     $reserveItem = new ReserveItemManager($sessionManager);
-    
-    text_head("Reserve Items", $sessionManager->getUserId_number());
+    text_head("Reserve Items");
 
     if (isset($_POST['reserve'])) {
         $quantity_toreserve = $_POST['quantity_toreserve'];
@@ -18,13 +17,13 @@
         if($reserveItem->isquantityValid($quantity_toreserve, $availableAtTime)){
             $item_id = $_POST['item_id'];
             $user_id = $sessionManager->getUserId_number();
-            $reserveItem-> createReservation($item_id, $quantity_toreserve, $user_id);    
+            $reserveItem-> createReservation($item_id, $quantity_toreserve, $user_id);
+            header("Location: reserve_item.php");
         }else{
             echo "<script>alert('Not enough items available at the desired time. Only $availableAtTime items are available. Please choose a different time or reduce the quantity.');</script>";
         }
     }
 
-    
     ?>
 <!DOCTYPE html>
 <html lang="en">

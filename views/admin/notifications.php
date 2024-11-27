@@ -19,12 +19,12 @@
     $notifications = new AdminNotificationsManager($sessionManager);
     $notifications->createShortageNotification(0);
     
-    text_head("Notifications", $sessionManager->getAdminId());
+    text_head("Notifications");
     ?>
 
 <div class="container">
     <div class="notifications">
-        <div class='not-seen-notifications'>
+    <div class='not-seen-notifications'>
             <ul>
                 <?php
                 $unseenList = $notifications->getUnseenNotifications();

@@ -14,7 +14,9 @@ function text_head($headertext) {
     require_once '../../src/user/notifications.php';
     $sessionManager = new SessionManager();
     $notificationManager =new UserNotificationsManager($sessionManager);
-    $totalrednotif = $notificationManager->not_seenNotificationCount();
+    $notificationManager->createReturnReminderNotification();
+    $not_seenNotificationcount = $notificationManager->not_seenNotificationCount();
+
     if (isset($_POST['logout'])) {
         $sessionManager->handleLogout();
         header("Location: index.php");
@@ -30,7 +32,7 @@ function text_head($headertext) {
             <div class="notification">
                 <a href="notifications.php" class="badge1">
                     <img src="../../assets/images/bell.png" alt="">
-                    <span class="badge">' . $totalrednotif . '</span>
+                    <span class="badge">' . $not_seenNotificationcount . '</span>
                 </a>
             </div>
             <div class="logout-container">
@@ -53,10 +55,10 @@ function text_head($headertext) {
     </header>';
 }
 ?>
-    
 </body>
 </html>
-
+<?php
+?>
 <script>
     function hidesidebar() {
         const sidebar = document.querySelector('.sidebar');

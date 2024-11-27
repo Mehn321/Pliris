@@ -27,6 +27,8 @@
         $reserve_id = $_POST['reserve_id'];
         $quantity_reserved = $_POST['quantity_reserved'];
         $returnedItems->approveReturn($_POST['reserve_id']);
+        $item_id=$_POST['item_id'];
+        $returnedItems->update_item_quantity_reserved($quantity_reserved, $item_id);
         $itemInfo = $returnedItems->getItemInfo($reserve_id);
         $notificationManager->createApprovalNotification($itemInfo['id_number'], $itemInfo['item_name'], $quantity_reserved);
         header("Location: returned_items.php");
@@ -43,7 +45,7 @@
         exit();
     }
 
-    text_head("Returned Items", $sessionManager->getAdminId());
+    text_head("Returned Items");
     ?>
 
     <div class="container">
@@ -60,19 +62,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($item = $returnedList->fetch_assoc()){
-                        $reserve_datetime = new DateTime($item['scheduled_reserve_datetime']);
-                        $return_datetime = new DateTime($item['scheduled_return_datetime']);
+                    <?php while($returned_item = $returnedList->fetch_assoc()){
+                        $reserve_datetime = new DateTime($returned_item['scheduled_reserve_datetime']);
+                        $return_datetime = new DateTime($returned_item['scheduled_return_datetime']);
                         echo "
                         <tr class='row-border'>
-                            <td>". $item['first_name'] ."</td>
-                            <td>". $item['item_name'] ."</td>
-                            <td>". $item['quantity_reserved'] ."</td>
+                            <td>". $returned_item['first_name'] ."</td>
+                            <td>". $returned_item['item_name'] ."</td>
+                            <td>". $returned_item['quantity_reserved'] ."</td>
                             <td>". $reserve_datetime->format('M-d-Y h:i:s:a') ."</td>
                             <td>". $return_datetime->format('M-d-Y h:i:s:a') ."</td>
                             <td><form action='' method='post'>
-                                <input type='hidden' name='quantity_reserved' value='{$item['quantity_reserved']}'>
-                                <input type='hidden' name='reserve_id' value='{$item['reserve_id']}'>
+                                <input type='hidden' name='quantity_reserved' value='{$returned_item['quantity_reserved']}'>
+                                <input type='hidden' name='reserve_id' value='{$returned_item['reserve_id']}'>
+                                <input type='hidden' name='item_id' value='{$returned_item['item_id']}'>
                                 <input type='submit' name='approve' value='Approve'>
                                 <input type='submit' name='disapprove' value='Disapprove'>
                             </form></td>
