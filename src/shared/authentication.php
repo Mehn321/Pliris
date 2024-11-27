@@ -32,22 +32,21 @@ class Authentication extends Database {
             return ['success' => false, 'message' => 'ID number not found'];
         }
         $user = $result->fetch_assoc();
-        if ($user['password'] === $password) {
+        if (password_verify($password, $user['password'])) {
             return ['success' => true];
-        } else {
-            return ['success' => false, 'message' => 'Invalid password'];
         }
+        return ['success' => false, 'message' => 'Invalid password'];
     }
     
     private function validateAdminCredentials($id_number, $password) {
         $result = $this->retrieve("password", "accounts", "id_number='999999999'");
         $admin = $result->fetch_assoc();
-        if ($admin['password'] === $password) {
+        if (password_verify($password, $admin['password'])) {
             return ['success' => true];
-        } else {
-            return ['success' => false, 'message' => 'Invalid admin password'];
         }
-    }    
+        return ['success' => false, 'message' => 'Invalid admin password'];
+    }
+
     public function handleRegistration($userData) {
         if ($this->exists('accounts', "id_number='{$userData['id_number']}'")) {
             $admin = $this->getAdminInfo();
@@ -57,13 +56,15 @@ class Authentication extends Database {
             ];
         }
         
+        $hashedPassword = password_hash($userData['password'], PASSWORD_BCRYPT);
+        
         $columns = 'first_name, last_name, id_number, email, middle_initial, password';
         $values = "'{$userData['first_name']}',
                 '{$userData['last_name']}',
                 '{$userData['id_number']}',
                 '{$userData['email']}',
                 '{$userData['middle_initial']}',
-                '{$userData['password']}'";
+                '$hashedPassword'";
         
         $this->insert('accounts', $columns, $values);
         return ['success' => true, 'redirect' => 'index.php'];
@@ -75,7 +76,5 @@ class Authentication extends Database {
     
     public function getUserinfo($userid_number) {
         return $this->retrieve('first_name, last_name, middle_initial', 'accounts', "id_number='$userid_number'")->fetch_assoc();
-        
     }
-
 }

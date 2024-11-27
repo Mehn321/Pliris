@@ -77,7 +77,7 @@ class AdminNotificationsManager extends Database {
         $result = $this->retrieve(
             'COUNT(*) as count',
             'notifications',
-            "id_number = '999999999' AND notification_status_id = 1 AND message NOT LIKE '%shortage alert%'"
+            "id_number = '999999999' AND notification_status_id = 1"
         );
         return $result->fetch_assoc()['count'];
     }

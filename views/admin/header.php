@@ -15,9 +15,7 @@ function text_head($headertext) {
     require_once "../../src/shared/SessionManager.php";
     $sessionManager = new SessionManager();
     $notificication=new AdminNotificationsManager($sessionManager);
-    $notSeenNotifications= $notificication->getNotseenNotificationsCount();
-    $lowStockItems = $notificication->getlowstockNotificationCount();
-    $totalrednotif = $notSeenNotifications + $lowStockItems; // total number of
+    $not_seenNotificationcount= $notificication->getNotseenNotificationsCount();
     echo '<header class="header">
         <nav class="navbar">
             <button class="menu" onclick="showsidebar()">
@@ -28,7 +26,7 @@ function text_head($headertext) {
             <div class="notification">
                 <a href="notifications.php" class="badge1">
                     <img src="../../assets/images/bell.png" alt="">
-                    <span class="badge">' . $totalrednotif . '</span>
+                    <span class="badge">' . $not_seenNotificationcount . '</span>
                 </a>
             </div>
             <div class="logout-container">
@@ -55,7 +53,7 @@ function text_head($headertext) {
     </header>';
 }
 ?>
-    
+
 </body>
 </html>
 

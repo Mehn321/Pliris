@@ -9,7 +9,7 @@ $auth = new Authentication($sessionManager);
 if(isset($_POST['submit'])){
     $result = $auth->handleRegistration($_POST);
     if($result['success']){
-        header("Location: user_login.php");
+        header("Location: index.php");
         exit;
     }
 }
@@ -54,7 +54,7 @@ if(isset($_POST['submit'])){
             </div>
             <input type="submit" name="submit" value="Sign Up" class="btn">
         </form>
-        <p>Already have an account? <a href="user_login.php">Login</a></p>
+        <p>Already have an account? <a href="index.php">Login</a></p>
     </div>
 </body>
 </html>

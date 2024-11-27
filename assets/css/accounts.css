@@ -59,15 +59,24 @@ table tr td input[type="email"]{
     width: 20vw;
 }
 
+table tr td input[type="password"]{
+    font-size: 1.3vw;
+    height: 2.5vw;
+    text-align: center;
+    width: 20vw;
+}
 
 table tr td input[type="submit"]{
     font-size: 1.5vw;
     height: 2.5vw;
-    width: 8vw;
+    width: 6vw;
     color: #fff; 
     background-color: #3498db; 
     border: none;
     border-radius: 3px;
+    align-items: center;
+    align-content: center;
+    
 }
 
 table tr {

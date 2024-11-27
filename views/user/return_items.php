@@ -10,13 +10,13 @@
     <?php
     require_once '../../src/shared/database.php';
     require_once '../../src/shared/SessionManager.php';
-    require_once '../../src/user/my_reservations.php';
+    require_once '../../src/shared/reservations.php';
     include 'header.php';
 
     $sessionManager = new SessionManager();
     $sessionManager->checkUserAccess();
 
-    $myReservations = new MyReservationsManager($sessionManager);
+    $myReservations = new ReservationsManager($sessionManager);
 
 
     if (isset($_POST['cancel'])) {

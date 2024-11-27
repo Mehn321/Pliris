@@ -26,7 +26,7 @@
         exit();
     }
 
-    text_head("Reserved Items", $sessionManager->getAdminId());
+    text_head("Reserved Items");
     ?>
 
     <div class="container">
@@ -58,7 +58,7 @@
                             <td>
                                 <form action='' method='post'>
                                     <input type='hidden' name='reserve_id' value='". $item['reserve_id'] ."'>
-                                    <input type='submit' name='submit' value='return'>
+                                    <input type='submit' name='return' value='return'>
                                 </form>
                             </td>
                         </tr>";

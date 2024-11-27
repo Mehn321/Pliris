@@ -16,6 +16,12 @@ class ReturnedItemsManager extends Database {
     public function approveReturn($reserve_id) {
         $this->update($this->table, 'reservation_status_ID = 3', "reserve_id = '$reserve_id'");
     }
+    public function update_item_quantity_reserved(int $item_quantity_toreturn, int $item_id): void {
+        $this->update('items', 
+            "item_quantity_reserved = item_quantity_reserved - $item_quantity_toreturn", 
+            "item_id = $item_id"
+        );
+    }
 
     public function disapproveReturn($reserve_id){
 

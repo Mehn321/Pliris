@@ -48,7 +48,7 @@ body {
     color: #666;
 }
 
-.not-seen-notifications{
+.not-seen-notifications li{
     border-left: 4px solid #3498db;
 }
 

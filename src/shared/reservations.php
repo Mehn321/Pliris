@@ -48,4 +48,6 @@ class ReservationsManager extends Database {
             "reservation_status.reservation_stat = 'reserving' OR reservation_status.reservation_stat = 'disapproved'"
         );
     }
+
+    
 }
