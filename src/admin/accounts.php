@@ -15,9 +15,7 @@ class AccountManager extends Database {
     }
 
     public function updateAccount($oldID_number, $newID_number, $last_name, $first_name, $middle_initial, $email, $password) {
-        if($oldID_number==99999999){
-            echo "alert('you can't change the admin id number sorry')";
-        }
+
         if (!empty($password)){
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
             $this->update("accounts", "last_name = '$last_name', first_name = '$first_name',id_number = '$newID_number', middle_initial = '$middle_initial', email = '$email', password = '$hashedPassword'", "id_number = '$oldID_number'");

@@ -31,8 +31,12 @@
         $oldID_number= $_POST['oldID_number'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $accounts->updateAccount($oldID_number,$newID_number, $last_name, $first_name, $middle_initial, $email, $password);
-        header("Location: accounts.php");
+        if($oldID_number==999999999){
+            echo "<script>alert('you can not change the admin id number sorry');</script>";
+        }else{
+            $accounts->updateAccount($oldID_number,$newID_number, $last_name, $first_name, $middle_initial, $email, $password);
+            header("Location: accounts.php");
+        }
     }
     if (isset($_POST['delete'])) {
         $accounts->deleteAccount($_POST['id_number']);
@@ -71,7 +75,6 @@
                                         <td><input type='password' name='password' placeholder='enter new password' value=''></td>
                                         <td><input type='submit' name='submit' value='submit'></td>
                                         <input type='hidden' name='oldID_number' value='$id_number'>
-
                                     </form>
                                 </tr>
                                 ";
