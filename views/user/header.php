@@ -10,7 +10,7 @@
 <?php
 
 function text_head($headertext) {
-    require_once '../../src/shared/SessionManager.php';
+    require_once '../../src/shared/sessionmanager.php';
     require_once '../../src/user/notifications.php';
     $sessionManager = new SessionManager();
     $notificationManager =new UserNotificationsManager($sessionManager);

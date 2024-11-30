@@ -1,0 +1,82 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f7f7f7;
+}
+
+.container {
+  padding: 20px;
+}
+
+.add-items-form{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.add-items-form label{
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.input-box input[type="text"], 
+.input-box input[type="number"] {
+  padding: 10px;
+  padding-left: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 10px;
+  
+}
+
+.add-items-form input[type="submit"] {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.add-items-form input[type="submit"]:hover {
+  background-color: #1850aa;
+}
+
+.add-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.add-items-table .row-border {
+  border-bottom: 1px solid #ccc;
+}
+
+.add-items-table th, 
+.add-items-table td {
+  padding: 15px;
+  text-align: left;
+}
+
+.add-items-table th {
+  background-color: #3498db;
+  color: #fff;
+}

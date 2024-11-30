@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "assets"
+		},
+		{
+			"path": "src"
+		},
+		{
+			"path": "views"
+		}
+	],
+	"settings": {}
+}

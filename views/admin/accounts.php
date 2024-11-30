@@ -9,7 +9,7 @@
 <body>
     <?php
     require_once '../../src/shared/database.php';
-    require_once '../../src/shared/SessionManager.php';
+    require_once '../../src/shared/sessionmanager.php';
     require_once '../../src/admin/accounts.php';
     include 'header.php';
 

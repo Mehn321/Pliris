@@ -1,5 +1,5 @@
 <?php
-require_once '../../src/shared/SessionManager.php';
+require_once '../../src/shared/sessionmanager.php';
 class UserNotificationsManager extends Database {
     private $sessionManager;
     private $id_number;
