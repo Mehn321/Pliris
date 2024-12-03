@@ -43,7 +43,7 @@ class AdminNotificationsManager extends Database {
         $items = $this->retrieve(
             'item_name, item_quantity',
             'items',
-            "item_quantity <= $threshold"
+            "active_status_ID = 1 AND item_quantity <= $threshold"
         );
     
         while ($item = $items->fetch_assoc()) {
@@ -64,14 +64,6 @@ class AdminNotificationsManager extends Database {
         }
     }
 
-    public function getlowstockNotificationCount() {
-        $result = $this->retrieve(
-            'COUNT(*) as count',
-            'notifications',
-            "id_number = '999999999' AND notification_status_id = 1 AND message LIKE '%shortage alert%'"
-        );
-        return $result->fetch_assoc()['count'];
-    }
 
     public function getNotseenNotificationsCount() {
         $result = $this->retrieve(
@@ -82,7 +74,7 @@ class AdminNotificationsManager extends Database {
         return $result->fetch_assoc()['count'];
     }
 
-    public function getUnseenNotifications() {
+    public function getNotseenNotifications() {
         return $this->retrieve(
             '*',
             'notifications',

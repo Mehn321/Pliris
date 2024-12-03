@@ -18,19 +18,20 @@
     $sessionManager->checkAdminAccess();
     // $sessionManager->handleAdminLogout();
 
-    $returnedItems = new ReturnedItemsManager();
-    $returnedList = $returnedItems->getReturnedItems();
+    $returnedItemsManager = new ReturnedItemsManager();
+    $returnedList = $returnedItemsManager->getReturnedItems();
 
     $notificationManager= new AdminNotificationsManager($sessionManager);
 
     if (isset($_POST['approve'])) {
         $reserve_id = $_POST['reserve_id'];
-        $quantity_reserved = $_POST['quantity_reserved'];
-        $returnedItems->approveReturn($_POST['reserve_id']);
         $item_id=$_POST['item_id'];
-        $returnedItems->update_item_quantity_reserved($quantity_reserved, $item_id);
-        $itemInfo = $returnedItems->getItemInfo($reserve_id);
-        $notificationManager->createApprovalNotification($itemInfo['id_number'], $itemInfo['item_name'], $quantity_reserved);
+        $id_number = $_POST['id_number'];
+        $quantity_reserved = $_POST['quantity_reserved'];
+        $returnedItemsManager->approveReturn($reserve_id);
+        $returnedItemsManager->createRecord($reserve_id, $item_id, $id_number);
+        $returnedItemsManager->update_items_quantity_reserved($quantity_reserved, $item_id);
+        $notificationManager->createApprovalNotification($_POST['id_number'], $_POST['item_name'], $quantity_reserved);
         header("Location: returned_items.php");
         exit();
     }
@@ -38,9 +39,8 @@
     if (isset($_POST['disapprove'])) {
         $reserve_id = $_POST['reserve_id'];
         $quantity_reserved = $_POST['quantity_reserved'];
-        $returnedItems->disapproveReturn($reserve_id);
-        $itemInfo = $returnedItems->getItemInfo($reserve_id);
-        $notificationManager->createDisapprovalNotification($itemInfo['id_number'], $itemInfo['item_name'], $quantity_reserved);
+        $returnedItemsManager->disapproveReturn($reserve_id);
+        $notificationManager->createDisapprovalNotification($_POST['id_number'], $_POST['item_name'], $quantity_reserved);
         header("Location: returned_items.php");
         exit();
     }
@@ -57,22 +57,24 @@
                         <th>Item Name</th>
                         <th>Quantity</th>
                         <th>Reserved Schedule</th>
-                        <th>Return Schedule</th>
+                        <th>Returned at</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php while($returned_item = $returnedList->fetch_assoc()){
                         $reserve_datetime = new DateTime($returned_item['scheduled_reserve_datetime']);
-                        $return_datetime = new DateTime($returned_item['scheduled_return_datetime']);
+                        $returned_datetime = new DateTime($returned_item['returned_datetime']);
                         echo "
                         <tr class='row-border'>
                             <td>". $returned_item['first_name'] ."</td>
                             <td>". $returned_item['item_name'] ."</td>
                             <td>". $returned_item['quantity_reserved'] ."</td>
                             <td>". $reserve_datetime->format('M-d-Y h:i:s:a') ."</td>
-                            <td>". $return_datetime->format('M-d-Y h:i:s:a') ."</td>
+                            <td>". $returned_datetime->format('M-d-Y h:i:s:a') ."</td>
                             <td><form action='' method='post'>
+                                <input type='hidden' name='id_number' value='{$returned_item['id_number']}'>
+                                <input type='hidden' name='item_name' value='{$returned_item['item_name']}'>
                                 <input type='hidden' name='quantity_reserved' value='{$returned_item['quantity_reserved']}'>
                                 <input type='hidden' name='reserve_id' value='{$returned_item['reserve_id']}'>
                                 <input type='hidden' name='item_id' value='{$returned_item['item_id']}'>

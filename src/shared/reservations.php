@@ -30,9 +30,10 @@ class ReservationsManager extends Database {
     // }
 
     public function returnItem($reserve_id) {
+        
         $this->update(
             'reservations',
-            'reservation_status_ID = 2',
+            "reservation_status_ID = 2, returned_datetime = NOW()",
             "reserve_id = '$reserve_id'"
         );
         return true;

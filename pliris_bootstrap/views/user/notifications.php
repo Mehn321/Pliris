@@ -1,6 +1,6 @@
 <?php
     require_once '../../src/shared/database.php';
-    require_once 'src/shared/sessionmanager.php';
+    require_once '../../src/shared/sessionmanager.php';
     require_once '../../src/user/notifications.php';
     include 'header.php';
 
@@ -23,7 +23,7 @@
         <div class='not-seen-notifications'>
                 <ul>
                     <?php
-                    $unseenList = $notifications->getUnseenNotifications();
+                    $unseenList = $notifications->getNotseenNotifications();
                     while ($row = $unseenList->fetch_assoc()) {
                         $created_at = new DateTime($row['created_at']);
                         echo "<li>

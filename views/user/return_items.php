@@ -15,7 +15,6 @@
 
     $sessionManager = new SessionManager();
     $sessionManager->checkUserAccess();
-
     $myReservations = new ReservationsManager($sessionManager);
 
 
@@ -59,10 +58,10 @@
                         <td><form action='' method='post'>
                                 <input type='hidden' name='reserve_id' value='{$row['reserve_id']}'>
                                 <input type='submit' name='return' value='Return'>
-                            </form>";
+                            </form>
+                        </td>
+                        </tr>";
                     }
-                    echo "</td></tr>";
-                
                     ?>
             </table>
         </div>

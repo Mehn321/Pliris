@@ -57,21 +57,21 @@
                         <th>Item Name</th>
                         <th>Quantity</th>
                         <th>Reserved Schedule</th>
-                        <th>Return Schedule</th>
+                        <th>Returned at</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php while($returned_item = $returnedList->fetch_assoc()){
                         $reserve_datetime = new DateTime($returned_item['scheduled_reserve_datetime']);
-                        $return_datetime = new DateTime($returned_item['scheduled_return_datetime']);
+                        $returned_datetime = new DateTime($returned_item['returned_datetime']);
                         echo "
                         <tr class='row-border'>
                             <td>". $returned_item['first_name'] ."</td>
                             <td>". $returned_item['item_name'] ."</td>
                             <td>". $returned_item['quantity_reserved'] ."</td>
                             <td>". $reserve_datetime->format('M-d-Y h:i:s:a') ."</td>
-                            <td>". $return_datetime->format('M-d-Y h:i:s:a') ."</td>
+                            <td>". $returned_datetime->format('M-d-Y h:i:s:a') ."</td>
                             <td><form action='' method='post'>
                                 <input type='hidden' name='quantity_reserved' value='{$returned_item['quantity_reserved']}'>
                                 <input type='hidden' name='reserve_id' value='{$returned_item['reserve_id']}'>

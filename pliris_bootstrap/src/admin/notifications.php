@@ -82,7 +82,7 @@ class AdminNotificationsManager extends Database {
         return $result->fetch_assoc()['count'];
     }
 
-    public function getUnseenNotifications() {
+    public function getNotseenNotifications() {
         return $this->retrieve(
             '*',
             'notifications',

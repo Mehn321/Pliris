@@ -10,7 +10,7 @@ class UserNotificationsManager extends Database {
         $this->id_number = $this->sessionManager->getUserId_number();
     }
 
-    public function getUnseenNotifications() {
+    public function getNotseenNotifications() {
         return $this->retrieve(
             '*',
             'notifications',

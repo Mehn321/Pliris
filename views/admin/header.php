@@ -14,9 +14,10 @@ function text_head($headertext) {
     require_once "../../src/admin/notifications.php";
     require_once "../../src/shared/SessionManager.php";
     $sessionManager = new SessionManager();
-    $notificication=new AdminNotificationsManager($sessionManager);
+    $notificationManager=new AdminNotificationsManager($sessionManager);
+    $notificationManager->createShortageNotification(0);
     $sessionManager->handleAdminLogout();
-    $not_seenNotificationcount= $notificication->getNotseenNotificationsCount();
+    $not_seenNotificationcount= $notificationManager->getNotseenNotificationsCount();
     echo '<header class="header">
         <nav class="navbar">
             <button class="menu" onclick="showsidebar()">

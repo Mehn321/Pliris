@@ -1,5 +1,5 @@
 <?php
-require_once 'src/shared/sessionmanager.php';
+require_once '../../src/shared/sessionmanager.php';
 class UserNotificationsManager extends Database {
     private $sessionManager;
     private $id_number;
@@ -10,7 +10,7 @@ class UserNotificationsManager extends Database {
         $this->id_number = $this->sessionManager->getUserId_number();
     }
 
-    public function getUnseenNotifications() {
+    public function getNotseenNotifications() {
         return $this->retrieve(
             '*',
             'notifications',
