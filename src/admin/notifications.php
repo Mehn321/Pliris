@@ -93,16 +93,15 @@ class AdminNotificationsManager extends Database {
     }
 
     public function createApprovalNotification($id_number, $item_name, $quantity) {
-        $message = "Your reservation for {$quantity} {$item_name}(s) has been approved at " . date('M-d-Y h:i:s:a');
+        $message = "Your return for {$quantity} {$item_name}(s) has been approved.";
         $columns = 'id_number, message, notification_status_id';
         $values = "'$id_number', '$message', 1";
         $this->insert('notifications', $columns, $values);
     }
 
     public function createDisapprovalNotification($id_number, $item_name, $quantity) {
-        $currentTime = date('M-d-Y h:i:s:a');
         $admin = $this->getAdminInfo();
-        $message = "Your reservation_status item $item_name with the quantity of $quantity is disapproved at $currentTime. Please return the item/items or you can approach the moderator Mr/Maam: {$admin['first_name']} {$admin['last_name']}.";
+        $message = "Your return for {$quantity} {$item_name}(s) has been approved. Please return the item/items or you can approach the moderator Mr/Maam: {$admin['first_name']} {$admin['last_name']}.";
         
         $this->insert(
             'notifications', 

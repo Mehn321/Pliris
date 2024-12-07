@@ -76,19 +76,28 @@ body {
     background-color: rgba(129, 211, 211, 0.542);
 }
 
-.navbar img {
+.menu img {
+    width: 4vw;
+    min-width: 30px;
+    height: auto;
+}
+
+.notification img {
     width: 50px;
     border-radius: 7px;
 }
 
-.navbar ul {
-    list-style-type: none;
-    display: flex;
+.ustplogo {
+    width: 10% ;
+    max-width: 70px;
+    border-radius: 7px;
 }
 
-.navbar ul li {
+
+.headertext{
     color: white;
     font-size: 3.5vw;
+    display: flex;
 }
 
 .logout-container button {
@@ -106,9 +115,9 @@ body {
 }
 
 .badge1 img {
-    width: 5vw; /* Adjusts size based on viewport width */
-    max-width: 60px; /* Prevents it from getting too large */
-    height: auto; /* Maintains aspect ratio */
+    width: 5vw; 
+    max-width: 60px; 
+    height: auto;
 }
 
 .badge1 {
