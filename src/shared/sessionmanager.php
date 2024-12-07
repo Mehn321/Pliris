@@ -1,6 +1,6 @@
 <?php
 class SessionManager {
-    private $redirectPath = '../../index.php';
+    private $redirectPath = 'index.php';
 
     public function __construct() {
         if (session_status() === PHP_SESSION_NONE) {

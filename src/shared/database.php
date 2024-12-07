@@ -2,7 +2,7 @@
 
 class Database {
     public $conn;
-    
+
     public function __construct() {
         $this->conn = new mysqli('localhost', 'root', '', 'pliris');
         if ($this->conn->connect_error) {

@@ -14,7 +14,7 @@ class ReservationsManager extends Database {
             'reservations 
             JOIN items ON reservations.item_id = items.item_id 
             JOIN reservation_status ON reservations.reservation_status_ID = reservation_status.reservation_status_ID',
-            "reservations.id_number = '$userId' 
+            "reservations.id_number = '$userId'
             AND (reservation_status.reservation_stat = 'reserving' 
             OR reservation_status.reservation_stat = 'disapproved')",
             'reservations.scheduled_reserve_datetime DESC'
@@ -30,7 +30,7 @@ class ReservationsManager extends Database {
     // }
 
     public function returnItem($reserve_id) {
-        
+
         $this->update(
             'reservations',
             "reservation_status_ID = 2, returned_datetime = NOW()",

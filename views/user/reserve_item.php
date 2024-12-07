@@ -5,6 +5,7 @@
     include 'header.php';
 
     $sessionManager = new SessionManager();
+    $sessionManager->setRedirectPath("../../index.php");
     $sessionManager->checkUserAccess();
     // $sessionManager->handleUserLogout();
 

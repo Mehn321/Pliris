@@ -8,7 +8,7 @@ class RecordsManager extends Database {
         INNER JOIN items ON reservations.item_id = items.item_id
         INNER JOIN accounts ON reservations.id_number = accounts.id_number
         INNER JOIN reservation_status ON reservations.reservation_status_ID = reservation_status.reservation_status_ID
-        ORDER BY reservations.scheduled_reserve_datetime DESC
+        ORDER BY reservations.returned_datetime DESC
         ");
     }
 

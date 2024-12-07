@@ -14,6 +14,7 @@
     include 'header.php';
 
     $sessionManager = new SessionManager();
+    $sessionManager->setRedirectPath("../../index.php");
     $sessionManager->checkUserAccess();
     $myReservations = new ReservationsManager($sessionManager);
 
@@ -44,7 +45,7 @@
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
-                <?php 
+                <?php
                 $reservations = $myReservations->getUserReservations();
                 while ($row = $reservations->fetch_assoc()) {
                     $reserve_datetime = new DateTime($row['scheduled_reserve_datetime']);

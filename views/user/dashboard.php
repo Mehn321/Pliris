@@ -16,6 +16,7 @@
     require_once '../../src/shared/authentication.php';
 
     $sessionManager = new SessionManager();
+    $sessionManager->setRedirectPath("../../index.php");
     $sessionManager->checkUserAccess();
     // $sessionManager->handleUserLogout();
 
