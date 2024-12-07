@@ -6,7 +6,6 @@ include 'header.php';
 
 $sessionManager = new SessionManager();
 $sessionManager->checkAdminAccess();
-// $sessionManager->handleAdminLogout();
 
 $records = new RecordsManager();
 $recordsList = $records->getAllRecords();

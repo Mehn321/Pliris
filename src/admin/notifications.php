@@ -1,11 +1,6 @@
 <?php
 class AdminNotificationsManager extends Database {
-    private $sessionManager;
 
-    public function __construct(SessionManager $sessionManager) {
-        parent::__construct();
-        $this->sessionManager = $sessionManager;
-    }
 
     public function getAdminNotifications() {
         return $this->retrieve(
@@ -47,7 +42,6 @@ class AdminNotificationsManager extends Database {
         );
     
         while ($item = $items->fetch_assoc()) {
-            // Check last notification time for this specific item
             $lastNotif = $this->retrieve(
                 'created_at',
                 'notifications',

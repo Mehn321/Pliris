@@ -6,7 +6,6 @@ include 'header.php';
 
 $sessionManager = new SessionManager();
 $sessionManager->checkAdminAccess();
-// $sessionManager->handleAdminLogout();
 
 $items = new ItemManager();
 $itemsList = $items->getActiveItems();

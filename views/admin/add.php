@@ -15,7 +15,6 @@
 
     $sessionManager = new SessionManager();
     $sessionManager->checkAdminAccess();
-    // $sessionManager->handleAdminLogout();
 
     $addItem = new AddItemManager();
 

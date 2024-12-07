@@ -7,7 +7,6 @@
     $sessionManager = new SessionManager();
     $sessionManager->setRedirectPath("../../index.php");
     $sessionManager->checkUserAccess();
-    // $sessionManager->handleUserLogout();
 
     $reserveItem = new ReserveItemManager($sessionManager);
     text_head("Reserve Items");

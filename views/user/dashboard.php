@@ -18,7 +18,6 @@
     $sessionManager = new SessionManager();
     $sessionManager->setRedirectPath("../../index.php");
     $sessionManager->checkUserAccess();
-    // $sessionManager->handleUserLogout();
 
     $dashboard = new UserDashboard();
     $stats = $dashboard->getDashboardStats($sessionManager->getUserId_number());

@@ -1,13 +1,7 @@
 <?php
-session_start();
 class AccountManager extends Database {
     private $table = 'accounts';
-    private $sessionManager;
 
-    public function __construct(SessionManager $sessionManager) {
-        parent::__construct();
-        $this->sessionManager = $sessionManager;
-    }
 
     public function getAccounts() {
         $accounts = $this->retrieve('*', $this->table, '1=1', 'last_name');

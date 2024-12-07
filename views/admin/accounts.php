@@ -15,7 +15,6 @@
 
     $sessionManager = new SessionManager();
     $sessionManager->checkAdminAccess();
-    // $sessionManager->handleAdminLogout();
 
 
     $accounts = new AccountManager($sessionManager);

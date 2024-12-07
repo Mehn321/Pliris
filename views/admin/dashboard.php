@@ -8,7 +8,6 @@ $sessionManager = new SessionManager();
 
 $sessionManager->setRedirectPath("index.php");
 $sessionManager->checkAdminAccess();
-// $sessionManager->handleAdminLogout();
 
 
 

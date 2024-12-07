@@ -15,7 +15,6 @@
 
     $sessionManager = new SessionManager();
     $sessionManager->checkAdminAccess();
-    // $sessionManager->handleAdminLogout();
 
     $admin_id_number = $sessionManager->getAdminId();
     $reservedItems = new ReservationsManager($sessionManager);
