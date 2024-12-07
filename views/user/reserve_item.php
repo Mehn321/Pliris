@@ -18,6 +18,7 @@
             $user_id = $sessionManager->getUserId_number();
             $reserveItem-> createReservation($item_id, $quantity_toreserve, $user_id);
             header("Location: reserve_item.php");
+            echo"<script>alert('Reservation successful!');</script>";
         }else{
             echo "<script>alert('Not enough items available at the desired time. Only $availableAtTime items are available. Please choose a different time or reduce the quantity.');</script>";
         }
@@ -36,7 +37,7 @@
 
 
     <div class="container">
-        <?php 
+        <?php
         $scheduled_reserve_datetime = (isset($_SESSION['scheduled_reserve_datetime'])) ? $_SESSION['scheduled_reserve_datetime'] : '';
         $scheduled_return_datetime = (isset($_SESSION['scheduled_return_datetime'])) ? $_SESSION['scheduled_return_datetime'] : '';
         if (isset($_POST["show_available_items"])) {
@@ -47,8 +48,8 @@
         }
         if (isset($_SESSION['scheduled_reserve_datetime'])) { 
             
-                    echo"
-                                <div class='form-section'>
+            echo"
+            <div class='form-section'>
             <form action='reserve_item.php' method='post'>
                 <p>Select your preferred reservation and return times to view available items</p>
                 <div class='form-group'>
@@ -72,7 +73,7 @@
                                 <th>Total Quantity</th>
                                 <th>Reserved</th>
                                 <th>Available</th>
-                                <th>Reserve Quantity</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,7 +108,7 @@
             </table>
         </div>";
         } else{
-            echo '
+            echo'
             <div class="form-section">
             <form action="reserve_item.php" method="post">
                 <p>Select your preferred reservation and return times to view available items</p>
