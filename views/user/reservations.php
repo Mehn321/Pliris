@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Return Items</title>
+    <title>Reservations</title>
     <link rel="stylesheet" href="../../assets/css/items_records_reserved_returned.css">
 </head>
 <body>
@@ -21,18 +21,18 @@
 
     if (isset($_POST['cancel'])) {
         $myReservations->cancelReservation($_POST['reserve_id']);
-        header("Location: return_items.php");
+        header("Location: reservations.php");
         echo "Reservation canceled successfully.";
         exit();
     }
 
     if (isset($_POST['return'])) {
         $myReservations->returnItem($_POST['reserve_id']);
-        header("Location: return_items.php");
+        header("Location: reservations.php");
         exit();
     }
     
-    text_head("Return Items");
+    text_head("Reservations");
     ?>
 
     <div class="container">
@@ -43,7 +43,6 @@
                     <th>Quantity</th>
                     <th>Reserved Schedule</th>
                     <th>Return Schedule</th>
-                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 <?php
@@ -56,7 +55,6 @@
                         <td>{$row['quantity_reserved']}</td>
                         <td>{$reserve_datetime->format('M-d-Y h:i:s A')}</td>
                         <td>{$return_datetime->format('M-d-Y h:i:s A')}</td>
-                        <td>{$row['reservation_stat']}</td>
                         <td><form action='' method='post'>
                                 <input type='hidden' name='reserve_id' value='{$row['reserve_id']}'>
                                 <input type='submit' name='return' value='Return'>

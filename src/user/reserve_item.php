@@ -80,4 +80,29 @@ class ReserveItemManager extends Database {
             return true;
         }
     }
+
+    public function processMultipleReservations($item_ids, $quantities, $availableAtTimes, $user_id) {
+        $allValid = true;
+        $reservationsMade = false;
+        
+        for($i = 0; $i < count($item_ids); $i++) {
+            if($quantities[$i] > 0) {
+                if($this->isquantityValid($quantities[$i], $availableAtTimes[$i])) {
+                    $this->createReservation($item_ids[$i], $quantities[$i], $user_id);
+                    $reservationsMade = true;
+                } else {
+                    $allValid = false;
+                    return ['success' => false, 'message' => 'Not enough items available for one or more selections. Please check quantities.'];
+                }
+            }
+        }
+        
+        if($allValid && $reservationsMade) {
+            return ['success' => true, 'message' => 'Reservations successful!'];
+        }
+        
+        return ['success' => false, 'message' => 'No items were selected for reservation.'];
+    }
 }
+
+

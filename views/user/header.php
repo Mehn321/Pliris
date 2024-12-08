@@ -48,7 +48,7 @@ function text_head($headertext) {
                 </button>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="reserve_item.php">Reserve Items</a></li>
-                <li><a href="return_items.php">Return Items</a></li>
+                <li><a href="reservations.php">Reservations</a></li>
                 <li><a href="notifications.php">Notifications</a></li>
             </ul>
         </div>

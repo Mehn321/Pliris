@@ -242,7 +242,7 @@
                               <a href="reserve_item.php" class="btn btn-primary">
                                   <i class="bi bi-plus-circle me-2"></i>New Reservation
                               </a>
-                              <a href="return_items.php" class="btn btn-outline-primary">
+                              <a href="reservations.php" class="btn btn-outline-primary">
                                   <i class="bi bi-arrow-return-left me-2"></i>Return Items
                               </a>
                           </div>

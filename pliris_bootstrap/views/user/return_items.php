@@ -21,13 +21,13 @@
 
     // if (isset($_POST['cancel'])) {
     //     $myReservations->cancelReservation($_POST['reserve_id']);
-    //     header("Location: return_items.php");
+    //     header("Location: reservations.php");
     //     exit();
     // }
     
     if (isset($_POST['return'])) {
         $myReservations->returnItem($_POST['reserve_id']);
-        header("Location: return_items.php");
+        header("Location: reservations.php");
         exit();
     }
     

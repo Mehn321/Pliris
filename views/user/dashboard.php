@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="../../assets/css/dashboard.css">
 </head>
 <body>
@@ -34,8 +34,8 @@
             <a href='reserve_item.php' class='red'>
                 <li><img src='../../assets/images/allitems.png' alt=''><br>Reserve Items</li>
             </a>
-            <a href='return_items.php' class='green'>
-                <li><img src='../../assets/images/return.png' alt=''><br>Return Items: <?= $stats['reserved'] ?></li>
+            <a href='reservations.php' class='green'>
+                <li><img src='../../assets/images/return.png' alt=''><br>Reservations: <?= $stats['reserved'] ?></li>
             </a>
             <a href='notifications.php' class='blue'>
                 <li><img src='../../assets/images/bell.png' alt=''><br>Notifications</li>

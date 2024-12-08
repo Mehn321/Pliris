@@ -58,7 +58,7 @@
           <div class="nav flex-column mt-2">
               <a href="dashboard.php" class="nav-link">Dashboard</a>
               <a href="reserve_item.php" class="nav-link">Reserve Items</a>
-              <a href="return_items.php" class="nav-link">Return Items</a>
+              <a href="reservations.php" class="nav-link">Return Items</a>
           </div>
       </div>
 
