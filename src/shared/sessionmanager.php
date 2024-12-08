@@ -49,7 +49,6 @@ class SessionManager {
             if ($this->isUserLoggedIn()) {
                 unset($_SESSION['id_number']);
             }
-            session_destroy();
         }
     }
 

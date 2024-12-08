@@ -65,15 +65,16 @@ class Authentication extends Database {
                 '{$userData['email']}',
                 '{$userData['middle_initial']}',
                 '$hashedPassword'";
-        
         $this->insert('accounts', $columns, $values);
-        return ['success' => true, 'redirect' => 'index.php'];
+        $this->sessionManager->setUserSession($userData['id_number']);
+        return true;
+        
     }
     
     private function getAdminInfo() {
         return $this->retrieve('first_name, last_name', 'accounts', "id_number='999999999'")->fetch_assoc();
     }
-    
+
     public function getUserinfo($userid_number) {
         return $this->retrieve('first_name, last_name, middle_initial', 'accounts', "id_number='$userid_number'")->fetch_assoc();
     }

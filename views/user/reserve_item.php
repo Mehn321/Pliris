@@ -17,8 +17,11 @@
             $item_id = $_POST['item_id'];
             $user_id = $sessionManager->getUserId_number();
             $reserveItem-> createReservation($item_id, $quantity_toreserve, $user_id);
-            header("Location: reserve_item.php");
-            echo"<script>alert('Reservation successful!');</script>";
+            echo "<script>
+                    alert('Reservation successful!');
+                    window.location.href = 'reserve_item.php';
+                </script>";
+            exit;
         }else{
             echo "<script>alert('Not enough items available at the desired time. Only $availableAtTime items are available. Please choose a different time or reduce the quantity.');</script>";
         }
@@ -62,7 +65,7 @@
                     <input type='datetime-local' name='scheduled_return_datetime'
                         value='$scheduled_return_datetime' required>
                 </div>
-                <input type='submit' name='show_available_items' value='Show Available Items' class='btn-submit'>
+                <input class='showed' type='submit' name='show_available_items' value='Show Available Items' class='btn-submit'>
             </form>
         </div>
                     <div class='table-wrapper'>
@@ -98,7 +101,7 @@
                                     <input type='hidden' name='scheduled_return_datetime' value='$scheduled_return_datetime'>
                                     <input type='hidden' name='availableAtTime' value='$availableAtTime'>
                                     <input type='hidden' name='item_quantity_reserved' value='$item_quantity_reserved'>
-                                    <input type='number' name='quantity_toreserve' min='1' required>
+                                    <input type='number' name='quantity_toreserve' min='0' required>
                                     <input type='submit' name='reserve' value='Reserve'>
                                 </form>
                             </td>
@@ -121,7 +124,7 @@
                     <label>Return Time:</label>
                     <input type="datetime-local" name="scheduled_return_datetime" value="$scheduled_return_datetime" required>
                 </div>
-                <input type="submit" name="show_available_items" value="Show Available Items" class="btn-submit">
+                <input class="show" type="submit" name="show_available_items" value="Show Available Items" class="btn-submit">
             </form>
         </div>';
         }

@@ -8,8 +8,8 @@ $auth = new Authentication($sessionManager);
 
 if(isset($_POST['submit'])){
     $result = $auth->handleRegistration($_POST);
-    if($result['success']){
-        header("Location: index.php");
+    if($result){
+        header("Location: views/user/dashboard.php");
         exit;
     }
 }
