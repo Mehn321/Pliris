@@ -16,6 +16,9 @@ function text_head($headertext) {
     $notificationManager =new UserNotificationsManager($sessionManager);
     $notificationManager->createReturnReminderNotification();
     $not_seenNotificationcount = $notificationManager->not_seenNotificationCount();
+    if($not_seenNotificationcount>9){
+        $not_seenNotificationcount="9+";
+    }
 
     if (isset($_POST['logout'])) {
         $sessionManager->handleUserLogout();
@@ -35,7 +38,7 @@ function text_head($headertext) {
                     <span class="badge">' . $not_seenNotificationcount . '</span>
                 </a>
             </div>
-            <div class="logout-container">
+            <div class="logout-box">
                 <form action="" method="post">
                     <button name="logout" value="logout">Log Out</button>
                 </form>

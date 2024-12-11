@@ -45,12 +45,12 @@
         <?php endif; ?>
         
         <form action="index.php" method="post">
-            <div class="input-box">
+            <div class="input-container">
                 <input type="text" name="id_number" pattern="[0-9]{}" required>
                 <label>ID Number</label>
             </div>
             
-            <div class="input-box">
+            <div class="input-container">
                 <input type="password" name="password" required>
                 <label>Password</label>
             </div>

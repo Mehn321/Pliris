@@ -29,7 +29,7 @@ text_head("Welcome Admin");
     <?php 
     $stats=$dashboard->getDashboardStats();
     echo '
-    <div class="box">
+    <div class="container">
         <ul>
             <a href="items.php" class="red">
                 <li><img src="../../assets/images/allitems.png" alt=""><br>All Items: ' . $stats['items'] . '</li>

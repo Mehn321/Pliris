@@ -28,11 +28,11 @@ if(isset($_POST['login'])){
         <h2>Physics Laboratory Item Reservation and Inventory System</h2>
         <h3>ADMIN</h3>
         <form action="" method="post">
-            <div class="input-box">
+            <div class="input-container">
                 <input type="text" name="id_number" required>
                 <label>Admin ID</label>
             </div>
-            <div class="input-box">
+            <div class="input-container">
                 <input type="password" name="password" required>
                 <label>Password</label>
             </div>

@@ -8,7 +8,6 @@ class AccountManager extends Database {
 
     public function updateAccount($oldID_number, $newID_number, $last_name, $first_name, $middle_initial, $email, $password) {
         if($oldID_number==999999999){
-            echo "<script>alert('you can not change the admin id number sorry');</script>";
             return false;
         }else{
             if (!empty($password)){

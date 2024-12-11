@@ -17,7 +17,7 @@ class ReservationsManager extends Database {
             "reservations.id_number = '$userId'
             AND (reservation_status.reservation_stat = 'reserving' 
             OR reservation_status.reservation_stat = 'disapproved')",
-            'reservations.scheduled_reserve_datetime DESC'
+            'reservations.reserve_id ASC'
         );
     }
 

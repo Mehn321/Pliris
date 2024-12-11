@@ -15,11 +15,42 @@ text_head("Items");
 
 if (isset($_POST['submit'])) {
     $items->updateItem($_POST['item_id'], $_POST['itemname'], $_POST['item_quantity']);
+    $_SESSION['update_success'] = true;
+    header('Location: items.php');
+    exit;
+}
 
+if(isset($_SESSION['update_success'])) {
+    echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='updateToast'>
+            <div class='toast show bg-success text-white' role='alert'>
+                <div class='toast-body d-flex align-items-center'>
+                    <i class='bi bi-check-circle-fill me-2'></i>
+                    Item Updated Successfully! 🎉
+                </div>
+            </div>
+          </div>
+          <script>
+            setTimeout(() => {
+                document.getElementById('updateToast').remove();
+            }, 2000);
+          </script>";
+    unset($_SESSION['update_success']);
 }
 if (isset($_POST['delete'])) {
     $items->deleteItem($_POST['item_id']);
-    echo"<script>alert('Item deleted successfully') window.location.href = 'items.php';</script>";
+    echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='updateToast'>
+            <div class='toast show bg-success text-white' role='alert'>
+                <div class='toast-body d-flex align-items-center'>
+                    <i class='bi bi-check-circle-fill me-2'></i>
+                    Item Deleted Successfully! 🎉
+                </div>
+            </div>
+          </div>
+          <script>
+            setTimeout(() => {
+                document.getElementById('updateToast').remove();
+            }, 2000);
+          </script>";
 }
 
 
@@ -30,11 +61,12 @@ if (isset($_POST['delete'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Items</title>
-    <link rel="stylesheet" href="../../assets/css/items_records_reservation.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../assets/css/items_records_reservation_accounts.css">
 </head>
 <body>
-    
-<div class="container">
+<div class="box">
         <table>
             <tr class="row-border">
                 <th>Item Name</th>

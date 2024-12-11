@@ -2,11 +2,6 @@
 class ReserveItemManager extends Database {
     private $available_quantity;
     
-    public function __construct(SessionManager $sessionManager) {
-        parent::__construct();
-        $this->sessionManager = $sessionManager;
-    }
-    
     public function handleDateTimeSubmission() {
         if (isset($_POST['submit'])) {
             $_SESSION['scheduled_reserve_datetime'] = $_POST['scheduled_reserve_datetime'];

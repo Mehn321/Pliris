@@ -29,7 +29,7 @@
     text_head("Welcome $first_name $last_name");
     ?>
 
-    <div class="box">
+    <div class="container">
         <ul>
             <a href='reserve_item.php' class='red'>
                 <li><img src='../../assets/images/allitems.png' alt=''><br>Reserve Items</li>

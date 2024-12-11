@@ -29,11 +29,11 @@
 
     <div class="container">
         <form class="add-items-form" action="" method="post">
-            <div class="input-box">
+            <div class="input-container">
             <label>Item Name</label>
                 <input type="text" name="item_name" required>
             </div>
-            <div class="input-box">
+            <div class="input-container">
             <label>Quantity</label>
                 <input type="number" name="item_quantity" required>
             </div>

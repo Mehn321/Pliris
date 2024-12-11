@@ -12,7 +12,7 @@ body {
     width: 380px;
     background: transparent;
     border-radius: 15px;
-    box-shadow: 0px 10px 50px rgba(15, 0, 15, 0.15);
+    container-shadow: 0px 10px 50px rgba(15, 0, 15, 0.15);
     backdrop-filter:blur(20px);
     border: 2px solid blur(255,255,-1);
     padding: 30px;
@@ -43,7 +43,7 @@ body {
     letter-spacing: 2px;
 }
 
-.input-box {
+.input-container {
     position: relative;
     margin-bottom: 15px;
 }

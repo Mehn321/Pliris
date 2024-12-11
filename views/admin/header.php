@@ -14,7 +14,7 @@ function text_head($headertext) {
     require_once "../../src/admin/notifications.php";
     require_once "../../src/shared/SessionManager.php";
     $sessionManager = new SessionManager();
-    $notificationManager=new AdminNotificationsManager($sessionManager);
+    $notificationManager=new AdminNotificationsManager();
     $notificationManager->createShortageNotification(0);
     $sessionManager->handleAdminLogout();
     $not_seenNotificationcount= $notificationManager->getNotseenNotificationsCount();
@@ -31,7 +31,7 @@ function text_head($headertext) {
                     <span class="badge">' . $not_seenNotificationcount . '</span>
                 </a>
             </div>
-            <div class="logout-container">
+            <div class="logout-box">
                 <form action="" method="post">
                     <button name="logout" value="logout">Log Out</button>
                 </form>

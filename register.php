@@ -28,27 +28,27 @@ if(isset($_POST['submit'])){
         <h2>Physics Laboratory Item Reservation and Inventory System</h2>
         <h3>PLIRIS</h3>
         <form action="" method="post">
-            <div class="input-box">
+            <div class="input-container">
                 <input type="text" name="first_name" required>
                 <label>First Name</label>
             </div>
-            <div class="input-box">
+            <div class="input-container">
                 <input type="text" name="last_name" required>
                 <label>Last Name</label>
             </div>
-            <div class="input-box">
+            <div class="input-container">
                 <input type="text" name="middle_initial" maxlength="1" required>
                 <label>Middle Initial</label>
             </div>
-            <div class="input-box">
+            <div class="input-container">
                 <input type="number" name="id_number" required>
                 <label>ID Number</label>
             </div>
-            <div class="input-box">
+            <div class="input-container">
                 <input type="email" name="email" required>
                 <label>Email</label>
             </div>
-            <div class="input-box">
+            <div class="input-container">
                 <input type="password" name="password" required>
                 <label>Create Password</label>
             </div>

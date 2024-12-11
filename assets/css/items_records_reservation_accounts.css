@@ -9,6 +9,18 @@
     background-color: #fff; /* white background */
     margin-top: 20px;
 }
+
+.box{
+    display: block;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* white background */
+    margin-top: 20px;
+}
+
 table{
     border: 2px solid ;
     display: auto;
@@ -32,7 +44,7 @@ table tr th, table tr td, table tr td input[type="number"]{
 
 table tr td input[type="number"]{
     font-size: 1.8vw;
-    height: 2.5vw;
+    height: 2.0vw !important;
     width: 12VW;
 }
 
@@ -141,3 +153,117 @@ table tr {
     background-color: #3498db47;
     font-size: 1.3vw;
 }
+
+
+table{
+    border: 2px solid ;
+    display: auto;
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+table tr th, table tr td{
+    padding: 0.2vw;
+    font-size: 1.7vw;
+}
+
+table tr td input[type="number"]{
+    padding: 5px;
+    text-align: center;
+}
+
+table tr td input[type="number"]{
+    font-size: 1.3vw;
+    height: 2.5vw;
+    width: 10vw;
+}
+
+table tr td input[type="text"]{
+    font-size: 1.3vw;
+    height: 2.5vw;
+    text-align: center;
+    width: 10vw;
+}
+
+table tr td input[type="email"]{
+    font-size: 1.3vw;
+    height: 2.5vw;
+    text-align: center;
+    width: 20vw;
+}
+
+table tr td input[type="password"]{
+    font-size: 1.3vw;
+    height: 2.5vw;
+    text-align: center;
+    width: 20vw;
+}
+
+table tr td input[type="submit"]{
+    font-size: 1.5vw;
+    height: 2.5vw;
+    width: 6vw;
+    color: #fff; 
+    background-color: #3498db; 
+    border: none;
+    border-radius: 3px;
+    align-items: center;
+    align-content: center;
+    
+}
+
+table tr {
+    width: 100%;
+    border-bottom: 2px solid #000000;
+}
+
+.itemname{
+    text-align: left;
+}
+
+
+
+
+
+  .toast-wrapper {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 400px;
+  }
+
+  .toast-container {
+      padding: 16px 20px;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      background-color: #dc3545;
+      color: white;
+  }
+
+  .toast-content {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+  }
+
+  .toast-icon {
+      margin-right: 12px;
+      font-size: 20px;
+      font-weight: bold;
+  }
+
+  /* Animation */
+  @keyframes slideIn {
+      from {
+          transform: translateX(100%);
+      }
+      to {
+          transform: translateX(0);
+      }
+  }
+
+  .toast-wrapper {
+      animation: slideIn 0.3s ease-out;
+  }

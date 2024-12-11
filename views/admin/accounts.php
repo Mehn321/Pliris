@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<ht lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accounts</title>
-    <link rel="stylesheet" href="../../assets/css/accounts.css">
-</head>
-<body>
-    <?php
+<?php
     require_once '../../src/shared/database.php';
     require_once '../../src/shared/sessionmanager.php';
     require_once '../../src/admin/accounts.php';
@@ -15,10 +6,28 @@
     $sessionManager = new SessionManager();
     $sessionManager->checkAdminAccess();
 
-    $accounts = new AccountManager($sessionManager);
+    $accounts = new AccountManager();
     $accountsList = $accounts->getAccounts();
 
     text_head("Accounts");
+
+
+    if(isset($_SESSION['update_success'])){
+        echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='successToast'>
+        <div class='toast show bg-success text-white' role='alert'>
+            <div class='toast-body d-flex align-items-center'>
+                <i class='bi bi-check-circle-fill me-2'></i>
+                Account Updated Successfully! 🎉
+            </div>
+        </div>
+      </div>
+      <script>
+        setTimeout(() => {
+            document.getElementById('successToast').remove();
+        }, 2000);
+      </script>";
+    unset($_SESSION['update_success']);
+    }
     
     if (isset($_POST['submit'])) {
         $last_name = $_POST['last_name'];
@@ -30,18 +39,56 @@
         $password = $_POST['password'];
         $update_acc=$accounts->updateAccount($oldID_number,$newID_number, $last_name, $first_name, $middle_initial, $email, $password);
         if($update_acc){
-            header("Location: accounts.php");
+            $_SESSION['update_success'] = true;
+            header('Location: accounts.php');
+            exit;
         }else{
-            echo "<script>alert('you can not change the admin id number sorry') window.location.href = 'accounts.php';</script>";
+            echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='adminErrorToast'>
+                    <div class='toast show bg-danger text-white' role='alert'>
+                        <div class='toast-body d-flex align-items-center'>
+                            <i class='bi bi-exclamation-circle-fill me-2'></i>
+                            Cannot change admin ID number
+                        </div>
+                    </div>
+                  </div>
+                  <script>
+                    setTimeout(() => {
+                        document.getElementById('adminErrorToast').remove();
+                    }, 2000);
+                  </script>";
         }
     }
+
     if (isset($_POST['delete'])) {
         $accounts->deleteAccount($_POST['id_number']);
-        echo "<script>alert('Account deleted successfully') window.location.href = 'accounts.php';</script>";
+        echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='deleteToast'>
+                <div class='toast show bg-success text-white' role='alert'>
+                    <div class='toast-body d-flex align-items-center'>
+                        <i class='bi bi-check-circle-fill me-2'></i>
+                        Account Deleted Successfully! 🎉
+                    </div>
+                </div>
+              </div>
+              <script>
+                setTimeout(() => {
+                    document.getElementById('deleteToast').remove();
+                }, 2000);
+              </script>";
     }
-    ?>
+?>
+<!DOCTYPE html>
+<ht lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../assets/css/items_records_reservation_accounts.css">
+</head>
 
-    <div class="container">
+<body>
+    <div class="box">
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -99,5 +146,6 @@
             </table>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

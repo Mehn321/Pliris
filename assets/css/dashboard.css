@@ -1,5 +1,5 @@
 * {
-    box-sizing: border-box;
+    box-sizing: border-container;
     margin: 0;
     padding: 0;
     
@@ -12,7 +12,7 @@ body {
     background-color: #f7f7f7; /* light gray background */
 }
 
-.box{
+.container{
     display: block;
     flex-direction: column;
     padding: 20px;
@@ -23,15 +23,16 @@ body {
     margin-top: 20px;
 }
 
-.box{
+.container{
     display: relative;
     align-items: center;
 }
-.box ul{
+
+.container ul{
     display: flex;
     flex-wrap: wrap;
 }
-.box ul a{
+.container ul a{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,7 +47,7 @@ body {
     color: #ffffff;
     font-size: 2vw;
 }
-.box ul a li img{
+.container ul a li img{
     width: 6vw;
 }
 
