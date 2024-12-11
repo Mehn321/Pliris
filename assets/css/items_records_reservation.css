@@ -73,7 +73,7 @@ table tr {
 .show, .showed {
     width: auto;
     max-width: 90%;
-    font-size: 1.6vw;
+    font-size: 1.3vw;
     color: #fff;
     background-color: #3498db;
     border: none;
@@ -86,7 +86,6 @@ table tr {
 
 .show:hover, .showed:hover {
     background-color: #2980b9;
-    transform: translateY(-2px);
 }
 
 .showed {

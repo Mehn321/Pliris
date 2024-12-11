@@ -42,10 +42,14 @@ if(isset($_SESSION['scheduled_return_datetime'])){
 }
 
 if(isset($_POST["show_available_items"])){
-    $_SESSION['scheduled_reserve_datetime'] = $_POST["scheduled_reserve_datetime"];
-    $_SESSION['scheduled_return_datetime'] = $_POST["scheduled_return_datetime"];
-    $scheduled_reserve_datetime = $_POST["scheduled_reserve_datetime"];
-    $scheduled_return_datetime = $_POST["scheduled_return_datetime"];
+    if (strtotime($_POST["scheduled_return_datetime"]) > strtotime($_POST["scheduled_reserve_datetime"])) {
+        $_SESSION['scheduled_reserve_datetime'] = $_POST["scheduled_reserve_datetime"];
+        $_SESSION['scheduled_return_datetime'] = $_POST["scheduled_return_datetime"];
+        $scheduled_reserve_datetime = $_POST["scheduled_reserve_datetime"];
+        $scheduled_return_datetime = $_POST["scheduled_return_datetime"];
+    } else {
+        echo "<script>alert('Return time must be after reserve time');</script>";
+    }
 }
 
 ?>
@@ -123,11 +127,11 @@ if(isset($_POST["show_available_items"])){
                     <p>Select your preferred reservation and return times to view available items</p>
                     <div class="form-group">
                         <label>Reserve Time:</label>
-                        <input type="datetime-local" name="scheduled_reserve_datetime" value="<?= $scheduled_reserve_datetime ?>" required>
+                        <input class="datetime-container" type="datetime-local" name="scheduled_reserve_datetime" value="<?= $scheduled_reserve_datetime ?>" required>
                     </div>
                     <div class="form-group">
                         <label>Return Time:</label>
-                        <input type="datetime-local" name="scheduled_return_datetime" value="<?= $scheduled_return_datetime ?>" required>
+                        <input class="datetime-container" type="datetime-local" name="scheduled_return_datetime" value="<?= $scheduled_return_datetime ?>" required>
                     </div>
                     <input class="show" type="submit" name="show_available_items" value="Show Available Items" class="btn-submit">
                 </form>
