@@ -33,7 +33,7 @@ table tr th, table tr td, table tr td input[type="number"]{
 table tr td input[type="number"]{
     font-size: 1.8vw;
     height: 2.5vw;
-    width: 7VW;
+    width: 12VW;
 }
 
 table tr td input[type="text"]{
@@ -53,6 +53,10 @@ table tr td input[type="submit"]{
     border-radius: 3px;
 }
 
+table tr td input[type="submit"]:hover{
+    background-color: #2980b9;
+}
+
 table tr {
     width: 100%;
     border-bottom: 2px solid #000000;
@@ -66,26 +70,27 @@ table tr {
     font-size: 2.3vw;
 }
 
-.show{
-    width: 100%;
-    font-size: 25.5px;
+.show, .showed {
+    width: auto;
+    max-width: 90%;
+    font-size: 1.6vw;
     color: #fff;
     background-color: #3498db;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
+    padding: 10px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
 }
 
-.show:hover, .showed:hover{
+.show:hover, .showed:hover {
     background-color: #2980b9;
+    transform: translateY(-2px);
 }
 
-.showed{
-    width: 100%;
-    font-size: 25.5px;
-    color: #fff;
+.showed {
     background-color: #23475f;
-    border: none;
-    border-radius: 3px;
 }
 
 .fixed-bottom {
@@ -99,17 +104,15 @@ table tr {
 
 .reserve-button {
     position: fixed;
-    /* utroha lang if mag butang nag footer */
-    bottom: 0; 
-    left: 0;
-    width: 100%;
-    padding: 10px 30px;
+    bottom: 30px;
+    right: 30px;
+    padding: 0.5vw 1vw;
     background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.3vw;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 1.5vw;
 }
 
 .reserve-button:hover {
@@ -118,4 +121,24 @@ table tr {
 
 .table-wrapper {
     margin-bottom: 70px;
+}
+
+.datetime-container {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.reservation-datetime{
+    margin: 3px;
+    padding: 3px;
+    padding-left: 10px;
+    background-color: #3498db47;
+    font-size: 1.3vw;
 }

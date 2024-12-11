@@ -55,7 +55,7 @@ if(isset($_POST["show_available_items"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserve Items</title>
-    <link rel="stylesheet" href="../../assets/css/items_records_reserved_returned.css">
+    <link rel="stylesheet" href="../../assets/css/items_records_reservation.css">
 </head>
 <body>
     <div class="container">
@@ -65,14 +65,15 @@ if(isset($_POST["show_available_items"])){
                     <p>Select your preferred reservation and return times to view available items</p>
                     <div class='form-group'>
                         <label>Reserve Time:</label>
-                        <input type='datetime-local' name='scheduled_reserve_datetime' value='<?= $scheduled_reserve_datetime ?>' required>
+                        <input class="datetime-container" type='datetime-local' name='scheduled_reserve_datetime' value='<?= $scheduled_reserve_datetime ?>' required>
                     </div>
                     <div class='form-group'>
                         <label>Return Time:</label>
-                        <input type='datetime-local' name='scheduled_return_datetime' value='<?= $scheduled_return_datetime ?>' required>
+                        <input class="datetime-container" type='datetime-local' name='scheduled_return_datetime' value='<?= $scheduled_return_datetime ?>' required>
                     </div>
-                    <input class='showed' type='submit' name='show_available_items' value='Show Available Items' class='btn-submit'>
+                    <input class='showed' type='submit' name='show_available_items' value='Show Available Items'>
                 </form>
+                <div class='reservation-datetime'>Available Items from <?= date('F j, Y g:i A', strtotime($scheduled_reserve_datetime)) ?> to <?= date('F j, Y g:i A', strtotime($scheduled_return_datetime)) ?></div>
             </div>
             <form action='reserve_item.php' method='post' id='reserveForm'>
                 <div class='table-wrapper'>

@@ -19,6 +19,7 @@ if (isset($_POST['submit'])) {
 }
 if (isset($_POST['delete'])) {
     $items->deleteItem($_POST['item_id']);
+    echo"<script>alert('Item deleted successfully') window.location.href = 'items.php';</script>";
 }
 
 
@@ -29,7 +30,7 @@ if (isset($_POST['delete'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Items</title>
-    <link rel="stylesheet" href="../../assets/css/items_records_reserved_returned.css">
+    <link rel="stylesheet" href="../../assets/css/items_records_reservation.css">
 </head>
 <body>
     
@@ -79,7 +80,7 @@ if (isset($_POST['delete'])) {
                     <form action='items.php' method='post'>
                     <td>
                         <input type='submit' name='$item_id' value='edit'>
-                        <input type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete this item?');\">
+                        <input type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete $itemname?');\">
                         <input type='hidden' name='item_id' value=$item_id>
                     </td>
                     </form>

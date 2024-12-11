@@ -23,7 +23,7 @@ function text_head($headertext) {
             <button class="menu" onclick="showsidebar()">
                 <img src="../../assets/images/menuwhite.png" alt="menu" height="40px" width="45">
             </button>
-            <img class="ustplogo" src="../../assets/images/ustplogo.png" alt="">
+            <img class="ustplogo" src="../../assets/images/ustplogo.png" alt="ustplogo">
             <div class=headertext>' . $headertext . '</div>
             <div class="notification">
                 <a href="notifications.php" class="badge1">

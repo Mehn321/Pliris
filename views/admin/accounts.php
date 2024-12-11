@@ -12,10 +12,8 @@
     require_once '../../src/shared/sessionmanager.php';
     require_once '../../src/admin/accounts.php';
     include 'header.php';
-
     $sessionManager = new SessionManager();
     $sessionManager->checkAdminAccess();
-
 
     $accounts = new AccountManager($sessionManager);
     $accountsList = $accounts->getAccounts();
@@ -30,15 +28,16 @@
         $oldID_number= $_POST['oldID_number'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        if($oldID_number==999999999){
-            echo "<script>alert('you can not change the admin id number sorry');</script>";
-        }else{
-            $accounts->updateAccount($oldID_number,$newID_number, $last_name, $first_name, $middle_initial, $email, $password);
+        $update_acc=$accounts->updateAccount($oldID_number,$newID_number, $last_name, $first_name, $middle_initial, $email, $password);
+        if($update_acc){
             header("Location: accounts.php");
+        }else{
+            echo "<script>alert('you can not change the admin id number sorry') window.location.href = 'accounts.php';</script>";
         }
     }
     if (isset($_POST['delete'])) {
         $accounts->deleteAccount($_POST['id_number']);
+        echo "<script>alert('Account deleted successfully') window.location.href = 'accounts.php';</script>";
     }
     ?>
 
@@ -91,7 +90,7 @@
                                     <form action='' method='post'>
                                         <input type='submit' name='$account[id_number]' value='edit'>
                                         <input type='hidden' name='id_number' value='". $account['id_number'] ."'>
-                                        <input type='submit' name='delete' value='delete'>
+                                        <input type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete the account of ". $account['first_name'] . " ". $account['last_name'] . " ?');\">
                                     </form>
                                 </td>
                             </tr>";
