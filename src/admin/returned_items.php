@@ -22,7 +22,7 @@ class ReturnedItemsManager extends Database {
 
     }
 
-    public function update_items_quantity_reserved(int $item_quantity_toreturn, int $item_id): void {
+    public function update_items_quantity_reserved(int $item_quantity_toreturn, int $item_id){
         $this->update('items', 
             "item_quantity_reserved = item_quantity_reserved - $item_quantity_toreturn", 
             "item_id = $item_id"

@@ -23,36 +23,28 @@ if (isset($_POST['reserve'])) {
         header('Location: reserve_item.php');
         exit;
     } else{
-        echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='errorToast'>
-                <div class='toast show bg-danger text-white' role='alert'>
-                    <div class='toast-body d-flex align-items-center'>
-                        <i class='bi bi-exclamation-circle-fill me-2'></i>
-                        Reservation Unsuccessful: {$result['message']}
-                    </div>
+        echo "<div class='alert-notif red' id='alert_notif'>
+                    <p class='circle-exclamation-check red-exclamation'>!</p>
+                    Reservation Unsuccessful: {$result['message']} 
                 </div>
-              </div>
-              <script>
-                setTimeout(() => {
-                    document.getElementById('errorToast').remove();
-                }, 5000);
-              </script>";
+                <script>
+                    setTimeout(() => {
+                        document.getElementById('alert_notif').remove();
+                    }, 5000);
+                </script>";
     }
 }
 
     if(isset($_SESSION['reserve_success'])) {
-        echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='successToast'>
-                <div class='toast show bg-success text-white' role='alert'>
-                    <div class='toast-body d-flex align-items-center'>
-                        <i class='bi bi-check-circle-fill me-2'></i>
-                        Items Reserved Successfully! 🎉
-                    </div>
+        echo "<div class='alert-notif green' id='alert_notif'>
+                    <p class='circle-exclamation-check green-check'>✓</p>
+                    Items Reserved Successfully! 🎉
                 </div>
-              </div>
-              <script>
-                setTimeout(() => {
-                    document.getElementById('successToast').remove();
-                }, 2000);
-              </script>";
+                <script>
+                    setTimeout(() => {
+                        document.getElementById('alert_notif').remove();
+                    }, 5000);
+                </script>";
         unset($_SESSION['reserve_success']);
     }
     
@@ -76,31 +68,23 @@ if (isset($_POST['reserve'])) {
             $scheduled_reserve_datetime = $_POST["scheduled_reserve_datetime"];
             $scheduled_return_datetime = $_POST["scheduled_return_datetime"];
         }elseif(strtotime($_POST["scheduled_return_datetime"]) < time() || strtotime($_POST["scheduled_reserve_datetime"]) < time()){
-            echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='timeErrorToast'>
-            <div class='toast show bg-danger text-white' role='alert'>
-                <div class='toast-body d-flex align-items-center'>
-                    <i class='bi bi-exclamation-circle-fill me-2'></i>
+            echo "<div class='alert-notif red' id='alert_notif'>
+                    <p class='circle-exclamation-check red-exclamation'>!</p>
                     Invalid Time: Your Schedule Must Be earlier than Current Time
-                </div>
-            </div>
-            </div>
-            <script>
-            setTimeout(() => {
-                document.getElementById('timeErrorToast').remove();
-            }, 5000);
-            </script>";
-        }else{
-            echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='timeErrorToast'>
-                    <div class='toast show bg-danger text-white' role='alert'>
-                        <div class='toast-body d-flex align-items-center'>
-                            <i class='bi bi-exclamation-circle-fill me-2'></i>
-                            Invalid Time: Return time must be after reserve time
-                        </div>
-                    </div>
                 </div>
                 <script>
                     setTimeout(() => {
-                        document.getElementById('timeErrorToast').remove();
+                        document.getElementById('alert_notif').remove();
+                    }, 5000);
+                </script>";
+        }else{
+            echo "<div class='alert-notif red' id='alert_notif'>
+                    <p class='circle-exclamation-check' red-exclamation>!</p>
+                    Invalid Time: Return time must be after reserve time
+            </div>
+                <script>
+                    setTimeout(() => {
+                        document.getElementById('alert_notif').remove();
                     }, 5000);
                 </script>";
         }
@@ -112,14 +96,10 @@ if (isset($_POST['reserve'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserve Items</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
     <link rel="stylesheet" href="../../assets/css/items_records_reservation_accounts.css">
 </head>
 <body>
-    <div class="box">
+    <div class="container">
         <?php if ($scheduled_reserve_datetime && $scheduled_return_datetime): ?>
             <div class='form-section'>
                 <form action='reserve_item.php' method='post'>

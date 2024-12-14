@@ -63,6 +63,7 @@ body {
     align-items: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1;
+    box-sizing: border-box;
 }
 
 .menu {
@@ -123,17 +124,26 @@ body {
 .badge1 {
     display: flex !important;
     padding: 0 !important;
-    position: absolute !important;
+    position: block !important;
     top: 25px !important;
+    text-decoration: none !important;
 }
 
 .badge {
     background-color: red;
-    border-radius: 100px !important;
-    position: absolute !important;
+    position: relative !important;
     font-size: 1.2vw !important;
     top: 0.5px !important;
-    right: 0.4vw !important;
-    padding: 0.1px 0.6vw !important;
+    right: 2vw !important;
+    padding: 0.1px !important;
     color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    width: 1.7vw !important; /* Fixed width */
+    height: 1.7vw !important; /* Fixed height */
+    overflow: hidden !important; /* Prevent overflow */
+    text-align: center !important; /* Center text */
+
 }

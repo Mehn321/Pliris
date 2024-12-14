@@ -10,23 +10,12 @@
     margin-top: 20px;
 }
 
-.box{
-    display: block;
-    flex-direction: column;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff; /* white background */
-    margin-top: 20px;
-}
-
 table{
     border: 2px solid ;
     display: auto;
     width: 100%;
     border-collapse: collapse;
-
+    
 }
 table td img{
     width: 40px; 
@@ -105,7 +94,7 @@ table tr {
 }
 
 .fixed-bottom {
-
+    
     width: 100%;
     background: #fff;
     padding: 15px;
@@ -160,7 +149,7 @@ table{
     display: auto;
     width: 100%;
     border-collapse: collapse;
-
+    
 }
 
 table tr th, table tr td{
@@ -221,49 +210,48 @@ table tr {
 .itemname{
     text-align: left;
 }
+.alert-notif {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    z-index: 1000;
+    width: 25vw;
+    padding: 1.5vh 1.5vw;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    font-size: 1.2vw;
+    color: white;
+}
 
+.red{
+    background-color: #dc3545;
+}
 
+.green{
+    background-color: #28a745;
+}
 
+.red-exclamation{
+    color: #dc3545;
+}
 
+.green-check{
+    color: #28a745;
+}
 
-  .toast-wrapper {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      width: 400px;
-  }
-
-  .toast-container {
-      padding: 16px 20px;
-      border-radius: 4px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      background-color: #dc3545;
-      color: white;
-  }
-
-  .toast-content {
-      display: flex;
-      align-items: center;
-      font-size: 16px;
-  }
-
-  .toast-icon {
-      margin-right: 12px;
-      font-size: 20px;
-      font-weight: bold;
-  }
-
-  /* Animation */
-  @keyframes slideIn {
-      from {
-          transform: translateX(100%);
-      }
-      to {
-          transform: translateX(0);
-      }
-  }
-
-  .toast-wrapper {
-      animation: slideIn 0.3s ease-out;
-  }
+.circle-exclamation-check {
+    margin-right: 1vw;
+    font-size: 1.4vw;
+    font-weight: bold;
+    background-color: rgb(255, 255, 255);
+    min-width: 2vw;
+    min-height: 2vw;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}

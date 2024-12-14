@@ -13,19 +13,15 @@
 
 
     if(isset($_SESSION['update_success'])){
-        echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='successToast'>
-        <div class='toast show bg-success text-white' role='alert'>
-            <div class='toast-body d-flex align-items-center'>
-                <i class='bi bi-check-circle-fill me-2'></i>
-                Account Updated Successfully! 🎉
-            </div>
-        </div>
-      </div>
-      <script>
+        echo "<div class='alert-notif green' id='alert_notif'>
+        <p class='circle-exclamation-check green-check'>✓</p>
+        Account Updated Successfully! 🎉
+    </div>
+    <script>
         setTimeout(() => {
-            document.getElementById('successToast').remove();
-        }, 2000);
-      </script>";
+            document.getElementById('alert_notif').remove();
+        }, 5000);
+    </script>";
     unset($_SESSION['update_success']);
     }
     
@@ -43,38 +39,30 @@
             header('Location: accounts.php');
             exit;
         }else{
-            echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='adminErrorToast'>
-                    <div class='toast show bg-danger text-white' role='alert'>
-                        <div class='toast-body d-flex align-items-center'>
-                            <i class='bi bi-exclamation-circle-fill me-2'></i>
-                            Cannot change admin ID number
-                        </div>
-                    </div>
-                  </div>
-                  <script>
-                    setTimeout(() => {
-                        document.getElementById('adminErrorToast').remove();
-                    }, 2000);
-                  </script>";
+            echo "<div class='alert-notif red' id='alert_notif'>
+            <p class='circle-exclamation-check red-exclamation'>!</p>
+            Cannot change admin ID number
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('alert_notif').remove();
+            }, 5000);
+        </script>";
         }
     }
 
     if (isset($_POST['delete'])) {
         $accounts->deleteAccount($_POST['id_number']);
-        echo "<div class='position-fixed top-0 end-0 p-3' style='z-index: 1000' id='deleteToast'>
-                <div class='toast show bg-success text-white' role='alert'>
-                    <div class='toast-body d-flex align-items-center'>
-                        <i class='bi bi-check-circle-fill me-2'></i>
-                        Account Deleted Successfully! 🎉
-                    </div>
-                </div>
-              </div>
-              <script>
-                setTimeout(() => {
-                    document.getElementById('deleteToast').remove();
-                }, 2000);
-              </script>";
-    }
+        echo "<div class='alert-notif green' id='alert_notif'>
+        <p class='circle-exclamation-check green-check'>✓</p>
+        Account Deleted Successfully! 🎉
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('alert_notif').remove();
+            }, 5000);
+        </script>";
+        }
 ?>
 <!DOCTYPE html>
 <ht lang="en">
@@ -82,13 +70,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounts</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../assets/css/items_records_reservation_accounts.css">
 </head>
 
 <body>
-    <div class="box">
+    <div class="container">
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -146,6 +132,5 @@
             </table>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
