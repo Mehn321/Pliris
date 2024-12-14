@@ -20,7 +20,7 @@
 
 
     if (isset($_POST['cancel'])) {
-        $myReservations->cancelReservation($_POST['reserve_id']);
+        $myReservations->cancelReservation($_POST['reserve_id'], $_POST['quantity_reserved'], $_POST['item_id']);
         header("Location: reservations.php");
         echo "Reservation canceled successfully.";
         exit();
@@ -57,6 +57,8 @@
                         <td>{$return_datetime->format('M-d-Y h:i:s A')}</td>
                         <td><form action='' method='post'>
                                 <input type='hidden' name='reserve_id' value='{$row['reserve_id']}'>
+                                <input type='hidden' name='quantity_reserved' value='{$row['quantity_reserved']}'>
+                                <input type='hidden' name='item_id' value='{$row['item_id']}'>
                                 <input type='submit' name='return' value='Return'>
                                 <input type='submit' name='cancel' value='Cancel' onclick=\"return confirm('Are you sure you want to cancel this reservation?');\">
                             </form>

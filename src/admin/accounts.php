@@ -1,11 +1,13 @@
 <?php
 class AccountManager extends Database {
 
+    //retrieve all active accounts sorted by their lastname
     public function getAccounts() {
         $accounts = $this->retrieve('*', 'accounts', '1=1', 'last_name');
         return $accounts;
     }
 
+    //update an account
     public function updateAccount($oldID_number, $newID_number, $last_name, $first_name, $middle_initial, $email, $password) {
         if($oldID_number==999999999){
             return false;
@@ -18,9 +20,9 @@ class AccountManager extends Database {
             }
             return true;
         }
-
     }
 
+    //delete an account by its id_number
     public function deleteAccount($idNumber) {
         $this->delete('accounts', "id_number = '$idNumber'");
     }

@@ -30,7 +30,6 @@ class ReturnedItemsManager extends Database {
     }
 
     public function disapproveReturn($reserve_id){
-
         $this->update($this->table, 'reservation_status_ID = 4', "reserve_id = '$reserve_id'");
     }
 

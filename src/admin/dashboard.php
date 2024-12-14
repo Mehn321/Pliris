@@ -1,5 +1,7 @@
 <?php
 class AdminDashboard extends Database {
+
+    // get the admin dashboard statistics
     public function getDashboardStats() {
         return [
             'items' => $this->count('items', 'active_status_ID = 1'),
