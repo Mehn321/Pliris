@@ -42,12 +42,18 @@ body {
     font-weight: bold;
     letter-spacing: 2px;
 }
-
 .input-container {
     position: relative;
-    margin-bottom: 15px;
 }
 
+#togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+}
 input {
     width: 100%;
     padding: 15px 0;
@@ -118,4 +124,8 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.error-message{
+    color: red;
 }

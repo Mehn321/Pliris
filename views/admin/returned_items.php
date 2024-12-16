@@ -20,7 +20,7 @@
     $returnedItemsManager = new ReturnedItemsManager();
     $returnedList = $returnedItemsManager->getReturnedItems();
 
-    $notificationManager= new AdminNotificationsManager($sessionManager);
+    $notificationManager= new AdminNotificationsManager();
 
     if (isset($_POST['approve'])) {
         $reserve_id = $_POST['reserve_id'];
@@ -28,7 +28,7 @@
         $id_number = $_POST['id_number'];
         $quantity_reserved = $_POST['quantity_reserved'];
         $returnedItemsManager->approveReturn($reserve_id);
-        $returnedItemsManager->createRecord($reserve_id, $item_id, $id_number);
+        $returnedItemsManager->createRecord($reserve_id);
         $returnedItemsManager->update_items_quantity_reserved($quantity_reserved, $item_id);
         $notificationManager->createApprovalNotification($_POST['id_number'], $_POST['item_name'], $quantity_reserved);
         header("Location: returned_items.php");
@@ -66,7 +66,7 @@
                         $returned_datetime = new DateTime($returned_item['returned_datetime']);
                         echo "
                         <tr class='row-border'>
-                            <td>". $returned_item['first_name'] ."</td>
+                            <td>". $returned_item['first_name'] ." ". $returned_item['last_name'] ."</td>
                             <td>". $returned_item['item_name'] ."</td>
                             <td>". $returned_item['quantity_reserved'] ."</td>
                             <td>". $reserve_datetime->format('M-d-Y h:i:s:a') ."</td>
@@ -78,7 +78,7 @@
                                 <input type='hidden' name='reserve_id' value='{$returned_item['reserve_id']}'>
                                 <input type='hidden' name='item_id' value='{$returned_item['item_id']}'>
                                 <input type='submit' name='approve' value='Approve'>
-                                <input type='submit' name='disapprove' value='Disapprove'>
+                                <input type='submit' name='disapprove' value='Disapprove' class='disapprove-button'>
                             </form></td>
                         </tr>";
                     }?>

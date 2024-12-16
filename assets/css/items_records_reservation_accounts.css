@@ -54,6 +54,8 @@ table tr td input[type="submit"]{
     border-radius: 3px;
 }
 
+
+
 table tr td input[type="submit"]:hover{
     background-color: #2980b9;
 }
@@ -199,7 +201,11 @@ table tr td input[type="submit"]{
     border-radius: 3px;
     align-items: center;
     align-content: center;
-    
+    text-align: center;
+}
+
+table tr td input[type="submit"].disapprove-button{
+    width: 9vw;
 }
 
 table tr {
@@ -255,3 +261,4 @@ table tr {
     justify-content: center;
     line-height: 1;
 }
+

@@ -41,12 +41,12 @@
         }else{
             echo "<div class='alert-notif red' id='alert_notif'>
             <p class='circle-exclamation-check red-exclamation'>!</p>
-            Cannot change admin ID number
+            Cannot change the admin ID number
         </div>
         <script>
             setTimeout(() => {
                 document.getElementById('alert_notif').remove();
-            }, 5000);
+            }, 10000);
         </script>";
         }
     }

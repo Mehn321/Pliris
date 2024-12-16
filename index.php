@@ -35,30 +35,38 @@
         <img src="assets/images/ustplogo.png" alt="ustp Logo">
         <h2>Welcome to PLIRIS</h2>
         <h3>Physics Laboratory Item Reservation and Inventory System</h3>
-        
         <?php if (isset($message)): ?>
             <div class="error-message">
-                <?php 
-                echo $message;
-                ?>
+                <?php echo $message; ?>
             </div>
         <?php endif; ?>
         
         <form action="index.php" method="post">
             <div class="input-container">
-                <input type="text" name="id_number" pattern="[0-9]{}" required>
+                <input type="text" name="id_number" pattern="\d*" title="Please enter a number" required>
                 <label>ID Number</label>
             </div>
             
             <div class="input-container">
-                <input type="password" name="password" required>
+                <input type="password" name="password" id="passwordField" required>
                 <label>Password</label>
+                <span id="togglePassword">👁</span>
             </div>
-
             <input type="submit" name="login" value="Login" class="btn">
             
             <p>Don't have an account? <a href="register.php">Register</a></p>
         </form>
     </div>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#passwordField');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.textContent = type === 'password' ? '👁' : '👁‍🗨';
+        });
+    </script>
 </body>
 </html>

@@ -37,7 +37,7 @@ if(isset($_POST['submit'])){
                 <label>Last Name</label>
             </div>
             <div class="input-container">
-                <input type="text" name="middle_initial" maxlength="1" required>
+                <input type="text" name="middle_initial" maxlength="1">
                 <label>Middle Initial</label>
             </div>
             <div class="input-container">

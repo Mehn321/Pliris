@@ -75,7 +75,7 @@ if (isset($_POST['reserve'])) {
                 <script>
                     setTimeout(() => {
                         document.getElementById('alert_notif').remove();
-                    }, 5000);
+                    }, 10000);
                 </script>";
         }else{
             echo "<div class='alert-notif red' id='alert_notif'>
@@ -85,7 +85,7 @@ if (isset($_POST['reserve'])) {
                 <script>
                     setTimeout(() => {
                         document.getElementById('alert_notif').remove();
-                    }, 5000);
+                    }, 10000);
                 </script>";
         }
     }
@@ -123,7 +123,6 @@ if (isset($_POST['reserve'])) {
                             <tr class='row-border'>
                                 <th>Item Name</th>
                                 <th>Quantity</th>
-                                <th>Reserved</th>
                                 <th>Available</th>
                                 <th>Quantity to Reserve</th>
                             </tr>
@@ -141,7 +140,6 @@ if (isset($_POST['reserve'])) {
                             <tr class='row-border'>
                                 <td class='itemname'>$itemname</td>
                                 <td>$quantity</td>
-                                <td>$item_quantity_reserved</td>
                                 <td>$availableAtTime</td>
                                 <td>
                                     <input type='hidden' name='item_ids[]' value='$item_id'>

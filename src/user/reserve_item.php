@@ -53,7 +53,7 @@ class ReserveItemManager extends Database {
             }
         }
         
-        public function createReservation($item_id, $quantity, $user_id) {
+        private function createReservation($item_id, $quantity, $user_id) {
             $columns = 'id_number, item_id, quantity_reserved, scheduled_reserve_datetime, scheduled_return_datetime, reservation_status_ID';
             $values = "'$user_id', 
                 '$item_id', 
@@ -68,7 +68,7 @@ class ReserveItemManager extends Database {
             return true;
         }
     
-    public function isquantityValid($quantity, $availableAtTime){
+    private function isquantityValid($quantity, $availableAtTime){
         if ($quantity > $availableAtTime) {
             return false;
         }else {

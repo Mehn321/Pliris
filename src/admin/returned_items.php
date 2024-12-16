@@ -4,7 +4,7 @@ class ReturnedItemsManager extends Database {
 
     public function getReturnedItems() {
         return $this->retrieve(
-            'reservations.*, items.item_name, accounts.first_name, reservation_status.reservation_stat',
+            'reservations.*, items.item_name, accounts.first_name, accounts.last_name, reservation_status.reservation_stat',
             'reservations 
             JOIN items ON reservations.item_id = items.item_id 
             JOIN accounts ON reservations.id_number = accounts.id_number 
@@ -17,9 +17,8 @@ class ReturnedItemsManager extends Database {
         $this->update($this->table, 'reservation_status_ID = 3', "reserve_id = '$reserve_id'");
     }
 
-    public function createRecord($reserve_id, $item_id, $id_number) {
-        $this->insert('records', "reserve_id, item_id, id_number", "$reserve_id, $item_id, $id_number");
-
+    public function createRecord($reserve_id) {
+        $this->insert('records', "reserve_id", "$reserve_id");
     }
 
     public function update_items_quantity_reserved(int $item_quantity_toreturn, int $item_id){
