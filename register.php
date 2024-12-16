@@ -8,9 +8,11 @@ $auth = new Authentication($sessionManager);
 
 if(isset($_POST['submit'])){
     $result = $auth->handleRegistration($_POST);
-    if($result){
+    if($result['success']){
         header("Location: views/user/dashboard.php");
         exit;
+    }else{
+        $message = $result['message'];
     }
 }
 ?>
@@ -27,6 +29,11 @@ if(isset($_POST['submit'])){
         <img src="assets/images/ustplogo.png" alt="USTP Logo">
         <h2>Physics Laboratory Item Reservation and Inventory System</h2>
         <h3>PLIRIS</h3>
+        <?php if (isset($message)): ?>
+            <div class="error-message">
+                <?php echo $message; ?>
+            </div>
+        <?php endif; ?>
         <form action="" method="post">
             <div class="input-container">
                 <input type="text" name="first_name" required>
@@ -49,12 +56,37 @@ if(isset($_POST['submit'])){
                 <label>Email</label>
             </div>
             <div class="input-container">
-                <input type="password" name="password" required>
+                <input type="password" name="password" id="passwordField1" required>
                 <label>Create Password</label>
+                <span class="togglePassword" id="togglePassword1">👁</span>
             </div>
+            <div class="input-container">
+                <input type="password" name="confirm_password" id="passwordField2" required>
+                <label>Confirm Password</label>
+                <span class="togglePassword" id="togglePassword2">👁</span>
+            </div>
+
             <input type="submit" name="submit" value="Sign Up" class="btn">
         </form>
         <p>Already have an account? <a href="index.php">Login</a></p>
     </div>
 </body>
 </html>
+<script>
+    const togglePassword1 = document.querySelector('#togglePassword1');
+    const togglePassword2 = document.querySelector('#togglePassword2');
+    const password1 = document.querySelector('#passwordField1');
+    const password2 = document.querySelector('#passwordField2');
+
+    togglePassword1.addEventListener('click', function () {
+        const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
+        password1.setAttribute('type', type);
+        this.textContent = type === 'password' ? '👁' : '👁‍🗨';
+    });
+
+    togglePassword2.addEventListener('click', function () {
+        const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+        password2.setAttribute('type', type);
+        this.textContent = type === 'password' ? '👁' : '👁‍🗨';
+    });
+</script>

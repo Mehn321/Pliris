@@ -91,7 +91,7 @@ class AdminNotificationsManager extends Database {
     // create a notification for the user if the item returned is disapproved
     public function createDisapprovalNotification($id_number, $item_name, $quantity) {
         $admin = $this->getAdminInfo();
-        $message = "Your return for {$quantity} {$item_name}(s) has been approved. Please return the item/items or you can approach the moderator Mr/Maam: {$admin['first_name']} {$admin['last_name']}.";
+        $message = "Your return for {$quantity} {$item_name}(s) has been approved. Please return the item/items or you can approach the moderator Sir/Maam: {$admin['first_name']} {$admin['last_name']} or you can contact him/her at {$admin['email']}.";
         
         $this->insert(
             'notifications', 
@@ -102,6 +102,6 @@ class AdminNotificationsManager extends Database {
 
     // retrieves the admin's first and last name
     private function getAdminInfo() {
-        return $this->retrieve('first_name, last_name', 'accounts', "id_number='999999999'")->fetch_assoc();
+        return $this->retrieve('first_name, last_name, email', 'accounts', "id_number='999999999'")->fetch_assoc();
     }
 }

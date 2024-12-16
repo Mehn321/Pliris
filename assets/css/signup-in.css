@@ -54,6 +54,16 @@ body {
     cursor: pointer;
     user-select: none;
 }
+
+.togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+}
+
 input {
     width: 100%;
     padding: 15px 0;

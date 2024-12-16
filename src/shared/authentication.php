@@ -47,32 +47,43 @@ class Authentication extends Database {
         return ['success' => false, 'message' => 'Invalid admin password'];
     }
 
+    private function validatePasswords($password, $confirmPassword) {
+        if($password !== $confirmPassword) {
+            return ['success' => false, 'message' => 'Passwords do not match!'];
+        }
+        return ['success' => true];
+    }
+
     public function handleRegistration($userData) {
-        if ($this->exists('accounts', "id_number='{$userData['id_number']}'")) {
+        $passwordValidation = $this->validatePasswords($userData['password'], $userData['confirm_password']);
+    
+        if(!$passwordValidation['success']) {
+            return $passwordValidation;
+        }
+        elseif($this->exists('accounts', "id_number='{$userData['id_number']}'")) {
             $admin = $this->getAdminInfo();
             return [
                 'success' => false, 
-                'message' => "ID Number already exists. If you forgot your password, please contact {$admin['first_name']} {$admin['last_name']}."
+                'message' => "ID Number already exists. If you forgot your password, please contact Sir/Maam {$admin['first_name']} {$admin['last_name']} at {$admin['email']}."
             ];
+        }else{
+            $hashedPassword = password_hash($userData['password'], PASSWORD_BCRYPT);
+            $columns = 'first_name, last_name, id_number, email, middle_initial, password';
+            $values = "'{$userData['first_name']}',
+                    '{$userData['last_name']}',
+                    '{$userData['id_number']}',
+                    '{$userData['email']}',
+                    '{$userData['middle_initial']}',
+                    '$hashedPassword'";
+            $this->insert('accounts', $columns, $values);
+            $this->sessionManager->setUserSession($userData['id_number']);
+            return ['success' => true];
         }
-        
-        $hashedPassword = password_hash($userData['password'], PASSWORD_BCRYPT);
-        
-        $columns = 'first_name, last_name, id_number, email, middle_initial, password';
-        $values = "'{$userData['first_name']}',
-                '{$userData['last_name']}',
-                '{$userData['id_number']}',
-                '{$userData['email']}',
-                '{$userData['middle_initial']}',
-                '$hashedPassword'";
-        $this->insert('accounts', $columns, $values);
-        $this->sessionManager->setUserSession($userData['id_number']);
-        return true;
         
     }
     
     private function getAdminInfo() {
-        return $this->retrieve('first_name, last_name', 'accounts', "id_number='999999999'")->fetch_assoc();
+        return $this->retrieve('first_name, last_name, email', 'accounts', "id_number='999999999'")->fetch_assoc();
     }
 
     public function getUserinfo($userid_number) {
