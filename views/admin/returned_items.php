@@ -13,10 +13,9 @@
     require_once '../../src/admin/returned_items.php';
     require_once '../../src/admin/notifications.php';
     include 'header.php';
-
     $sessionManager = new SessionManager();
     $sessionManager->checkAdminAccess();
-
+// 
     $returnedItemsManager = new ReturnedItemsManager();
     $returnedList = $returnedItemsManager->getReturnedItems();
 
