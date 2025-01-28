@@ -12,6 +12,7 @@
     text_head("Accounts");
 
 
+    // Display success message if account was updated successfully
     if(isset($_SESSION['update_success'])){
         echo "<div class='alert-notif green' id='alert_notif'>
         <p class='circle-exclamation-check green-check'>✓</p>
@@ -25,6 +26,7 @@
     unset($_SESSION['update_success']);
     }
     
+    // Update account if submit button was clicked
     if (isset($_POST['submit'])) {
         $last_name = $_POST['last_name'];
         $first_name = $_POST['first_name'];
@@ -51,6 +53,7 @@
         }
     }
 
+    // Delete account if delete button was clicked
     if (isset($_POST['delete'])) {
         $accounts->deleteAccount($_POST['id_number']);
         echo "<div class='alert-notif green' id='alert_notif'>

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Handles user and admin authentication
+ */
 class Authentication extends Database {
     private $sessionManager;
     
@@ -7,6 +10,7 @@ class Authentication extends Database {
         $this->sessionManager = $sessionManager;
     }
     
+    // Handle user login and set session if successful
     public function handleUserLogin($id_number, $password) {
         $result = $this->validateUserCredentials($id_number, $password);
         if ($result['success']) {
@@ -15,6 +19,7 @@ class Authentication extends Database {
         return $result;
     }
     
+    // Handle admin login, allowing only a specific admin ID
     public function handleAdminLogin($id_number, $password) {
         if ($id_number !== '999999999') {
             return ['success' => false, 'message' => 'Invalid admin credentials'];
@@ -26,6 +31,7 @@ class Authentication extends Database {
         return $result;
     }
     
+    // Validate user credentials against the database
     private function validateUserCredentials($id_number, $password) {
         $result = $this->retrieve("*", "accounts", "id_number='$id_number'");
         if ($result->num_rows === 0) {
@@ -38,6 +44,7 @@ class Authentication extends Database {
         return ['success' => false, 'message' => 'Invalid password'];
     }
     
+    // Validate admin credentials
     private function validateAdminCredentials($id_number, $password) {
         $result = $this->retrieve("password", "accounts", "id_number='999999999'");
         $admin = $result->fetch_assoc();
@@ -47,6 +54,7 @@ class Authentication extends Database {
         return ['success' => false, 'message' => 'Invalid admin password'];
     }
 
+    // Validate if passwords match during registration
     private function validatePasswords($password, $confirmPassword) {
         if($password !== $confirmPassword) {
             return ['success' => false, 'message' => 'Passwords do not match!'];
@@ -54,6 +62,7 @@ class Authentication extends Database {
         return ['success' => true];
     }
 
+    // Handle user registration and create account if valid
     public function handleRegistration($userData) {
         $passwordValidation = $this->validatePasswords($userData['password'], $userData['confirm_password']);
     
@@ -66,7 +75,7 @@ class Authentication extends Database {
                 'success' => false, 
                 'message' => "ID Number already exists. If you forgot your password, please contact Sir/Maam {$admin['first_name']} {$admin['last_name']} at {$admin['email']}."
             ];
-        }else{
+        } else {
             $hashedPassword = password_hash($userData['password'], PASSWORD_BCRYPT);
             $columns = 'first_name, last_name, id_number, email, middle_initial, password';
             $values = "'{$userData['first_name']}',
@@ -79,13 +88,14 @@ class Authentication extends Database {
             $this->sessionManager->setUserSession($userData['id_number']);
             return ['success' => true];
         }
-        
     }
     
+    // Get admin contact information
     private function getAdminInfo() {
         return $this->retrieve('first_name, last_name, email', 'accounts', "id_number='999999999'")->fetch_assoc();
     }
 
+    // Retrieve user information
     public function getUserinfo($userid_number) {
         return $this->retrieve('first_name, last_name, middle_initial', 'accounts', "id_number='$userid_number'")->fetch_assoc();
     }

@@ -29,7 +29,6 @@
         $quantity_reserved = $_POST['quantity_reserved'];
         $returnedItemsManager->approveReturn($reserve_id);
         $returnedItemsManager->createRecord($reserve_id);
-        $returnedItemsManager->update_items_quantity_reserved($quantity_reserved, $item_id);
         $notificationManager->createApprovalNotification($_POST['id_number'], $_POST['item_name'], $quantity_reserved);
         header("Location: returned_items.php");
         exit();

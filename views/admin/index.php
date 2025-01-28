@@ -7,6 +7,7 @@ $sessionManager = new SessionManager();
 $auth = new Authentication($sessionManager);
 
 $message;
+
 if(isset($_POST['login'])){
     $result = $auth->handleAdminLogin($_POST["id_number"],$_POST["password"]);
     if($result['success']){

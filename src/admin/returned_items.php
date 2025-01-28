@@ -2,6 +2,7 @@
 class ReturnedItemsManager extends Database {
     private $table = 'reservations';
 
+    // Retrieve all items pending return
     public function getReturnedItems() {
         return $this->retrieve(
             'reservations.*, items.item_name, accounts.first_name, accounts.last_name, reservation_status.reservation_stat',
@@ -13,25 +14,23 @@ class ReturnedItemsManager extends Database {
         );
     }
 
+    // Approve the return of an item
     public function approveReturn($reserve_id) {
         $this->update($this->table, 'reservation_status_ID = 3', "reserve_id = '$reserve_id'");
     }
 
+    // Create a record of the return
     public function createRecord($reserve_id) {
         $this->insert('records', "reserve_id", "$reserve_id");
     }
 
-    public function update_items_quantity_reserved(int $item_quantity_toreturn, int $item_id){
-        $this->update('items', 
-            "item_quantity_reserved = item_quantity_reserved - $item_quantity_toreturn", 
-            "item_id = $item_id"
-        );
-    }
 
-    public function disapproveReturn($reserve_id){
+    // Disapprove the return of an item
+    public function disapproveReturn($reserve_id) {
         $this->update($this->table, 'reservation_status_ID = 4', "reserve_id = '$reserve_id'");
     }
 
+    // Get information about a specific item return
     public function getItemInfo($reserve_id) {
         return $this->retrieve(
             'items.item_name, reservations.id_number, items.item_id',
@@ -40,3 +39,4 @@ class ReturnedItemsManager extends Database {
         )->fetch_assoc();
     }
 }
+

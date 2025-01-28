@@ -70,7 +70,7 @@ if (isset($_POST['delete'])) {
         while ($row = $items->fetch_assoc()) {
             $itemname = $row['item_name'];
             $item_quantity = $row['item_quantity'];
-            $quantity_reserved = $row['item_quantity_reserved'];
+            $quantity_reserved = $row['total_item_reserved'];
             $item_id = $row['item_id'];
 
             if(isset($_POST["$item_id"])){

@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +9,29 @@
 <body>
 <?php
 
+/**
+ * Function to generate header for admin pages
+ * @param string $headertext the text to be displayed in the header
+ */
 function text_head($headertext) {
+    // require_once necessary files
     require_once "../../src/admin/notifications.php";
     require_once "../../src/shared/SessionManager.php";
+
+    // create instances of session manager and notification manager
     $sessionManager = new SessionManager();
-    $notificationManager=new AdminNotificationsManager();
+    $notificationManager = new AdminNotificationsManager();
+
+    // create shortage notifications
     $notificationManager->createShortageNotification(0);
+
+    // handle admin logout
     $sessionManager->handleAdminLogout();
-    $not_seenNotificationcount= $notificationManager->getNotseenNotificationsCount();
+
+    // get count of unseen notifications
+    $not_seenNotificationcount = $notificationManager->getNotseenNotificationsCount();
+
+    // generate header HTML
     echo '<header class="header">
         <nav class="navbar">
             <button class="menu" onclick="showsidebar()">
@@ -55,18 +69,20 @@ function text_head($headertext) {
     </header>';
 }
 ?>
-
 </body>
 </html>
 
 <script>
+    // function to hide sidebar
     function hidesidebar() {
         const sidebar = document.querySelector('.sidebar');
         sidebar.style.display = 'none';
     }
 
+    // function to show sidebar
     function showsidebar() {
         const sidebar = document.querySelector('.sidebar');
         sidebar.style.display = 'block';
     }
 </script>
+

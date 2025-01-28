@@ -216,6 +216,7 @@ table tr {
 .itemname{
     text-align: left;
 }
+
 .alert-notif {
     position: fixed;
     top: 50px;

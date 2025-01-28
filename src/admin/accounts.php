@@ -3,7 +3,7 @@ class AccountManager extends Database {
 
     //retrieve all active accounts sorted by their lastname
     public function getAccounts() {
-        $accounts = $this->retrieve('*', 'accounts', '1=1', 'last_name');
+        $accounts = $this->retrieve('*', 'accounts', 'active_status_id=1', 'last_name');
         return $accounts;
     }
 
@@ -24,6 +24,6 @@ class AccountManager extends Database {
 
     //delete an account by its id_number
     public function deleteAccount($idNumber) {
-        $this->delete('accounts', "id_number = '$idNumber'");
+        $this->update('accounts', "active_status_id=2","id_number = '$idNumber'" );
     }
 }

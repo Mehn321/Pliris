@@ -34,7 +34,6 @@ if (isset($_POST['reserve'])) {
                 </script>";
     }
 }
-
     if(isset($_SESSION['reserve_success'])) {
         echo "<div class='alert-notif green' id='alert_notif'>
                     <p class='circle-exclamation-check green-check'>✓</p>
@@ -135,7 +134,7 @@ if (isset($_POST['reserve'])) {
                             $quantity = $row['item_quantity'];
                             $item_id = $row['item_id'];
                             $availableAtTime = $reserveItem->calculateAvailableQuantity($item_id, $quantity);
-                            $item_quantity_reserved = $reserveItem->getReservedQuantityAtTime($item_id);
+                            // $item_quantity_reserved = $reserveItem->getReservedQuantityAtTime($item_id);
                             echo "
                             <tr class='row-border'>
                                 <td class='itemname'>$itemname</td>
