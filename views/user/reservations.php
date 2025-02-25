@@ -73,40 +73,56 @@
     text_head("Reservations");
     ?>
 
-    <div class="container">
-        <div class="table-wrapper">
-            <table>
-                <tr class="row-border">
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Reserved Schedule</th>
-                    <th>Return Schedule</th>
-                    <th>Action</th>
-                </tr>
-                <?php
-                $reservations = $myReservations->getUserReservations();
-                while ($row = $reservations->fetch_assoc()) {
-                    $reserve_datetime = new DateTime($row['scheduled_reserve_datetime']);
-                    $return_datetime = new DateTime($row['scheduled_return_datetime']);
-                    echo "<tr class='row-border'>
-                        <td>{$row['item_name']}</td>
-                        <td>{$row['quantity_reserved']}</td>
-                        <td>{$reserve_datetime->format('M-d-Y h:i:s A')}</td>
-                        <td>{$return_datetime->format('M-d-Y h:i:s A')}</td>
-                        <td><form action='' method='post'>
-                                <input type='hidden' name='reserve_id' value='{$row['reserve_id']}'>
-                                <input type='hidden' name='quantity_reserved' value='{$row['quantity_reserved']}'>
-                                <input type='hidden' name='reserve_datetime' value='{$row['scheduled_reserve_datetime']}'>
-                                <input type='hidden' name='item_id' value='{$row['item_id']}'>
-                                <input type='submit' name='return' value='Return'>
-                                <input type='submit' name='cancel' value='Cancel' onclick=\"return confirm('Are you sure you want to cancel this reservation?');\">
-                            </form>
-                        </td>
-                        </tr>";
-                    }
-                    ?>
-            </table>
+    <div class="px-2">
+        <div class="container-fluid py-5 border rounded-3 mt-4 bg-light shadow-sm">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="text-center">
+                                <table class="table table-responsive mx-auto table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Item Name</th>
+                                            <th>Quantity</th>
+                                            <th>Reserved Schedule</th>
+                                            <th>Return Schedule</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $reservations = $myReservations->getUserReservations();
+                                        while ($row = $reservations->fetch_assoc()) {
+                                            $reserve_datetime = new DateTime($row['scheduled_reserve_datetime']);
+                                            $return_datetime = new DateTime($row['scheduled_return_datetime']);
+                                            echo "<tr >
+                                                <td class='text-start'>{$row['item_name']}</td>
+                                                <td class='align-middle'>{$row['quantity_reserved']}</td>
+                                                <td class='align-middle'>{$reserve_datetime->format('M-d-Y h:i:s A')}</td>
+                                                <td class='align-middle'>{$return_datetime->format('M-d-Y h:i:s A')}</td>
+                                                <td class='align-middle'>
+                                                    <form action='' method='post' class='d-flex gap-2 justify-content-center'>
+                                                        <input type='hidden' name='reserve_id' value='{$row['reserve_id']}'>
+                                                        <input type='hidden' name='quantity_reserved' value='{$row['quantity_reserved']}'>
+                                                        <input type='hidden' name='reserve_datetime' value='{$row['scheduled_reserve_datetime']}'>
+                                                        <input type='hidden' name='item_id' value='{$row['item_id']}'>
+                                                        <button type='submit' name='return' class='btn btn-success btn-sm'>Return</button>
+                                                        <button type='submit' name='cancel' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to cancel this reservation?');\">Cancel</button>
+                                                    </form>
+                                                </td>
+                                            </tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

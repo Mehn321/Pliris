@@ -88,6 +88,7 @@ if (isset($_POST['reserve'])) {
                 </script>";
         }
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,81 +99,112 @@ if (isset($_POST['reserve'])) {
     <link rel="stylesheet" href="../../assets/css/items_records_reservation_accounts.css">
 </head>
 <body>
-    <div class="container">
-        <?php if ($scheduled_reserve_datetime && $scheduled_return_datetime): ?>
-            <div class='form-section'>
-                <form action='reserve_item.php' method='post'>
-                    <p>Select your preferred reservation and return times to view available items</p>
-                    <div class='form-group'>
-                        <label>Reserve Time:</label>
-                        <input class="datetime-container" type='datetime-local' name='scheduled_reserve_datetime' value='<?= $scheduled_reserve_datetime ?>' required>
+    <div class="px-2">
+        <div class="container-fluid py-5 border rounded-3 mt-4 bg-light shadow-sm">
+            <?php if ($scheduled_reserve_datetime && $scheduled_return_datetime): ?>
+                <div class="row justify-content-center">
+                    <div class="col-md-12 col-lg-12">
+                        <form action="reserve_item.php" method="post" class="bg-white p-4 rounded-3 shadow-sm mb-4">
+                            <h4 class="text-primary mb-4">Select Reservation Schedule</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Reserve Time</label>
+                                    <input class="form-control" type="datetime-local" name="scheduled_reserve_datetime" value="<?= $scheduled_reserve_datetime ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Return Time</label>
+                                    <input class="form-control" type="datetime-local" name="scheduled_return_datetime" value="<?= $scheduled_return_datetime ?>" required>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" name="show_available_items" class="btn btn-primary">Update Available Items</button>
+                            </div>
+                        </form>
+
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Available Items from <?= date('F j, Y g:i A', strtotime($scheduled_reserve_datetime)) ?> to <?= date('F j, Y g:i A', strtotime($scheduled_return_datetime)) ?>
+                        </div>
+
+                        <form action="reserve_item.php" method="post" id="reserveForm">
+                            <div class="card shadow-sm">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th>Total Quantity</th>
+                                                <th>Available</th>
+                                                <th>Reserve Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $items = $reserveItem->getAvailableItems();
+                                        while ($row = $items->fetch_assoc()) {
+                                            $itemname = $row['item_name'];
+                                            $quantity = $row['item_quantity'];
+                                            $item_id = $row['item_id'];
+                                            $availableAtTime = $reserveItem->calculateAvailableQuantity($item_id, $quantity);
+                                            echo "
+                                            <tr>
+                                                <td class='text-start'>$itemname</td>
+                                                <td class='align-middle'>$quantity</td>
+                                                <td class='align-middle'><span class='badge bg-success'>$availableAtTime</span></td>
+                                                <td style=''>
+                                                    <input type='hidden' name='item_ids[]' value='$item_id'>
+                                                    <input type='hidden' name='availableAtTime[]' value='$availableAtTime'>
+                                                    <input type='number' class='form-control mx-auto' style='text-decoration: none;' name='quantity_toreserve[]' min='0' max='$availableAtTime'>
+                                                </td>
+                                            </tr>";
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="scheduled_reserve_datetime" value="<?= $scheduled_reserve_datetime ?>">
+                            <input type="hidden" name="scheduled_return_datetime" value="<?= $scheduled_return_datetime ?>">
+                            
+                            <div class="mt-2" style="z-index: 1000; width: 50vw;">
+                                <button type="submit" name="reserve" class="btn btn-primary btn-lg position-fixed" style="font-size: 1.5vw; bottom: 40px; right: 25px" >
+                                    <i class="bi bi-calendar-check me-2"></i>Reserve Selected Items
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class='form-group'>
-                        <label>Return Time:</label>
-                        <input class="datetime-container" type='datetime-local' name='scheduled_return_datetime' value='<?= $scheduled_return_datetime ?>' required>
-                    </div>
-                    <input class='showed' type='submit' name='show_available_items' value='Show Available Items'>
-                </form>
-                <div class='reservation-datetime'>Available Items from <?= date('F j, Y g:i A', strtotime($scheduled_reserve_datetime)) ?> to <?= date('F j, Y g:i A', strtotime($scheduled_return_datetime)) ?></div>
-            </div>
-            <form action='reserve_item.php' method='post' id='reserveForm'>
-                <div class='table-wrapper'>
-                    <table>
-                        <thead>
-                            <tr class='row-border'>
-                                <th>Item Name</th>
-                                <th>Quantity</th>
-                                <th>Available</th>
-                                <th>Quantity to Reserve</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        $items = $reserveItem->getAvailableItems();
-                        while ($row = $items->fetch_assoc()) {
-                            $itemname = $row['item_name'];
-                            $quantity = $row['item_quantity'];
-                            $item_id = $row['item_id'];
-                            $availableAtTime = $reserveItem->calculateAvailableQuantity($item_id, $quantity);
-                            // $item_quantity_reserved = $reserveItem->getReservedQuantityAtTime($item_id);
-                            echo "
-                            <tr class='row-border'>
-                                <td class='itemname'>$itemname</td>
-                                <td>$quantity</td>
-                                <td>$availableAtTime</td>
-                                <td>
-                                    <input type='hidden' name='item_ids[]' value='$item_id'>
-                                    <input type='hidden' name='availableAtTime[]' value='$availableAtTime'>
-                                    <input type='number' name='quantity_toreserve[]' min='0'>
-                                </td>
-                            </tr>";
-                        }
-                        ?>
-                        </tbody>
-                    </table>
                 </div>
-                <input type='hidden' name='scheduled_reserve_datetime' value='<?= $scheduled_reserve_datetime ?>'>
-                <input type='hidden' name='scheduled_return_datetime' value='<?= $scheduled_return_datetime ?>'>
-                <input type='submit' name='reserve' value='Reserve Selected Items' class='reserve-button'>
-            </form>
-        <?php else: ?>
-            <div class="form-section">
-                <form action="reserve_item.php" method="post">
-                    <p>Select your preferred reservation and return times to view available items</p>
-                    <div class="form-group">
-                        <label>Reserve Time:</label>
-                        <input class="datetime-container" type="datetime-local" name="scheduled_reserve_datetime" value="<?= $scheduled_reserve_datetime ?>" required>
+
+            <?php else: ?>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4">
+                                <h4 class="card-title text-primary mb-4">Schedule Your Reservation</h4>
+                                <form action="reserve_item.php" method="post">
+                                    <div class="mb-3">
+                                        <label class="form-label">Reserve Time</label>
+                                        <input class="form-control" type="datetime-local" name="scheduled_reserve_datetime" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Return Time</label>
+                                        <input class="form-control" type="datetime-local" name="scheduled_return_datetime" required>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" name="show_available_items" class="btn btn-primary">
+                                            Show Available Items
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Return Time:</label>
-                        <input class="datetime-container" type="datetime-local" name="scheduled_return_datetime" value="<?= $scheduled_return_datetime ?>" required>
-                    </div>
-                    <input class="show" type="submit" name="show_available_items" value="Show Available Items" class="btn-submit">
-                </form>
-            </div>
-        <?php endif;?>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

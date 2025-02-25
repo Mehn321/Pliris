@@ -1,88 +1,95 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/header.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background: white;
+            z-index: 1050;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
 <?php
-
-/**
- * Function to generate header for admin pages
- * @param string $headertext the text to be displayed in the header
- */
 function text_head($headertext) {
-    // require_once necessary files
     require_once "../../src/admin/notifications.php";
     require_once "../../src/shared/SessionManager.php";
 
-    // create instances of session manager and notification manager
     $sessionManager = new SessionManager();
     $notificationManager = new AdminNotificationsManager();
-
-    // create shortage notifications
     $notificationManager->createShortageNotification(0);
-
-    // handle admin logout
-    $sessionManager->handleAdminLogout();
-
-    // get count of unseen notifications
     $not_seenNotificationcount = $notificationManager->getNotseenNotificationsCount();
-
-    // generate header HTML
+    if($not_seenNotificationcount>9){
+        $not_seenNotificationcount="9+";
+    }
+    
+    if (isset($_POST['logout'])) {
+        $sessionManager->handleAdminLogout();
+        header("Location: ../../index.php");
+        exit();
+    }
     echo '<header class="header">
-        <nav class="navbar">
-            <button class="menu" onclick="showsidebar()">
-                <img src="../../assets/images/menuwhite.png" alt="menu" height="40px" width="45">
-            </button>
-            <img class="ustplogo" src="../../assets/images/ustplogo.png" alt="ustplogo">
-            <div class=headertext>' . $headertext . '</div>
-            <div class="notification">
-                <a href="notifications.php" class="badge1">
-                    <img src="../../assets/images/bell.png" alt="">
-                    <span class="badge">' . $not_seenNotificationcount . '</span>
-                </a>
-            </div>
-            <div class="logout-box">
-                <form action="" method="post">
-                    <button name="logout" value="logout">Log Out</button>
-                </form>
+        <nav class="navbar navbar-dark bg-primary px-2" style="min-width: 480px;">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div class="d-flex align-items-center justify-content-arround">
+                    <button class="btn btn-link btn-info" onclick="showsidebar()">
+                        <img src="../../assets/images/menuwhite.png" alt="menu" height="40">
+                    </button>
+                    <img class="position-absolute top-50 translate-middle rounded-1" style="left: 17vw;" src="../../assets/images/ustplogo.png" alt="USTP Logo" height="40">
+                </div>
+                <div class="text-white fs-5 ms-3">' . $headertext . '</div>
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <a href="notifications.php" class="position-relative d-inline-block">
+                            <span class="position-absolute mt-n3 translate-middle-x badge rounded-circle bg-danger d-flex justify-content-center align-items-center" style="width: 15px; height: 15px; top: 0px; right: -7px">' . $not_seenNotificationcount . '</span>
+                            <img src="../../assets/images/bell.png" alt="notifications" height="35">
+                        </a>
+                    </div>
+                    <form method="post" class="m-0">
+                        <button name="logout" value="logout" class="btn btn-outline-light">Logout</button>
+                    </form>
+                </div>
             </div>
         </nav>
-        <div class="sidebar">
-            <ul>
-                <button class="menu" onclick="hidesidebar()">
-                    <img src="../../assets/images/menublue.png" alt="menu" height="40px" width="45px">
+        <div class="sidebar bg-dark w-auto pe-4">
+            <div class="d-flex align-items-center justify-content-arround">
+                <button class="btn btn-link btn-secondary" onclick="hidesidebar()">
+                    <img src="../../assets/images/menublue.png" alt="menu" height="40">
                 </button>
-                <a href="dashboard.php"><li>Dashboard</li></a>
-                <a href="items.php"><li>Items</li></a>
-                <a href="reserved_items.php"><li>Reserved items</li></a>
-                <a href="returned_items.php"><li>Returned items</li></a>
-                <a href="add.php"><li>Add Items</li></a>
-                <a href="accounts.php"><li>Accounts</li></a>
-                <a href="records.php"><li>Records</li></a>
-                <a href="notifications.php"><li>Notifications</li></a>
-            </ul>
+            </div>
+            <div class="list-group list-group-flush">
+                <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'dashboard.php\'">Dashboard</button>
+                <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'items.php\'">Items</button>
+                <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'reserved_items.php\'">Reserved items</button>
+                <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'returned_items.php\'">Returned items</button>
+                <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'add.php\'">Add Items</button>
+                <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'accounts.php\'">Accounts</button>
+                <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'records.php\'">Records</button>
+                <button class="btn btn-dark text-start w-100" onclick="window.location.href=\'notifications.php\'">Notifications</button>
+            </div>
         </div>
-    </header>';
-}
+    </header>';}
 ?>
 </body>
 </html>
 
 <script>
-    // function to hide sidebar
-    function hidesidebar() {
-        const sidebar = document.querySelector('.sidebar');
-        sidebar.style.display = 'none';
-    }
+function hidesidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.style.display = 'none';
+}
 
-    // function to show sidebar
-    function showsidebar() {
-        const sidebar = document.querySelector('.sidebar');
-        sidebar.style.display = 'block';
-    }
+function showsidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.style.display = 'block';
+}
 </script>
-
