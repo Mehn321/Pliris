@@ -4,28 +4,28 @@ class Database {
     public $conn;
 
     // Constructor establishes a connection to the database
-    // public function __construct() {
-    //     $this->conn = new mysqli('localhost', 'root', '', 'pliris');
-    //     if ($this->conn->connect_error) {
-    //         die("Connection failed: " . $this->conn->connect_error);
-    //     }
-    // }
-
     public function __construct() {
-        $db_host = getenv('PGHOST');
-        $db_port = getenv('PGPORT');
-        $db_name = getenv('PGDATABASE');
-        $db_user = getenv('PGUSER');
-        $db_pass = getenv('PGPASSWORD');
-
-        try {
-            $dsn = "pgsql:host=$db_host;port=$db_port;dbname=$db_name;";
-            $this->conn = new PDO($dsn, $db_user, $db_pass);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
+        $this->conn = new mysqli('localhost', 'root', '', 'pliris');
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->conn->connect_error);
         }
     }
+
+    // public function __construct() {
+    //     $db_host = getenv('PGHOST');
+    //     $db_port = getenv('PGPORT');
+    //     $db_name = getenv('PGDATABASE');
+    //     $db_user = getenv('PGUSER');
+    //     $db_pass = getenv('PGPASSWORD');
+
+    //     try {
+    //         $dsn = "pgsql:host=$db_host;port=$db_port;dbname=$db_name;";
+    //         $this->conn = new PDO($dsn, $db_user, $db_pass);
+    //         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //     } catch (PDOException $e) {
+    //         die("Connection failed: " . $e->getMessage());
+    //     }
+    // }
 
     // Insert data into a specified table
     public function insert($table, $columns, $data) {

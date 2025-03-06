@@ -44,7 +44,7 @@ function text_head($headertext) {
                     <button class="btn btn-link btn-info" onclick="showsidebar()">
                         <img src="../../assets/images/menuwhite.png" alt="menu" height="40">
                     </button>
-                    <img class="position-absolute top-50 translate-middle rounded-1" style="left: 17vw;" src="../../assets/images/ustplogo.png" alt="USTP Logo" height="40">
+                    <img class="position-absolute top-50 translate-middle rounded-1" style="left: 17vw;" src="../../assets/images/ustplogo.png" alt="USTP Logo" height="60">
                 </div>
                 <div class="text-white fs-5 ms-3">' . $headertext . '</div>
                 <div class="d-flex align-items-center">
@@ -71,7 +71,6 @@ function text_head($headertext) {
                 <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'items.php\'">Items</button>
                 <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'reserved_items.php\'">Reserved items</button>
                 <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'returned_items.php\'">Returned items</button>
-                <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'add.php\'">Add Items</button>
                 <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'accounts.php\'">Accounts</button>
                 <button class="btn btn-dark text-start mb-2 w-100" onclick="window.location.href=\'records.php\'">Records</button>
                 <button class="btn btn-dark text-start w-100" onclick="window.location.href=\'notifications.php\'">Notifications</button>

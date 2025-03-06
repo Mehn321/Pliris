@@ -2,6 +2,7 @@
 require_once '../../src/shared/database.php';
 require_once '../../src/shared/sessionmanager.php';
 require_once '../../src/admin/items.php';
+require_once '../../src/admin/add.php';
 include 'header.php';
 
 $sessionManager = new SessionManager();
@@ -18,6 +19,28 @@ if (isset($_POST['submit'])) {
     header('Location: items.php');
     exit;
 }
+
+if(isset($_POST['add'])) {
+    $addItem = new AddItemManager();
+    $addItem->addNewItem($_POST['itemname'], $_POST['item_quantity']);
+    $_SESSION['add_success'] = true;
+    header('Location: items.php');
+    exit;
+}
+
+if(isset($_SESSION['add_success'])) {
+    echo "<div class='alert-notif green' id='alert_notif'>
+            <p class='circle-exclamation-check green-check'>✓</p>
+            Items added Successfully! 🎉
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('alert_notif').remove();
+            }, 5000);
+        </script>";
+    unset($_SESSION['add_success']);
+}
+
 
 if(isset($_SESSION['update_success'])) {
     echo "<div class='alert-notif green' id='alert_notif'>

@@ -102,28 +102,28 @@ $stats = $dashboard->getDashboardStats();
         <!-- Quick Actions -->
         <div class="row g-4">
             <div class="col-md-4">
-                <a href="items.php" class="text-decoration-none">
+                <a href="records.php" class="text-decoration-none">
                     <div class="card hover-card border-0 shadow-sm h-100">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center mb-3">
-                                <i class="bi bi-grid-3x3-gap-fill text-primary fs-3 me-3"></i>
-                                <h5 class="card-title mb-0 text-dark">Manage Items</h5>
+                                <i class="bi bi-file-text text-primary fs-3 me-3"></i>
+                                <h5 class="card-title mb-0 text-dark">View Records</h5>
                             </div>
-                            <p class="card-text text-muted">View and manage inventory items</p>
+                            <p class="card-text text-muted">View transaction history and reports</p>
                         </div>
                     </div>
                 </a>
             </div>
 
             <div class="col-md-4">
-                <a href="add.php" class="text-decoration-none">
+                <a href="items.php" class="text-decoration-none">
                     <div class="card hover-card border-0 shadow-sm h-100">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center mb-3">
-                                <i class="bi bi-plus-circle-fill text-success fs-3 me-3"></i>
-                                <h5 class="card-title mb-0 text-dark">Add New Items</h5>
+                                <i class="bi bi-grid-3x3-gap-fill text-success fs-3 me-3"></i>
+                                <h5 class="card-title mb-0 text-dark">Manage Items</h5>
                             </div>
-                            <p class="card-text text-muted">Add new items to inventory</p>
+                            <p class="card-text text-muted">View and manage inventory items</p>
                         </div>
                     </div>
                 </a>
