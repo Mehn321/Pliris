@@ -24,6 +24,9 @@ class AccountManager extends Database {
 
     //delete an account by its id_number
     public function deleteAccount($idNumber) {
-        $this->update('accounts', "active_status_id=2","id_number = '$idNumber'" );
+        $sessionManager = new SessionManager();
+        $sessionManager->LogoutUser($idNumber);
+        $this->update('accounts', "active_status_id=2", "id_number = '$idNumber'");
     }
+    
 }

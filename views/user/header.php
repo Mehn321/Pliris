@@ -43,7 +43,9 @@ function text_head($headertext) {
                     <button class="btn btn-link btn-info" onclick="showsidebar()">
                         <img src="../../assets/images/menuwhite.png" alt="menu" height="40">
                     </button>
-                    <img class="position-absolute top-50 translate-middle rounded-1" style="left: 17vw;" src="../../assets/images/ustplogo.png" alt="USTP Logo" height="60">
+                    </button>
+                        <h5 class="ms-1 ms-md-3 ms-lg-5 text-white">PLIRIS</h5>
+                        <img class="ms-2 ms-md-4 ms-lg-5" style="left: 17vw;" src="../../assets/images/ustplogo.png" alt="USTP Logo" height="60">
                 </div>
                 <div class="text-white fs-5 ms-3">' . $headertext . '</div>
                 <div class="d-flex align-items-center">

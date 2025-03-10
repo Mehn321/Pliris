@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2025 at 04:04 PM
+-- Generation Time: Mar 05, 2025 at 03:45 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,11 +44,11 @@ CREATE TABLE `accounts` (
 INSERT INTO `accounts` (`id_number`, `active_status_id`, `first_name`, `middle_initial`, `last_name`, `email`, `password`) VALUES
 (999999999, 1, 'Bryan', 'A', 'Tamayo', 'bryan@gmail.com', '$2y$10$wVL6Zfh651X2dlhEzvFu5u/Y7P4j5TGiSOVZA/uizGrzO1HCy2RmO'),
 (2023300076, 1, 'Nhem Day', 'G', 'Aclo', 'aclonhemday@gmail.com', '$2y$10$CVxtCY23xTkk3kV0h1Ym8.C6USOTmna99008FB8.IxRhmco0amI0i'),
-(2023309879, 1, 'Chris', 'H', 'Toylo', 'chris@gmail.com', '$2y$10$5xLIzK8eFlXIzM1jcrSO2uOnDheP14d/yeacFuUjy2JaCln3QQiUO'),
+(2023309879, 2, 'Chris', 'H', 'Toylo', 'chris@gmail.com', '$2y$10$5xLIzK8eFlXIzM1jcrSO2uOnDheP14d/yeacFuUjy2JaCln3QQiUO'),
 (2023345345, 1, 'Errol', 'G', 'Dionson', 'ulollolskie@gmail.com', '$2y$10$ByuVxd7gUSCup8VkBSebOuNNqxqkA1UaxX.Y1RHJGZA2MfpwmvQsO'),
 (2023367257, 1, 'Miyong', 'T', 'Sabuero', 'aclonhemday@gmail.com', '$2y$10$qvtVK42fHjvjGPQJtvzOV.6.SzJ/Tmg37nUVowW3TbfwQoZFaWjXS'),
 (2023376897, 1, 'Kim Adam', 'K', 'Blacer', 'kimadam@gmail.com', '$2y$10$ngJ0vP2yT7lEG99uOzuvDueyRYHIPHaeJnlcnrbnspQo54txkwjAC'),
-(2023390698, 1, 'Jaysa', 'J', 'Lague', 'ulollolskie@gmail.com', '$2y$10$Ppj8rvM2xT.jincvdSjafuuQ2Fya1Okb5cZRr1pxHlOHexja8fG3G'),
+(2023390698, 1, 'Jaysa', 'J', 'Laguea', 'ulollolskie@gmail.com', '$2y$10$Ppj8rvM2xT.jincvdSjafuuQ2Fya1Okb5cZRr1pxHlOHexja8fG3G'),
 (2023627838, 2, 'miyong', '', 'Aclo', 'ilove@gmail.com', '$2y$10$wsbqrSPBSolX2JtPxwxUwuus8Wc1BUxCRYk9vKzaNefcqDuyNJTQ2'),
 (2023786347, 1, 'Mark', 'H', 'Libut', 'mark@gmail.com', '$2y$10$JW3UhQO5Fv.dZcfiUN1squ4xBLbG3KJu.JvGjDsaIFXa.GfE8HVry');
 
@@ -124,7 +124,10 @@ INSERT INTO `items` (`item_id`, `active_status_id`, `item_name`, `item_quantity`
 (89, 2, 'atry', 0),
 (97, 2, 'Balco Meter Tulay', 0),
 (98, 1, 'Balco Meter Bridge', 1),
-(112, 1, 'saga', 5);
+(112, 2, 'saga', 5),
+(113, 2, 'aa', 34),
+(114, 2, 'addddd', 23),
+(115, 2, 'awsdfg', 78);
 
 -- --------------------------------------------------------
 
@@ -287,15 +290,34 @@ INSERT INTO `notifications` (`notification_id`, `id_number`, `notification_statu
 (919, 999999999, 2, '2024-12-17 17:06:54', 'Your return for 3 Conductivity of solutions Apparatus(s) has been approved.'),
 (920, 999999999, 2, '2024-12-17 17:06:55', 'Your return for 2 Electronic Multicolor Dynamic Trolly(s) has been approved.'),
 (921, 2023300076, 2, '2025-01-01 09:16:00', 'Your return for 1 Calibration Weight(s) has been approved. Please return the item/items or you can approach the moderator Sir/Maam: Bryan Tamayo or you can contact him/her at bryan@gmail.com.'),
-(922, 2023300076, 1, '2025-01-28 22:05:43', 'Your return for 1 Calibration Weight(s) has been approved.'),
-(923, 2023300076, 1, '2025-01-28 22:05:46', 'Your return for 1 Ammeter(s) has been approved.'),
-(924, 2023300076, 1, '2025-01-28 22:05:46', 'Your return for 1 Balco Meter Bridge(s) has been approved.'),
-(925, 2023300076, 1, '2025-01-28 22:05:47', 'Your return for 4 Electronic Multicolor Dynamic Trolly(s) has been approved.'),
-(926, 999999999, 1, '2025-01-28 22:05:47', 'Your return for 1 Balco Meter Bridge(s) has been approved. Please return the item/items or you can approach the moderator Sir/Maam: Bryan Tamayo or you can contact him/her at bryan@gmail.com.'),
-(927, 999999999, 1, '2025-01-28 22:05:47', 'Your return for 1 Calibration Weight(s) has been approved. Please return the item/items or you can approach the moderator Sir/Maam: Bryan Tamayo or you can contact him/her at bryan@gmail.com.'),
-(928, 999999999, 1, '2025-01-28 22:05:48', 'Your return for 2 Calorometer(s) has been approved.'),
-(929, 999999999, 1, '2025-01-28 22:05:58', 'Your return for 1 Balco Meter Bridge(s) has been approved.'),
-(930, 999999999, 1, '2025-01-28 22:05:59', 'Your return for 1 Calibration Weight(s) has been approved.');
+(922, 2023300076, 2, '2025-01-28 22:05:43', 'Your return for 1 Calibration Weight(s) has been approved.'),
+(923, 2023300076, 2, '2025-01-28 22:05:46', 'Your return for 1 Ammeter(s) has been approved.'),
+(924, 2023300076, 2, '2025-01-28 22:05:46', 'Your return for 1 Balco Meter Bridge(s) has been approved.'),
+(925, 2023300076, 2, '2025-01-28 22:05:47', 'Your return for 4 Electronic Multicolor Dynamic Trolly(s) has been approved.'),
+(926, 999999999, 2, '2025-01-28 22:05:47', 'Your return for 1 Balco Meter Bridge(s) has been approved. Please return the item/items or you can approach the moderator Sir/Maam: Bryan Tamayo or you can contact him/her at bryan@gmail.com.'),
+(927, 999999999, 2, '2025-01-28 22:05:47', 'Your return for 1 Calibration Weight(s) has been approved. Please return the item/items or you can approach the moderator Sir/Maam: Bryan Tamayo or you can contact him/her at bryan@gmail.com.'),
+(928, 999999999, 2, '2025-01-28 22:05:48', 'Your return for 2 Calorometer(s) has been approved.'),
+(929, 999999999, 2, '2025-01-28 22:05:58', 'Your return for 1 Balco Meter Bridge(s) has been approved.'),
+(930, 999999999, 2, '2025-01-28 22:05:59', 'Your return for 1 Calibration Weight(s) has been approved.'),
+(931, 2023300076, 2, '2025-01-30 13:06:17', 'Return reminder: Ammeter is due for return on 2025-01-29 23:50:00'),
+(932, 2023300076, 2, '2025-01-30 13:06:17', 'Return reminder: Balco Meter Bridge is due for return on 2025-01-29 23:50:00'),
+(933, 2023300076, 2, '2025-01-30 13:06:17', 'Return reminder: Conductivity of solutions Apparatus is due for return on 2025-01-29 23:50:00'),
+(934, 2023300076, 2, '2025-02-15 22:19:35', 'Return reminder: Ammeter is due for return on 2025-01-29 23:50:00'),
+(935, 2023300076, 2, '2025-02-15 22:19:35', 'Return reminder: Balco Meter Bridge is due for return on 2025-01-29 23:50:00'),
+(936, 2023300076, 2, '2025-02-15 22:19:35', 'Return reminder: Conductivity of solutions Apparatus is due for return on 2025-01-29 23:50:00'),
+(937, 2023300076, 1, '2025-02-17 15:23:48', 'Return reminder: Ammeter is due for return on 2025-01-29 23:50:00'),
+(938, 2023300076, 1, '2025-02-17 15:23:48', 'Return reminder: Balco Meter Bridge is due for return on 2025-01-29 23:50:00'),
+(939, 2023300076, 1, '2025-02-17 15:23:48', 'Return reminder: Conductivity of solutions Apparatus is due for return on 2025-01-29 23:50:00'),
+(940, 2023300076, 1, '2025-02-22 15:08:41', 'Return reminder: Ammeter is due for return on 2025-02-17 19:24:00'),
+(941, 2023300076, 1, '2025-02-22 15:08:41', 'Return reminder: Balco Meter Bridge is due for return on 2025-02-17 19:24:00'),
+(942, 2023300076, 1, '2025-02-24 21:09:25', 'Return reminder: Ammeter is due for return on 2025-02-17 19:24:00'),
+(943, 2023300076, 1, '2025-02-24 21:09:25', 'Return reminder: Balco Meter Bridge is due for return on 2025-02-17 19:24:00'),
+(944, 2023300076, 1, '2025-02-24 21:09:25', 'Return reminder: Decade Resistance Box is due for return on 2025-02-22 20:08:00'),
+(945, 999999999, 1, '2025-03-05 10:43:43', 'Your return for 1 Calibration Weight(s) has been approved.'),
+(946, 2023300076, 1, '2025-03-05 10:43:44', 'Your return for 2 Conductivity of solutions Apparatus(s) has been approved.'),
+(947, 2023300076, 1, '2025-03-05 10:43:45', 'Your return for 4 Decade Resistance Box(s) has been approved.'),
+(948, 2023300076, 1, '2025-03-05 10:43:45', 'Your return for 1 Ammeter(s) has been approved.'),
+(949, 2023300076, 1, '2025-03-05 10:43:46', 'Your return for 1 Ammeter(s) has been approved.');
 
 -- --------------------------------------------------------
 
@@ -393,7 +415,12 @@ INSERT INTO `records` (`record_id`, `reserve_id`) VALUES
 (208, 747),
 (210, 748),
 (211, 749),
-(209, 750);
+(209, 750),
+(215, 751),
+(213, 753),
+(216, 754),
+(214, 759),
+(212, 762);
 
 -- --------------------------------------------------------
 
@@ -477,7 +504,19 @@ INSERT INTO `reservations` (`reserve_id`, `id_number`, `item_id`, `quantity_rese
 (747, 2023300076, 22, 4, '2025-01-01 10:00:00', '2025-01-01 11:00:00', '2025-01-01 09:15:20', 3),
 (748, 999999999, 98, 1, '2025-01-29 22:00:00', '2025-01-30 11:00:00', '2025-01-28 22:05:53', 3),
 (749, 999999999, 15, 1, '2025-01-29 22:00:00', '2025-01-30 11:00:00', '2025-01-28 22:05:53', 3),
-(750, 999999999, 21, 2, '2025-01-29 22:00:00', '2025-01-30 11:00:00', '2025-01-28 22:05:13', 3);
+(750, 999999999, 21, 2, '2025-01-29 22:00:00', '2025-01-30 11:00:00', '2025-01-28 22:05:13', 3),
+(751, 2023300076, 39, 1, '2025-01-29 21:50:00', '2025-01-29 23:50:00', '2025-02-17 15:26:21', 3),
+(752, 2023300076, 98, 1, '2025-01-29 21:50:00', '2025-01-29 23:50:00', '2025-02-17 15:26:21', 2),
+(753, 2023300076, 18, 2, '2025-01-29 21:50:00', '2025-01-29 23:50:00', '2025-02-17 15:26:21', 3),
+(754, 2023300076, 39, 1, '2025-01-31 15:10:00', '2025-01-31 19:10:00', '2025-02-17 15:26:22', 3),
+(755, 999999999, 39, 1, '2025-02-17 11:50:00', '2025-02-17 12:50:00', '2025-02-17 08:51:15', 2),
+(756, 999999999, 98, 1, '2025-02-17 11:50:00', '2025-02-17 12:50:00', '2025-02-17 08:51:16', 2),
+(757, 2023300076, 39, 1, '2025-02-17 17:24:00', '2025-02-17 19:24:00', '2025-03-05 10:23:30', 2),
+(758, 2023300076, 98, 1, '2025-02-17 17:24:00', '2025-02-17 19:24:00', '2025-03-05 10:23:32', 2),
+(759, 2023300076, 25, 4, '2025-02-22 16:08:00', '2025-02-22 20:08:00', '2025-03-05 10:23:33', 3),
+(760, 999999999, 39, 1, '2025-03-06 16:08:00', '2025-03-07 20:08:00', '2025-03-05 10:23:11', 2),
+(761, 999999999, 98, 1, '2025-03-06 16:08:00', '2025-03-07 20:08:00', '2025-03-05 10:23:12', 2),
+(762, 999999999, 15, 1, '2025-03-06 16:08:00', '2025-03-07 20:08:00', '2025-03-05 10:23:16', 3);
 
 -- --------------------------------------------------------
 
@@ -580,13 +619,13 @@ ALTER TABLE `active_status`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=931;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=950;
 
 --
 -- AUTO_INCREMENT for table `notification_status`
@@ -598,13 +637,13 @@ ALTER TABLE `notification_status`
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `reserve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=751;
+  MODIFY `reserve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=763;
 
 --
 -- AUTO_INCREMENT for table `reservation_status`

@@ -1,16 +1,20 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include "header.php";
 require_once '../../src/shared/database.php';
 require_once '../../src/shared/sessionmanager.php';
 require_once '../../src/admin/dashboard.php';
 
 $sessionManager = new SessionManager();
-$sessionManager->setRedirectPath("index.php");
+$sessionManager->setRedirectPath("../../index.php");
 $sessionManager->checkAdminAccess();
 
 $dashboard = new AdminDashboard();
 text_head("Welcome Admin");
 $stats = $dashboard->getDashboardStats();
+
 ?>
 
 <!DOCTYPE html>
@@ -158,3 +162,9 @@ $stats = $dashboard->getDashboardStats();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+?>

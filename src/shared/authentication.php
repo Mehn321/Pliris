@@ -1,4 +1,8 @@
 <?php
+
+require_once __DIR__ . '/database.php';
+require_once __DIR__ . '/sessionmanager.php';
+
 /**
  * Handles user and admin authentication
  */
@@ -30,20 +34,29 @@ class Authentication extends Database {
         }
         return $result;
     }
-    
-    // Validate user credentials against the database
-    private function validateUserCredentials($id_number, $password) {
-        $result = $this->retrieve("*", "accounts", "id_number='$id_number'");
-        if ($result->num_rows === 0) {
-            return ['success' => false, 'message' => 'ID number not found'];
+        // Validate user credentials against the database
+        private function validateUserCredentials($id_number, $password) {
+            // Escape the input to prevent SQL injection
+            $id_number = $this->conn->real_escape_string($id_number);
+        
+            $result = $this->retrieve("*", "accounts", "id_number='$id_number'");
+        
+            // Check if query was successful
+            if ($result === false) {
+                return ['success' => false, 'message' => 'Database error: ' . $this->conn->error];
+            }
+        
+            if ($result->num_rows === 0) {
+                return ['success' => false, 'message' => 'ID number not found'];
+            }
+        
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user['password'])) {
+                return ['success' => true];
+            }
+        
+            return ['success' => false, 'message' => 'Invalid password'];
         }
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            return ['success' => true];
-        }
-        return ['success' => false, 'message' => 'Invalid password'];
-    }
-    
     // Validate admin credentials
     private function validateAdminCredentials($id_number, $password) {
         $result = $this->retrieve("password", "accounts", "id_number='999999999'");
