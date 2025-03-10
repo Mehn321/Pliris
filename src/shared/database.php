@@ -10,21 +10,22 @@ class Database {
             $db_user = getenv('DB_USER') ?: 'root';
             $db_pass = getenv('DB_PASSWORD') ?: 'rootpassword';
             $db_name = getenv('DB_NAME') ?: 'pliris';
+            $db_port = getenv('DB_PORT') ?: '3306';
         } 
         // For Render environment
         else {
-            $db_host = getenv('MYSQL_HOST') ?: '127.0.0.1';  // Using IP instead of 'localhost'
+            $db_host = getenv('MYSQL_HOST') ?: '127.0.0.1';
             $db_user = getenv('MYSQL_USER') ?: 'root';
             $db_pass = getenv('MYSQL_PASSWORD') ?: 'rootpassword';
             $db_name = getenv('MYSQL_DATABASE') ?: 'pliris';
+            $db_port = getenv('MYSQL_PORT') ?: '3306';
         }
 
-        $this->conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+        $this->conn = new mysqli($db_host, $db_user, $db_pass, $db_name, $db_port);
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);
         }
-    }
-    // public function __construct() {
+    }    // public function __construct() {
     //     $db_host = getenv('PGHOST');
     //     $db_port = getenv('PGPORT');
     //     $db_name = getenv('PGDATABASE');
