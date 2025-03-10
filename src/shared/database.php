@@ -4,10 +4,10 @@ class Database {
     public $conn;
 
     public function __construct() {
-        $db_host = getenv('DB_HOST') ?: 'db';  // Changed to 'db' to match service name
-        $db_user = getenv('DB_USER') ?: 'root';
-        $db_pass = getenv('DB_PASSWORD') ?: 'rootpassword'; // Match MySQL root password from docker-compose
-        $db_name = getenv('DB_NAME') ?: 'pliris';
+        $db_host = getenv('MYSQL_HOST') ?: 'localhost';
+        $db_user = getenv('MYSQL_USER') ?: 'root';
+        $db_pass = getenv('MYSQL_PASSWORD') ?: 'rootpassword';
+        $db_name = getenv('MYSQL_DATABASE') ?: 'pliris';
 
         $this->conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
         if ($this->conn->connect_error) {
