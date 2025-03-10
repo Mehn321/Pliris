@@ -4,10 +4,20 @@ class Database {
     public $conn;
 
     public function __construct() {
-        $db_host = getenv('MYSQL_HOST') ?: 'localhost';
-        $db_user = getenv('MYSQL_USER') ?: 'root';
-        $db_pass = getenv('MYSQL_PASSWORD') ?: 'rootpassword';
-        $db_name = getenv('MYSQL_DATABASE') ?: 'pliris';
+        // For local Docker environment
+        if (getenv('DB_HOST')) {
+            $db_host = getenv('DB_HOST') ?: 'db';
+            $db_user = getenv('DB_USER') ?: 'root';
+            $db_pass = getenv('DB_PASSWORD') ?: 'rootpassword';
+            $db_name = getenv('DB_NAME') ?: 'pliris';
+        } 
+        // For Render environment
+        else {
+            $db_host = getenv('MYSQL_HOST') ?: '127.0.0.1';  // Using IP instead of 'localhost'
+            $db_user = getenv('MYSQL_USER') ?: 'root';
+            $db_pass = getenv('MYSQL_PASSWORD') ?: 'rootpassword';
+            $db_name = getenv('MYSQL_DATABASE') ?: 'pliris';
+        }
 
         $this->conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
         if ($this->conn->connect_error) {
