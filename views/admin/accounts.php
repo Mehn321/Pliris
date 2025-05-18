@@ -57,7 +57,8 @@ ini_set('display_errors', 1);
             $_POST['first_name'],
             $_POST['middle_initial'],
             $_POST['email'],
-            $_POST['password']
+            $_POST['password'],
+            $_POST['role_name']
         );
         if($update_acc){
             $_SESSION['update_success'] = true;
@@ -115,6 +116,7 @@ ini_set('display_errors', 1);
                                         <th>Middle Initial</th>
                                         <th>ID Number</th>
                                         <th>Email</th>
+                                        <th>Role</th>
                                         <th>Password</th>
                                         <th class="text-end px-4">Actions</th>
                                     </tr>
@@ -127,9 +129,10 @@ ini_set('display_errors', 1);
                                             <td><?php echo $account['middle_initial']; ?></td>
                                             <td><?php echo $account['id_number']; ?></td>
                                             <td><?php echo $account['email']; ?></td>
+                                            <td><?php echo ucfirst($account['role_name']); ?></td>
                                             <td>*******</td>
                                             <td class="text-end px-4">
-                                                <button class="btn btn-sm btn-primary me-2" onclick="showEditBox('<?php echo $account['last_name']; ?>', '<?php echo $account['first_name']; ?>', '<?php echo $account['middle_initial']; ?>', '<?php echo $account['id_number']; ?>', '<?php echo $account['email']; ?>')">
+                                                <button class="btn btn-sm btn-primary me-2" onclick="showEditBox('<?php echo $account['last_name']; ?>', '<?php echo $account['first_name']; ?>', '<?php echo $account['middle_initial']; ?>', '<?php echo $account['id_number']; ?>', '<?php echo $account['email']; ?>', '<?php echo $account['role_name']; ?>')">
                                                     <i class="bi bi-pencil"></i> Edit
                                                 </button>
                                                 <form method="post" class="d-inline">
@@ -151,7 +154,7 @@ ini_set('display_errors', 1);
     </div>
 
     <script>
-    function showEditBox(lastName, firstName, middleInitial, idNumber, email) {
+    function showEditBox(lastName, firstName, middleInitial, idNumber, email, roleName) {
         const container = document.createElement('div');
         container.className = 'edit-box-container';
         const editBox = document.createElement('div');
@@ -182,6 +185,13 @@ ini_set('display_errors', 1);
                     <div class="mb-3">
                         <label class="form-label">Email</label>
                         <input type="email" class="form-control" name="email" value="${email}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select class="form-select" name="role_name" required>
+                            <option value="admin" ${roleName === 'admin' ? 'selected' : ''}>Admin</option>
+                            <option value="user" ${roleName === 'user' ? 'selected' : ''}>User</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">New Password</label>

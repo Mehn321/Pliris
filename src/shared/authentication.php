@@ -39,7 +39,7 @@ class Authentication extends Database {
             // Escape the input to prevent SQL injection
             $id_number = $this->conn->real_escape_string($id_number);
         
-            $result = $this->retrieve("*", "accounts", "id_number='$id_number'");
+            $result = $this->retrieve("*", "accounts", "id_number='$id_number' AND role_name='user'");
         
             // Check if query was successful
             if ($result === false) {

@@ -73,8 +73,6 @@
     }
     if (isset($_POST['cancel'])) {
         date_default_timezone_set('Asia/Manila');
-        echo strtotime($_POST['reserve_datetime']);
-        echo time();
         if(strtotime($_POST['reserve_datetime'])<= time()) {
             echo "<div class='alert-notif red' id='alert_notif'>
             <p class='circle-exclamation-check red-exclamation'>!</p>

@@ -16,16 +16,22 @@ class Database {
         else {
             $db_host = getenv('MYSQL_HOST') ?: '127.0.0.1';
             $db_user = getenv('MYSQL_USER') ?: 'root';
-            $db_pass = getenv('MYSQL_PASSWORD') ?: 'rootpassword';
+            $db_pass = getenv('MYSQL_PASSWORD') ?: '';
             $db_name = getenv('MYSQL_DATABASE') ?: 'pliris';
             $db_port = getenv('MYSQL_PORT') ?: '3306';
         }
+
+        // db_host = 'localhost';
+        // db_user =    'root';
+        // db_pass =    '';
+        // db_name =    'pliris';
 
         $this->conn = new mysqli($db_host, $db_user, $db_pass, $db_name, $db_port);
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);
         }
-    }    // public function __construct() {
+    }    
+    // public function __construct() {
     //     $db_host = getenv('PGHOST');
     //     $db_port = getenv('PGPORT');
     //     $db_name = getenv('PGDATABASE');
